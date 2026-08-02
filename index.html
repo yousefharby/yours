@@ -1,630 +1,744 @@
-/* ============================================
-   YOURS – Multi-Theme Luxury v5 (Rose Gold Default)
-   ============================================ */
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="rosegold">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOURS – Because You Deserve The Best</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
 
-/* ========== THEME VARIABLES ========== */
-/* DEFAULT = Rose Gold */
-:root,[data-theme="rosegold"]{
-  --bg:#FDF6F4;--bg-soft:#FFF;--bg-card:#FFF;--bg-hover:#F8EDE9;
-  --gold:#B5777A;--gold-l:#C99093;--gold-d:#8A5558;
-  --rg-accent:#D4A0A3;--rg-deep:#6B3A3D;
-  --text:#2D1F1F;--text-m:#8A6F6F;--text-s:#BBA0A0;
-  --border:rgba(181,119,122,0.22);--border-h:rgba(181,119,122,0.5);
-  --shadow:0 8px 40px rgba(45,31,31,0.12);--shadow-g:0 0 30px rgba(181,119,122,0.22);
-  --ann-bg:#2D1F1F;--ann-text:#FDF6F4;--logo-b:#B5777A;
-  --scroll-bg:#FDF6F4;--scroll-t:rgba(181,119,122,0.35);
-  --hero-ov:linear-gradient(to left,rgba(253,246,244,0.05) 0%,rgba(45,31,31,0.45) 40%,rgba(45,31,31,0.82) 100%);
-  --card-glass:rgba(255,255,255,0.92);
-}
-[data-theme="dark"]{
-  --bg:#0A0A0A;--bg-soft:#111;--bg-card:#161616;--bg-hover:#1E1E1E;
-  --gold:#C9A84C;--gold-l:#E5C97A;--gold-d:#9B7B2E;
-  --rg-accent:#C9A84C;--rg-deep:#9B7B2E;
-  --text:#FFF;--text-m:#888;--text-s:#AAA;
-  --border:rgba(201,168,76,0.2);--border-h:rgba(201,168,76,0.5);
-  --shadow:0 8px 40px rgba(0,0,0,0.6);--shadow-g:0 0 30px rgba(201,168,76,0.18);
-  --ann-bg:#C9A84C;--ann-text:#000;--logo-b:#C9A84C;
-  --scroll-bg:#0A0A0A;--scroll-t:rgba(201,168,76,0.3);
-  --hero-ov:linear-gradient(to left,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.85) 100%);
-  --card-glass:rgba(22,22,22,0.85);
-}
-[data-theme="champagne"]{
-  --bg:#F8F6F2;--bg-soft:#FFF;--bg-card:#FFF;--bg-hover:#F2EDE4;
-  --gold:#C9A45A;--gold-l:#D4B06A;--gold-d:#A97A2F;
-  --rg-accent:#C9A45A;--rg-deep:#A97A2F;
-  --text:#2D2D2D;--text-m:#6F6F6F;--text-s:#9A9A9A;
-  --border:rgba(201,164,90,0.25);--border-h:rgba(201,164,90,0.6);
-  --shadow:0 8px 40px rgba(0,0,0,0.1);--shadow-g:0 0 30px rgba(201,164,90,0.2);
-  --ann-bg:#2D2D2D;--ann-text:#F8F6F2;--logo-b:#C9A45A;
-  --scroll-bg:#F8F6F2;--scroll-t:rgba(201,164,90,0.4);
-  --hero-ov:linear-gradient(to left,rgba(248,246,242,0.05) 0%,rgba(45,45,45,0.45) 40%,rgba(45,45,45,0.82) 100%);
-  --card-glass:rgba(255,255,255,0.9);
-}
-[data-theme="quiet"]{
-  --bg:#EDE9E3;--bg-soft:#F5F1EB;--bg-card:#FAFAF8;--bg-hover:#E8E3DC;
-  --gold:#B88A3B;--gold-l:#D4AA5A;--gold-d:#8A6520;
-  --rg-accent:#B88A3B;--rg-deep:#8A6520;
-  --text:#2A2A2A;--text-m:#7A7A7A;--text-s:#AAAAAA;
-  --border:rgba(184,138,59,0.22);--border-h:rgba(184,138,59,0.55);
-  --shadow:0 8px 40px rgba(0,0,0,0.1);--shadow-g:0 0 30px rgba(184,138,59,0.18);
-  --ann-bg:#2A2A2A;--ann-text:#EDE9E3;--logo-b:#B88A3B;
-  --scroll-bg:#EDE9E3;--scroll-t:rgba(184,138,59,0.35);
-  --hero-ov:linear-gradient(to left,rgba(237,233,227,0.02) 0%,rgba(42,42,42,0.42) 40%,rgba(42,42,42,0.8) 100%);
-  --card-glass:rgba(250,250,248,0.9);
-}
-[data-theme="spa"]{
-  --bg:#F0F4F2;--bg-soft:#FFF;--bg-card:#FFF;--bg-hover:#E6EDEA;
-  --gold:#6E7D4F;--gold-l:#8A9E65;--gold-d:#4E5C36;
-  --rg-accent:#6E7D4F;--rg-deep:#4E5C36;
-  --text:#1E2E24;--text-m:#607060;--text-s:#90A090;
-  --border:rgba(110,125,79,0.22);--border-h:rgba(110,125,79,0.5);
-  --shadow:0 8px 40px rgba(0,0,0,0.1);--shadow-g:0 0 30px rgba(110,125,79,0.18);
-  --ann-bg:#2A3A2E;--ann-text:#F0F4F2;--logo-b:#6E7D4F;
-  --scroll-bg:#F0F4F2;--scroll-t:rgba(110,125,79,0.35);
-  --hero-ov:linear-gradient(to left,rgba(240,244,242,0.05) 0%,rgba(30,46,36,0.45) 40%,rgba(30,46,36,0.82) 100%);
-  --card-glass:rgba(255,255,255,0.9);
-}
+<!-- VIVIENNE WESTWOOD STYLE POPUP -->
+<div id="vw-popup-overlay" class="vw-popup-overlay" onclick="if(event.target===this)document.getElementById('vw-popup-overlay').classList.remove('active')">
+  <div class="vw-popup">
+    <button class="vw-popup-close" onclick="document.getElementById('vw-popup-overlay').classList.remove('active')">✕</button>
+    <div class="vw-popup-top">
+      <div class="vw-popup-eyebrow" data-ar="عرض لفترة محدودة" data-en="Limited Time Offer">عرض لفترة محدودة</div>
+      <div class="vw-popup-headline" data-ar="خصم 15% على أول طلب" data-en="15% Off Your First Order">خصم 15% على أول طلب</div>
+    </div>
+    <div class="vw-popup-body">
+      <div class="vw-popup-code-label" data-ar="كودك الخاص" data-en="Your Exclusive Code">كودك الخاص</div>
+      <div class="vw-popup-code-box" onclick="copyVWCode()">
+        <span class="vw-popup-code">YOURS15</span>
+        <span class="vw-popup-copy">📋 <span data-ar="انسخي" data-en="Copy">انسخي</span></span>
+      </div>
+      <div class="vw-popup-terms" data-ar="صالح على أول طلب فقط · يُضاف عند إتمام الشراء" data-en="Valid on first order only · Apply at checkout">صالح على أول طلب فقط · يُضاف عند إتمام الشراء</div>
+    </div>
+    <div class="vw-popup-footer">
+      <button class="vw-popup-cta btn-gold" onclick="document.getElementById('vw-popup-overlay').classList.remove('active')" data-ar="تسوقي الآن" data-en="Shop Now">تسوقي الآن</button>
+      <button class="vw-popup-skip" onclick="document.getElementById('vw-popup-overlay').classList.remove('active')" data-ar="لاحقاً" data-en="Later">لاحقاً</button>
+      <div class="vw-popup-visitors"><span class="live-dot"></span><span id="popup-visitors-count">247</span> <span data-ar="زائرة الآن" data-en="viewing now">زائرة الآن</span></div>
+    </div>
+  </div>
+</div>
 
-/* ========== BASE ========== */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;direction:rtl;overflow-x:hidden;line-height:1.7;transition:background 0.5s,color 0.5s}
-img{max-width:100%;display:block}
-a{text-decoration:none;color:inherit}
-ul{list-style:none}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--scroll-bg)}
-::-webkit-scrollbar-thumb{background:var(--scroll-t);border-radius:3px}
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar" id="ann-bar">
+  <div class="announcement-track" id="ann-track">
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+  </div>
+</div>
 
-/* ========== ANNOUNCEMENT ========== */
-.announcement-bar{background:var(--ann-bg);color:var(--ann-text);overflow:hidden;height:36px;display:flex;align-items:center}
-.announcement-track{display:flex;gap:60px;white-space:nowrap;animation:slideRight 28s linear infinite;font-size:12px;font-weight:600;letter-spacing:0.05em}
-@keyframes slideRight{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+<!-- HEADER -->
+<header class="header" id="header">
+  <nav class="nav-container">
+    <div class="nav-left">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <div class="nav-logo">
+      <a href="index.html"><img src="images/logo.jpg" alt="YOURS" class="logo-img"/></a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="toggleSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn" onclick="toggleCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
+  <div class="main-nav">
+    <a href="index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+    <a href="category/haircare.html" class="main-nav-link" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
+    <a href="category/body.html" class="main-nav-link" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a>
+    <a href="category/accessories.html" class="main-nav-link" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a>
+    <a href="category/collections.html" class="main-nav-link" data-ar="المجموعات" data-en="Collections">المجموعات</a>
+    <a href="#offers" class="main-nav-link" data-ar="العروض" data-en="Offers">العروض</a>
+    <a href="#about" class="main-nav-link" data-ar="عن يورز" data-en="About">عن يورز</a>
+  </div>
+</header>
 
-/* ========== HEADER ========== */
-.header{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow 0.3s,background 0.5s}
-:root .header,[data-theme="rosegold"] .header{background:rgba(253,246,244,0.96)}
-[data-theme="dark"] .header{background:rgba(10,10,10,0.96)}
-[data-theme="champagne"] .header{background:rgba(248,246,242,0.96)}
-[data-theme="quiet"] .header{background:rgba(237,233,227,0.96)}
-[data-theme="spa"] .header{background:rgba(240,244,242,0.96)}
-.header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.1)}
-.nav-container{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;max-width:1400px;margin:0 auto}
-.nav-logo .logo-img{height:52px;width:52px;border-radius:50%;border:2px solid var(--logo-b);object-fit:cover;transition:transform 0.3s,box-shadow 0.3s}
-.nav-logo .logo-img:hover{transform:scale(1.07);box-shadow:0 0 16px rgba(181,119,122,0.4)}
-.nav-left,.nav-right{display:flex;align-items:center;gap:10px}
-.lang-switcher{display:flex;align-items:center;gap:6px}
-.lang-btn{background:none;border:1px solid transparent;color:var(--text-m);cursor:pointer;padding:5px 10px;border-radius:20px;font-family:'Cairo',sans-serif;font-size:13px;display:flex;align-items:center;gap:4px;transition:0.3s}
-.lang-btn.active{color:var(--gold);background:rgba(181,119,122,0.1);border-color:var(--border)}
-.lang-btn:hover{color:var(--gold)}
-.lang-divider{color:var(--border)}
-.nav-icon-btn{background:none;border:1px solid transparent;color:var(--text-m);cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:0.3s;position:relative}
-.nav-icon-btn svg{width:18px;height:18px}
-.nav-icon-btn:hover{color:var(--gold);border-color:var(--border);background:rgba(181,119,122,0.08)}
-.cart-badge{position:absolute;top:-2px;left:-2px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.theme-toggle-btn{background:none;border:1px solid var(--border);color:var(--text-m);cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;transition:0.3s;position:relative}
-.theme-toggle-btn:hover{border-color:var(--gold);color:var(--gold)}
-.theme-panel{position:absolute;top:calc(100% + 12px);left:0;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:16px;width:230px;box-shadow:var(--shadow);z-index:200;opacity:0;pointer-events:none;transform:translateY(-8px) scale(0.97);transition:0.25s ease}
-.theme-panel.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
-.theme-panel-title{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-m);margin-bottom:12px}
-.theme-options{display:flex;flex-direction:column;gap:5px}
-.theme-option{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;border:1px solid transparent;transition:0.2s}
-.theme-option:hover,.theme-option.active{border-color:var(--gold);background:rgba(181,119,122,0.06)}
-.theme-swatch{display:flex;gap:3px}
-.theme-swatch span{width:13px;height:13px;border-radius:50%;display:block;border:1px solid rgba(128,128,128,0.2)}
-.theme-option-name{font-size:12px;font-weight:600;color:var(--text)}
-.theme-option-sub{font-size:10px;color:var(--text-m)}
-.main-nav{display:flex;justify-content:center;gap:4px;padding:8px 40px;border-top:1px solid var(--border);overflow-x:auto}
-.main-nav::-webkit-scrollbar{display:none}
-.main-nav-link{color:var(--text-m);font-size:13px;font-weight:500;padding:6px 14px;border-radius:20px;transition:0.3s;white-space:nowrap}
-.main-nav-link:hover{color:var(--gold);background:rgba(181,119,122,0.08)}
+<!-- SEARCH -->
+<div class="search-overlay" id="search-overlay">
+  <button class="search-close" onclick="toggleSearch()">✕</button>
+  <div class="search-inner">
+    <h3 data-ar="ابحثي عن منتجاتك" data-en="Search for your products">ابحثي عن منتجاتك</h3>
+    <input type="text" class="search-input" id="search-input" placeholder="شامبو، ماسك، سيروم..." oninput="searchProducts(this.value)"/>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
 
-/* ========== SEARCH ========== */
-.search-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding-top:120px;opacity:0;pointer-events:none;transition:0.35s}
-.search-overlay.active{opacity:1;pointer-events:all}
-.search-inner{width:100%;max-width:600px;padding:0 20px}
-.search-inner h3{color:var(--gold);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px}
-.search-input{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-family:'Cairo',sans-serif;font-size:20px;padding:16px 20px;border-radius:14px;outline:none;text-align:right;transition:0.3s}
-.search-input:focus{border-color:var(--gold)}
-.search-input::placeholder{color:var(--text-m)}
-.search-results{margin-top:16px;display:flex;flex-direction:column;gap:10px}
-.search-result-item{display:flex;align-items:center;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:0.3s}
-.search-result-item:hover{border-color:var(--gold)}
-.search-result-item img{width:50px;height:50px;border-radius:50%;object-fit:cover}
-.search-result-item h4{font-size:14px;font-weight:600}
-.search-result-item span{font-size:13px;color:var(--gold)}
-.search-close{position:absolute;top:20px;left:20px;background:none;border:none;color:rgba(255,255,255,0.7);font-size:24px;cursor:pointer}
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slider">
+    <div class="hero-slide active" style="background-image:url('images/hero2.jpg');background-position:center 30%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="العناية الفاخرة بالشعر" data-en="Luxury Hair Care">العناية الفاخرة بالشعر</span>
+        <h1 class="hero-title" data-ar="لأنك تستحقين الأفضل" data-en="Because You Deserve The Best">لأنك تستحقين الأفضل</h1>
+        <p class="hero-subtitle" data-ar="اكتشفي مجموعة YOURS – بمكونات طبيعية 100% لشعر مشرق وصحي" data-en="Discover YOURS collection – 100% natural ingredients for radiant, healthy hair">اكتشفي مجموعة YOURS – بمكونات طبيعية 100% لشعر مشرق وصحي</p>
+        <div class="hero-btns">
+          <a href="category/collections.html" class="btn-gold" data-ar="تسوقي الآن" data-en="Shop Now">تسوقي الآن</a>
+          <a href="#about" class="btn-outline" data-ar="قصتنا" data-en="Our Story">قصتنا</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image:url('images/hero1.jpg');background-position:center 20%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="العناية بالبروتين" data-en="Protein Treatment">العناية بالبروتين</span>
+        <h1 class="hero-title" data-ar="ارتقي بروتين شعرك" data-en="Elevate Your Hair Protein">ارتقي بروتين شعرك</h1>
+        <p class="hero-subtitle" data-ar="مجموعة YOURS للعناية العميقة – لشعر أقوى وأكثر لمعاناً" data-en="YOURS deep care collection – for stronger, shinier hair">مجموعة YOURS للعناية العميقة – لشعر أقوى وأكثر لمعاناً</p>
+        <div class="hero-btns"><a href="category/haircare.html" class="btn-gold" data-ar="اكتشفي" data-en="Discover">اكتشفي</a></div>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image:url('images/hero5.jpg');background-position:center 35%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="خط الترطيب" data-en="Hydration Line">خط الترطيب</span>
+        <h1 class="hero-title" data-ar="ترطيب عميق من الجذور" data-en="Deep Hydration from Roots">ترطيب عميق من الجذور</h1>
+        <p class="hero-subtitle" data-ar="ترطيب من الجذور حتى الأطراف – نتائج حقيقية، جمال أصيل" data-en="Hydration from roots to tips – real results, authentic beauty">ترطيب من الجذور حتى الأطراف – نتائج حقيقية، جمال أصيل</p>
+        <div class="hero-btns"><a href="category/collections.html" class="btn-gold" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a></div>
+      </div>
+    </div>
+  </div>
+  <button class="hero-prev" onclick="slideHero(-1)">❮</button>
+  <button class="hero-next" onclick="slideHero(1)">❯</button>
+  <div class="hero-dots">
+    <span class="hero-dot active" onclick="goToSlide(0)"></span>
+    <span class="hero-dot" onclick="goToSlide(1)"></span>
+    <span class="hero-dot" onclick="goToSlide(2)"></span>
+  </div>
+  <div class="hero-live-stats">
+    <div class="live-stat"><span class="live-dot"></span><span id="live-visitors">312</span> <span data-ar="زائرة الآن" data-en="viewing now">زائرة الآن</span></div>
+    <div class="live-stat-divider">·</div>
+    <div class="live-stat"><span id="live-orders">48</span> <span data-ar="طلب اليوم" data-en="orders today">طلب اليوم</span></div>
+  </div>
+</section>
 
-/* ========== HERO ========== */
-.hero{position:relative;height:100vh;min-height:560px;overflow:hidden}
-.hero-slider{width:100%;height:100%;position:relative}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center center;opacity:0;transition:opacity 1.2s ease}
-.hero-slide.active{opacity:1}
-.hero-overlay{position:absolute;inset:0;background:var(--hero-ov)}
-.hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 64px 0 0;max-width:640px;gap:18px}
-[dir="rtl"] .hero-content{right:0;left:auto;padding:0 64px 0 0}
-[dir="ltr"] .hero-content{left:0;right:auto;padding:0 0 0 64px}
-.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:8px;width:fit-content}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5.5vw,68px);font-weight:700;line-height:1.1;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5)}
-.hero-subtitle{font-size:15px;color:rgba(255,255,255,0.82);max-width:480px;line-height:1.8;text-shadow:0 1px 8px rgba(0,0,0,0.5)}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.hero-prev,.hero-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;width:44px;height:44px;border-radius:50%;cursor:pointer;z-index:10;transition:0.3s;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.hero-prev{right:20px}
-.hero-next{left:20px}
-.hero-prev:hover,.hero-next:hover{background:var(--gold);border-color:var(--gold);color:#fff}
-.hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:0.3s}
-.hero-dot.active{background:var(--gold);width:24px;border-radius:4px}
-.hero-live-stats{position:absolute;bottom:28px;right:32px;display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.15);border-radius:30px;padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.8);backdrop-filter:blur(10px);z-index:10}
-.live-dot{width:7px;height:7px;background:#4CAF50;border-radius:50%;animation:livePulse 2s infinite;display:inline-block}
-@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.4)}50%{box-shadow:0 0 0 5px rgba(76,175,80,0)}}
-.live-stat-divider{color:rgba(255,255,255,0.2)}
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="تسوقي حسب القسم" data-en="Shop by Category">تسوقي حسب القسم</span>
+      <h2 class="section-title" data-ar="اكتشفي مجموعاتنا" data-en="Discover Our Collections">اكتشفي مجموعاتنا</h2>
+      <p class="section-sub" data-ar="كل قسم مصمم بعناية لتلبية احتياجات شعرك" data-en="Each category is carefully designed to meet your hair needs">كل قسم مصمم بعناية لتلبية احتياجات شعرك</p>
+    </div>
+    <div class="categories-grid">
+      <div class="cat-card haircare reveal" onclick="window.location.href='category/haircare.html'">
+        <img src="images/cat_haircare.jpg" alt="عناية الشعر" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Hair Care</span>
+          <div class="cat-title" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</div>
+          <div class="cat-count" data-ar="شامبو · بلسم · سيروم" data-en="Shampoo · Conditioner · Serum">شامبو · بلسم · سيروم</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+      <div class="cat-card masks reveal" onclick="window.location.href='category/body.html'">
+        <img src="images/cat_body.jpg" alt="عناية الجسم" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Body Care</span>
+          <div class="cat-title" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</div>
+          <div class="cat-count" data-ar="بودي بوليش · بودي سوفليه" data-en="Body Polish · Body Soufflé">بودي بوليش · بودي سوفليه</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+      <div class="cat-card accessories reveal" onclick="window.location.href='category/accessories.html'">
+        <img src="images/cat_accessories.jpg" alt="إكسسوارات" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Accessories</span>
+          <div class="cat-title" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</div>
+          <div class="cat-count" data-ar="بونيه · مشط · فوطة" data-en="Bonnet · Comb · Towel">بونيه · مشط · فوطة</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* ========== BUTTONS ========== */
-.btn-gold{background:var(--gold);color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;transition:0.35s ease;display:inline-block;text-align:center}
-.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(181,119,122,0.4)}
-.btn-outline{background:transparent;color:#fff;font-family:'Cairo',sans-serif;font-weight:600;font-size:14px;padding:12px 30px;border-radius:50px;border:1px solid rgba(255,255,255,0.45);cursor:pointer;transition:0.35s ease;display:inline-block}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-.btn-gold-sm{background:var(--gold);color:#fff;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;padding:10px 20px;border-radius:50px;cursor:pointer;transition:0.3s ease;width:100%;text-align:center;display:block}
-.btn-gold-sm:hover{background:var(--gold-l);transform:translateY(-1px);box-shadow:0 4px 18px rgba(181,119,122,0.3)}
+<!-- UGC VIDEO SECTION -->
+<section class="ugc-section" id="ugc">
+  <div class="ugc-inner">
+    <div class="ugc-video-wrap reveal-left">
+      <video autoplay muted loop playsinline poster="images/hero2.jpg">
+        <source src="images/WhatsApp_Video_2026-07-25_at_2_47_52_AM.mp4" type="video/mp4"/>
+      </video>
+      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
+    </div>
+    <div class="ugc-text reveal-right">
+      <div class="ugc-eyebrow" data-ar="كما قاله يوسف جو 🎙️" data-en="As told by Yousef Joo 🎙️">كما قاله يوسف جو 🎙️</div>
+      <h2 class="ugc-title" id="ugc-title">لما <span>المشاهير</span> بيتكلموا عنا</h2>
+      <div class="ugc-stars">★★★★★</div>
+      <div class="ugc-quote">"جربت YOURS وبصراحة مش توقعت النتيجة دي — المنتج ده بجد فرّق مع شعري بشكل واضح، خامة عالية وريحة تجنن. أنا مؤيّده وبرشحه لكل الناس!"</div>
+      <div class="ugc-author">
+        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">YJ</div>
+        <div>
+          <div class="ugc-author-name">Yousef Joo</div>
+          <div class="ugc-author-sub">@yousefjoo · كونتنت كريتور</div>
+          <div style="margin-top:5px">
+            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ UGC Creator</span>
+          </div>
+        </div>
+      </div>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيه الآن ←</a>
+    </div>
+  </div>
+</section>
 
-/* ========== SECTIONS ========== */
-.section{padding:90px 0}
-.container{max-width:1300px;margin:0 auto;padding:0 40px}
-.section-header{text-align:center;margin-bottom:56px}
-.section-eyebrow{display:inline-block;color:var(--gold);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:10px}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--text);margin-bottom:14px}
-.section-sub{font-size:14px;color:var(--text-m);max-width:480px;margin:0 auto}
+<!-- COLLECTIONS -->
+<section class="section collections-section" id="collections">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="أفضل قيمة" data-en="Best Value">أفضل قيمة</span>
+      <h2 class="section-title" data-ar="المجموعات الفاخرة" data-en="Luxury Collections">المجموعات الفاخرة</h2>
+      <p class="section-sub" data-ar="وفري أكثر مع مجموعاتنا المتكاملة" data-en="Save more with our complete collections">وفري أكثر مع مجموعاتنا المتكاملة</p>
+    </div>
+    <div class="collections-grid" id="collections-grid"></div>
+  </div>
+</section>
 
-/* ========== ANIMATED SECTION REVEAL ========== */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal-left.visible{opacity:1;transform:translateX(0)}
-.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal-right.visible{opacity:1;transform:translateX(0)}
-.reveal-scale{opacity:0;transform:scale(0.9);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal-scale.visible{opacity:1;transform:scale(1)}
+<!-- FEATURED PRODUCTS -->
+<section class="section" id="products" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="المنتجات" data-en="Products">المنتجات</span>
+      <h2 class="section-title" data-ar="منتجاتنا المميزة" data-en="Our Featured Products">منتجاتنا المميزة</h2>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
 
-/* ========== CATEGORIES ========== */
-.categories-section{background:var(--bg-soft);padding:80px 0}
-.categories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.cat-card{position:relative;border-radius:22px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;border:1px solid var(--border);transition:transform 0.4s ease,box-shadow 0.4s ease;background:var(--bg-card)}
-.cat-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-g)}
-.cat-img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform 0.6s ease}
-.cat-card:hover .cat-img{transform:scale(1.08)}
-.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.2) 50%,transparent 100%);transition:0.4s}
-.cat-card:hover .cat-overlay{background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.3) 55%,rgba(0,0,0,0.1) 100%)}
-.cat-content{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(8px);transition:transform 0.4s ease}
-.cat-card:hover .cat-content{transform:translateY(0)}
-.cat-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;display:block}
-.cat-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
-.cat-count{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:14px}
-.cat-btn{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#fff;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;opacity:0;transform:translateY(10px);transition:opacity 0.35s ease,transform 0.35s ease,background 0.2s}
-.cat-card:hover .cat-btn{opacity:1;transform:translateY(0)}
-.cat-btn:hover{background:var(--gold-l)}
-@media(max-width:768px){.cat-btn{opacity:1;transform:none}.cat-content{transform:none}}
-.cat-card.haircare .cat-img{object-position:center 40%}
-.cat-card.masks .cat-img{object-position:center 35%}
-.cat-card.accessories .cat-img{object-position:center 25%}
+<!-- OFFERS SECTION -->
+<section class="offers-section" id="offers">
+  <div class="offers-particles" id="offers-particles"></div>
+  <div class="container">
+    <div class="offers-inner">
+      <div class="reveal-left">
+        <div class="offers-fire-badge" data-ar="🔥 عروض حصرية" data-en="🔥 Exclusive Offers">🔥 عروض حصرية</div>
+        <h2 class="offers-big-title">
+          <span data-ar="وفري حتى" data-en="Save up to">وفري حتى</span>
+          <span class="offers-num"> <span class="offers-pct" data-ar="35%" data-en="35%">35%</span></span>
+          <br><span data-ar="على المجموعات الكاملة" data-en="on complete collections">على المجموعات الكاملة</span>
+        </h2>
+        <p class="offers-sub" data-ar='استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي' data-en='Use code <strong>YOURS15</strong> for an extra 15% discount'>استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي</p>
+        <div class="offers-codes-row">
+          <div class="offer-code-pill" onclick="copyCode('YOURS15')">
+            <span>YOURS15</span>
+            <small data-ar="خصم 15%" data-en="15% Off">خصم 15%</small>
+          </div>
+          <div class="offer-code-pill silver" onclick="copyCode('YOURS25')">
+            <span>YOURS25</span>
+            <small data-ar="خصم 25% على لتر" data-en="25% Off 1L size">خصم 25% على لتر</small>
+          </div>
+        </div>
+        <div class="offers-scale-row" style="margin-bottom:24px">
+          <div class="scale-item"><span class="scale-qty">1</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="سعر عادي" data-en="Regular Price">سعر عادي</span></div>
+          <div class="scale-item"><span class="scale-qty">2</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 10%" data-en="10% Off">خصم 10%</span></div>
+          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15%" data-en="15% Off">خصم 15%</span></div>
+        </div>
+        <a href="category/collections.html" class="btn-gold offers-cta" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a>
+      </div>
+      <div class="offers-timer-wrap reveal-right">
+        <div class="timer-label" data-ar="⏳ ينتهي العرض خلال" data-en="⏳ Offer ends in">⏳ ينتهي العرض خلال</div>
+        <div class="timer-boxes">
+          <div class="timer-box"><span id="t-h">12</span><small data-ar="ساعة" data-en="Hours">ساعة</small></div>
+          <span class="timer-sep">:</span>
+          <div class="timer-box"><span id="t-m">00</span><small data-ar="دقيقة" data-en="Mins">دقيقة</small></div>
+          <span class="timer-sep">:</span>
+          <div class="timer-box"><span id="t-s">00</span><small data-ar="ثانية" data-en="Secs">ثانية</small></div>
+        </div>
+        <a href="category/collections.html" class="btn-gold" style="display:block;text-align:center" data-ar="اطلبي الآن 🛍" data-en="Order Now 🛍">اطلبي الآن 🛍</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* ========== UGC VIDEO SECTION ========== */
-.ugc-section{padding:80px 0;background:var(--bg)}
-.ugc-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;padding:0 40px}
-.ugc-video-wrap{position:relative;border-radius:24px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-g);background:var(--bg-card)}
-.ugc-video-wrap video{width:100%;height:auto;display:block;border-radius:22px}
-.ugc-video-badge{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.05em}
-.ugc-text{display:flex;flex-direction:column;gap:20px}
-.ugc-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase}
-.ugc-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--text);line-height:1.25}
-.ugc-title span{color:var(--gold)}
-.ugc-desc{font-size:15px;color:var(--text-m);line-height:1.9}
-.ugc-stars{display:flex;gap:4px;color:#FFD700;font-size:18px}
-.ugc-quote{font-style:italic;font-size:15px;color:var(--text-m);border-right:3px solid var(--gold);padding-right:16px;line-height:1.7}
-.ugc-author{display:flex;align-items:center;gap:12px;margin-top:6px}
-.ugc-author-img{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:var(--bg-hover)}
-.ugc-author-name{font-size:14px;font-weight:700;color:var(--text)}
-.ugc-author-sub{font-size:12px;color:var(--text-m)}
-@media(max-width:768px){.ugc-inner{grid-template-columns:1fr;gap:36px}}
+<!-- REVIEWS SECTION -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="آراء العملاء" data-en="Customer Reviews">آراء العملاء</span>
+      <h2 class="section-title" data-ar="ماذا تقول عملاؤنا؟" data-en="What Our Customers Say">ماذا تقول عملاؤنا؟</h2>
+      <p class="section-sub" data-ar="+5000 عميلة سعيدة بالفعل" data-en="+5000 happy customers already">+5000 عميلة سعيدة بالفعل</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="شعري تغير بشكل كامل بعد أسبوعين فقط! الشامبو رائع ومعه البلسم حاجة تانية خالص. بجد أحسن قرار اتخذتيه." data-en="My hair completely changed after just two weeks! The shampoo is amazing and with the conditioner it's something else entirely. Truly the best decision I made.">شعري تغير بشكل كامل بعد أسبوعين فقط! الشامبو رائع ومعه البلسم حاجة تانية خالص. بجد أحسن قرار اتخذتيه.</p>
+        <div class="review-author">
+          <div class="review-avatar">ن</div>
+          <div class="review-author-info">
+            <h5 data-ar="نور أحمد" data-en="Nour Ahmed">نور أحمد</h5>
+            <span data-ar="القاهرة" data-en="Cairo">القاهرة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="الماسك ده بجد سحر! حاسة إن شعري اتنفس من جديد. الريحة حلوة جداً ونتيجة واضحة من أول استخدام. هطلب تاني قطعاً." data-en="This mask is truly magic! I feel like my hair is breathing again. The scent is lovely and results were visible from the very first use. I will definitely order again.">الماسك ده بجد سحر! حاسة إن شعري اتنفس من جديد. الريحة حلوة جداً ونتيجة واضحة من أول استخدام. هطلب تاني قطعاً.</p>
+        <div class="review-author">
+          <div class="review-avatar">م</div>
+          <div class="review-author-info">
+            <h5 data-ar="منة علي" data-en="Menna Ali">منة علي</h5>
+            <span data-ar="الإسكندرية" data-en="Alexandria">الإسكندرية</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="اشتريت المجموعة الكاملة وكانت فرق ضخم في السعر. الخدمة ممتازة والشحن سريع والمنتجات أحسن من اللي توقعته." data-en="I bought the complete collection and the value was incredible. Excellent service, fast shipping, and the products exceeded my expectations.">اشتريت المجموعة الكاملة وكانت فرق ضخم في السعر. الخدمة ممتازة والشحن سريع والمنتجات أحسن من اللي توقعته.</p>
+        <div class="review-author">
+          <div class="review-avatar">ر</div>
+          <div class="review-author-info">
+            <h5 data-ar="رنا خالد" data-en="Rana Khaled">رنا خالد</h5>
+            <span data-ar="الجيزة" data-en="Giza">الجيزة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="بودي بوليش ده أحلى مقشر جربتيه في حياتي! بشرتي ناعمة ومشرقة زي ما متخيلتيش. هطلب مجموعة العناية بالجسم كاملة." data-en="This body polish is the best scrub I have ever tried! My skin is as soft and radiant as I never imagined. I will order the full body care collection.">بودي بوليش ده أحلى مقشر جربتيه في حياتي! بشرتي ناعمة ومشرقة زي ما متخيلتيش. هطلب مجموعة العناية بالجسم كاملة.</p>
+        <div class="review-author">
+          <div class="review-avatar">ه</div>
+          <div class="review-author-info">
+            <h5 data-ar="هناء إبراهيم" data-en="Hana Ibrahim">هناء إبراهيم</h5>
+            <span data-ar="المنصورة" data-en="Mansoura">المنصورة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="السيروم ده غير حياتي! شعري بيطلع ناعم وبراق من غير أي فرد. وأخيراً منتج مصري يتكلم عن نفسه بشكل مختلف." data-en="This serum changed my life! My hair comes out smooth and shiny without any straightening. Finally an Egyptian product that truly speaks for itself.">السيروم ده غير حياتي! شعري بيطلع ناعم وبراق من غير أي فرد. وأخيراً منتج مصري يتكلم عن نفسه بشكل مختلف.</p>
+        <div class="review-author">
+          <div class="review-avatar">ف</div>
+          <div class="review-author-info">
+            <h5 data-ar="فريدة حسن" data-en="Farida Hassan">فريدة حسن</h5>
+            <span data-ar="أسيوط" data-en="Assiut">أسيوط</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="البونيه الساتان ده الأفضل — خفيف، لطيف على الشعر، وشكله فاخر. واضح إن كل منتج في YOURS متفكر فيه بعناية وحب." data-en="The satin bonnet is the best — light, gentle on hair, and looks luxurious. You can tell every YOURS product is thoughtfully and lovingly designed.">البونيه الساتان ده الأفضل — خفيف، لطيف على الشعر، وشكله فاخر. واضح إن كل منتج في YOURS متفكر فيه بعناية وحب.</p>
+        <div class="review-author">
+          <div class="review-avatar">ي</div>
+          <div class="review-author-info">
+            <h5 data-ar="ياسمين عمر" data-en="Yasmin Omar">ياسمين عمر</h5>
+            <span data-ar="الأقصر" data-en="Luxor">الأقصر</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* ========== REVIEWS SECTION ========== */
-.reviews-section{padding:80px 0;background:var(--bg-soft)}
-.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.review-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:26px;position:relative;transition:0.35s ease}
-.review-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g);transform:translateY(-4px)}
-.review-quote-icon{font-size:32px;color:var(--gold);opacity:0.25;position:absolute;top:16px;left:20px;font-family:'Playfair Display',serif;line-height:1}
-.review-stars{display:flex;gap:3px;color:#FFD700;font-size:14px;margin-bottom:12px}
-.review-text{font-size:13px;color:var(--text-m);line-height:1.8;margin-bottom:18px}
-.review-author{display:flex;align-items:center;gap:12px}
-.review-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
-.review-author-info h5{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
-.review-author-info span{font-size:11px;color:var(--text-m)}
-.review-verified{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#4CAF50;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.2);border-radius:10px;padding:2px 8px;margin-top:4px}
-@media(max-width:768px){.reviews-grid{grid-template-columns:1fr;gap:16px}}
-@media(max-width:1024px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img src="images/hero3.jpg" alt="YOURS Brand" class="about-img"/>
+        <div class="about-badge" data-ar="100% طبيعي" data-en="100% Natural">100% طبيعي</div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="section-eyebrow" data-ar="قصتنا" data-en="Our Story">قصتنا</span>
+        <h2 data-ar="يورز – لأنك تستحقين الأفضل دائماً" data-en="YOURS – Because You Always Deserve the Best">يورز – لأنك تستحقين الأفضل دائماً</h2>
+        <p data-ar="YOURS وُلدت من شغف حقيقي بالعناية الطبيعية. كل منتج نصنعه يحمل وعداً بالجودة والأمان والنتيجة المرئية. نحن نؤمن أن كل فتاة تستحق أن تشعر بالثقة والجمال في كل يوم." data-en="YOURS was born from a genuine passion for natural care. Every product we make carries a promise of quality, safety, and visible results. We believe every woman deserves to feel confident and beautiful every day.">YOURS وُلدت من شغف حقيقي بالعناية الطبيعية. كل منتج نصنعه يحمل وعداً بالجودة والأمان والنتيجة المرئية. نحن نؤمن أن كل فتاة تستحق أن تشعر بالثقة والجمال في كل يوم.</p>
+        <div class="about-stats">
+          <div class="about-stat"><span class="stat-num">5K+</span><span class="stat-label" data-ar="عميلة سعيدة" data-en="Happy Customers">عميلة سعيدة</span></div>
+          <div class="about-stat"><span class="stat-num">100%</span><span class="stat-label" data-ar="طبيعي" data-en="Natural">طبيعي</span></div>
+          <div class="about-stat"><span class="stat-num">12+</span><span class="stat-label" data-ar="منتج" data-en="Products">منتج</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* ========== OFFERS SECTION ========== */
-.offers-section{position:relative;background:linear-gradient(135deg,var(--bg) 0%,var(--bg-soft) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:70px 0;overflow:hidden}
-.offers-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.offers-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;animation:floatUp var(--dur) ease-in infinite;animation-delay:var(--delay);left:var(--x);bottom:-10px}
-@keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(0)}20%{opacity:0.7;transform:translateY(-20px) scale(1)}100%{opacity:0;transform:translateY(-200px) scale(0.3)}}
-.offers-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.offers-fire-badge{display:inline-block;background:linear-gradient(135deg,#ff4400,#ff8800);color:#fff;font-size:13px;font-weight:700;padding:8px 20px;border-radius:50px;margin-bottom:18px;animation:fireShake 2.2s ease-in-out infinite}
-@keyframes fireShake{0%,100%{transform:rotate(-1deg) scale(1)}50%{transform:rotate(1deg) scale(1.03)}}
-.spark{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;animation:sparkBurst 0.8s ease-out forwards}
-@keyframes sparkBurst{0%{opacity:1;transform:scale(1) translate(0,0)}100%{opacity:0;transform:scale(0) translate(var(--sx),var(--sy))}}
-.offers-big-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,44px);color:var(--text);line-height:1.3;margin-bottom:14px}
-.offers-num{font-size:1.4em;color:var(--gold);font-weight:900;animation:numPop 2s ease-in-out infinite}
-@keyframes numPop{0%,100%{text-shadow:0 0 0 rgba(181,119,122,0)}50%{text-shadow:0 0 20px rgba(181,119,122,0.6)}}
-.offers-pct{color:#e05500;font-weight:900;position:relative}
-.offers-pct::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:currentColor;animation:underlineSlide 2s ease-in-out infinite}
-@keyframes underlineSlide{0%,100%{transform:scaleX(0.6)}50%{transform:scaleX(1)}}
-.offers-sub{font-size:15px;color:var(--text-m);margin-bottom:22px}
-.offers-sub strong{color:var(--gold);letter-spacing:0.1em}
-.offers-codes-row{display:flex;gap:12px;margin-bottom:26px;flex-wrap:wrap}
-.offer-code-pill{background:rgba(181,119,122,0.08);border:2px dashed var(--gold);border-radius:12px;padding:12px 18px;cursor:pointer;transition:0.3s;text-align:center;animation:codeFlicker 3s ease-in-out infinite}
-@keyframes codeFlicker{0%,90%,100%{border-color:var(--gold)}95%{border-color:var(--gold-l)}}
-.offer-code-pill span{display:block;font-size:20px;font-weight:900;color:var(--gold);letter-spacing:0.2em;font-family:monospace}
-.offer-code-pill small{display:block;font-size:11px;color:var(--text-m);margin-top:2px}
-.offer-code-pill:hover{background:rgba(181,119,122,0.18);transform:scale(1.03)}
-.offer-code-pill.silver{border-color:var(--border)}
-.offer-code-pill.silver span{color:var(--text)}
-.offers-cta{font-size:15px;padding:13px 34px;animation:ctaPulse 2.5s ease-in-out infinite}
-@keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(181,119,122,0.4)}50%{box-shadow:0 0 0 14px rgba(181,119,122,0)}}
-.offers-timer-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:30px;text-align:center;box-shadow:var(--shadow)}
-.timer-label{font-size:13px;color:var(--text-m);margin-bottom:18px}
-.timer-boxes{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px}
-.timer-box{background:var(--bg-hover);border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:68px;position:relative;overflow:hidden}
-.timer-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:shimmer 2s linear infinite}
-@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.timer-box span{display:block;font-size:34px;font-weight:900;color:var(--gold);font-family:'Playfair Display',serif;line-height:1}
-.timer-box small{font-size:10px;color:var(--text-m);display:block;margin-top:3px}
-.timer-sep{color:var(--gold);font-size:28px;font-weight:900;animation:blink 1s step-end infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-.offers-scale-row{display:flex;gap:8px}
-.scale-item{flex:1;background:rgba(181,119,122,0.05);border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;transition:0.3s}
-.scale-item:hover{border-color:var(--gold)}
-.scale-item.hot{background:rgba(255,107,53,0.08);border-color:rgba(255,107,53,0.4);animation:hotGlow 2s ease-in-out infinite}
-@keyframes hotGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,107,53,0.15)}50%{box-shadow:0 0 14px 2px rgba(255,107,53,0.1)}}
-.scale-qty{display:block;font-size:20px;font-weight:900;color:var(--gold)}
-.scale-arrow{display:block;font-size:10px;color:var(--text-m);margin:2px 0}
-.scale-disc{display:block;font-size:11px;font-weight:700;color:var(--text)}
-.scale-item.hot .scale-disc{color:#e05500}
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h3 data-ar="سلتك" data-en="Your Cart">سلتك</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty" id="cart-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p data-ar="سلتك فارغة" data-en="Your cart is empty">سلتك فارغة</p>
+      <button class="btn-gold-sm" style="width:auto;padding:9px 22px" onclick="toggleCart()" data-ar="ابدئي التسوق" data-en="Start Shopping">ابدئي التسوق</button>
+    </div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-discount" id="cart-discount-row" style="display:none">
+      <span data-ar="خصم الباقة:" data-en="Bundle discount:">خصم الباقة:</span><span id="discount-amount" class="discount-val">- 0 ج</span>
+    </div>
+    <div class="cart-total"><span data-ar="الإجمالي:" data-en="Total:">الإجمالي:</span><span id="cart-total" class="total-val">0 ج</span></div>
+    <button class="btn-gold cart-checkout-btn" onclick="proceedToCheckout()" data-ar="أكملي طلبك 🛍" data-en="Complete Order 🛍">أكملي طلبك 🛍</button>
+  </div>
+</div>
 
-/* ========== COLLECTIONS ========== */
-.collections-section{background:var(--bg-soft)}
-.collections-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.collection-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:0.4s ease;position:relative}
-.collection-card:hover{border-color:var(--gold);transform:translateY(-6px);box-shadow:var(--shadow-g)}
-.collection-img-wrap{position:relative;padding:36px;display:flex;justify-content:center;background:radial-gradient(circle,var(--bg-hover) 0%,var(--bg) 100%)}
-.collection-circle{width:210px;height:210px;border-radius:50%;overflow:hidden;border:2px solid var(--border);transition:0.4s ease}
-.collection-card:hover .collection-circle{border-color:var(--gold);box-shadow:0 0 0 8px rgba(181,119,122,0.07)}
-.collection-img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
-.collection-card:hover .collection-img{transform:scale(1.08)}
-.collection-badge{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px}
-.new-badge{background:var(--text);color:var(--bg)}
-.mini-badge{background:#6c5ce7;color:#fff}
-.collection-info{padding:24px}
-.collection-info h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:7px}
-.collection-info p{font-size:12px;color:var(--text-m);margin-bottom:14px;line-height:1.6}
-.collection-price{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.price-old{font-size:13px;color:var(--text-m);text-decoration:line-through}
-.price-new{font-size:22px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
-.collection-bundle-offer{font-size:11px;color:#4CAF50;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.2);border-radius:20px;padding:4px 12px;display:inline-block;margin-bottom:14px}
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal" style="display:none">
+  <div class="modal-box" style="max-width:680px;padding:0">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <!-- Steps -->
+    <div class="checkout-steps">
+      <div class="checkout-step active" id="step-1-tab">
+        <div class="step-num">1</div>
+        <span data-ar="بياناتك" data-en="Your Info">بياناتك</span>
+      </div>
+      <div class="step-line" id="step-line-1"></div>
+      <div class="checkout-step" id="step-2-tab">
+        <div class="step-num">2</div>
+        <span data-ar="الشحن" data-en="Delivery">الشحن</span>
+      </div>
+      <div class="step-line" id="step-line-2"></div>
+      <div class="checkout-step" id="step-3-tab">
+        <div class="step-num">3</div>
+        <span data-ar="الدفع" data-en="Payment">الدفع</span>
+      </div>
+    </div>
 
-/* ========== FILTER TABS ========== */
-.filter-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:44px;flex-wrap:wrap}
-.filter-tab{background:transparent;border:1px solid var(--border);color:var(--text-m);font-family:'Cairo',sans-serif;font-size:13px;padding:7px 18px;border-radius:50px;cursor:pointer;transition:0.3s}
-.filter-tab.active,.filter-tab:hover{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:700}
+    <!-- Step 1: Customer Info -->
+    <div class="checkout-body" id="checkout-step-1">
+      <div class="checkout-section-title" data-ar="بياناتك الشخصية" data-en="Your Personal Information">بياناتك الشخصية</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-ar="الاسم الكامل *" data-en="Full Name *">الاسم الكامل *</label>
+          <div class="input-valid">
+            <input type="text" id="order-name" placeholder="اسمك هنا..." oninput="validateField('order-name')"/>
+            <span class="input-valid-icon">✓</span>
+          </div>
+          <span class="field-error" id="err-name"></span>
+        </div>
+        <div class="form-group">
+          <label data-ar="رقم الموبايل *" data-en="Phone Number *">رقم الموبايل *</label>
+          <div class="input-valid">
+            <input type="tel" id="order-phone" placeholder="01XXXXXXXXX" oninput="validateField('order-phone')"/>
+            <span class="input-valid-icon">✓</span>
+          </div>
+          <span class="field-error" id="err-phone"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-ar="المحافظة *" data-en="Governorate *">المحافظة *</label>
+        <select id="order-gov" onchange="updateDeliveryByGov()">
+          <option value="" data-ar="اختاري المحافظة..." data-en="Select Governorate...">اختاري المحافظة...</option>
+          <option value="cairo">القاهرة / Cairo</option>
+          <option value="giza">الجيزة / Giza</option>
+          <option value="alex">الإسكندرية / Alexandria</option>
+          <option value="other" data-ar="محافظات أخرى" data-en="Other Governorates">محافظات أخرى</option>
+        </select>
+        <span class="field-error" id="err-gov"></span>
+      </div>
+      <div class="form-group">
+        <label data-ar="العنوان التفصيلي *" data-en="Detailed Address *">العنوان التفصيلي *</label>
+        <input type="text" id="order-address" placeholder="الحي، الشارع، رقم المبنى..."/>
+        <span class="field-error" id="err-address"></span>
+      </div>
+      <div class="form-group">
+        <label data-ar="ملاحظات (اختياري)" data-en="Notes (optional)">ملاحظات (اختياري)</label>
+        <textarea id="order-notes" placeholder="أي تفاصيل إضافية..."></textarea>
+      </div>
+      <!-- Extras -->
+      <div class="checkout-section-title" data-ar="خيارات إضافية" data-en="Extra Options">خيارات إضافية</div>
+      <div class="checkout-extras">
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-gift" onchange="updateCheckoutTotal()"/>
+          <label for="extra-gift">🎁 <span data-ar="تغليف هدية (+25 ج)" data-en="Gift Wrapping (+25 EGP)">تغليف هدية (+25 ج)</span></label>
+        </div>
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-invoice"/>
+          <label for="extra-invoice">🧾 <span data-ar="أريد فاتورة رسمية" data-en="I want an official invoice">أريد فاتورة رسمية</span></label>
+        </div>
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-newsletter"/>
+          <label for="extra-newsletter">💌 <span data-ar="أشتركي في النشرة البريدية للعروض الحصرية" data-en="Subscribe to newsletter for exclusive offers">أشتركي في النشرة البريدية للعروض الحصرية</span></label>
+        </div>
+      </div>
+      <button class="btn-gold" style="width:100%;margin-top:8px" onclick="goToStep(2)" data-ar="التالي: الشحن →" data-en="Next: Delivery →">التالي: الشحن →</button>
+    </div>
 
-/* ========== PRODUCTS GRID ========== */
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:26px}
-.product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden;position:relative;opacity:0;transform:translateY(48px);transition:opacity 0.6s ease,transform 0.6s ease,border-color 0.35s ease,box-shadow 0.35s ease}
-.product-card.revealed{opacity:1;transform:translateY(0)}
-.product-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g)}
-.product-img-wrap{width:100%;height:240px;overflow:hidden;position:relative;background:var(--bg-hover)}
-.product-full-img{width:100%;height:100%;object-fit:contain;object-position:center;padding:16px;transition:transform 0.55s ease;display:block}
-.product-card:hover .product-full-img{transform:scale(1.07)}
-.product-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(181,119,122,0.12) 0%,transparent 60%);opacity:0;transition:opacity 0.35s ease;pointer-events:none}
-.product-card:hover .product-img-wrap::after{opacity:1}
-.product-hover-btn{position:absolute;bottom:12px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gold);color:#fff;border:none;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;padding:8px 22px;border-radius:50px;cursor:pointer;opacity:0;transition:0.35s ease;white-space:nowrap;z-index:3}
-.product-card:hover .product-hover-btn,.product-card:focus-within .product-hover-btn{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:768px){.product-hover-btn{opacity:1;transform:translateX(-50%) translateY(0)}}
-.product-tag{position:absolute;top:12px;right:12px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;z-index:2}
-.product-info{padding:18px 20px 20px}
-.product-info h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}
-.product-desc{font-size:12px;color:var(--text-m);margin-bottom:3px;line-height:1.6}
-.product-size{font-size:11px;color:var(--gold);margin-bottom:10px;font-weight:600}
-.product-price{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.product-price .price-new{font-size:20px;font-weight:700;color:var(--gold)}
-.product-price .price-old{font-size:12px;color:var(--text-m);text-decoration:line-through}
+    <!-- Step 2: Delivery -->
+    <div class="checkout-body" id="checkout-step-2" style="display:none">
+      <div class="checkout-section-title" data-ar="اختاري طريقة الشحن" data-en="Choose Delivery Method">اختاري طريقة الشحن</div>
+      <div class="delivery-options" id="delivery-options">
+        <div class="delivery-option selected" onclick="selectDelivery(this,'standard',35,'2-4 أيام','2-4 Days')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="شحن عادي" data-en="Standard Delivery">شحن عادي</div>
+            <div class="delivery-option-desc" data-ar="يصلك خلال 2-4 أيام عمل" data-en="Arrives within 2-4 business days">يصلك خلال 2-4 أيام عمل</div>
+          </div>
+          <div class="delivery-option-price">35 ج</div>
+        </div>
+        <div class="delivery-option" onclick="selectDelivery(this,'express',65,'24 ساعة','24 Hours')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="شحن سريع" data-en="Express Delivery">شحن سريع</div>
+            <div class="delivery-option-desc" data-ar="يصلك خلال 24 ساعة" data-en="Arrives within 24 hours">يصلك خلال 24 ساعة</div>
+          </div>
+          <div class="delivery-option-price">65 ج</div>
+        </div>
+        <div class="delivery-option" id="sameday-option" style="display:none" onclick="selectDelivery(this,'sameday',90,'اليوم نفسه','Same Day')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="توصيل في نفس اليوم" data-en="Same Day Delivery">توصيل في نفس اليوم</div>
+            <div class="delivery-option-desc" data-ar="🟢 متاح في القاهرة والجيزة" data-en="🟢 Available in Cairo & Giza">🟢 متاح في القاهرة والجيزة</div>
+          </div>
+          <div class="delivery-option-price">90 ج</div>
+        </div>
+      </div>
 
-/* ========== FLOATING PRODUCT PANEL ========== */
-.fpp-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:399;opacity:0;pointer-events:none;transition:opacity 0.35s ease}
-.fpp-overlay.open{opacity:1;pointer-events:all}
-.floating-product-panel{position:fixed;left:0;top:0;bottom:0;width:320px;background:var(--bg-card);border-left:1px solid var(--border);z-index:400;transform:translateX(-100%);transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:6px 0 40px rgba(0,0,0,0.25);overflow:hidden}
-[dir="rtl"] .floating-product-panel{left:auto;right:0;border-left:none;border-right:1px solid var(--border);transform:translateX(100%);box-shadow:-6px 0 40px rgba(0,0,0,0.25)}
-.floating-product-panel.open{transform:translateX(0)}
-.fpp-header{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.fpp-header h3{font-size:15px;font-weight:700;color:var(--gold)}
-.fpp-close{background:none;border:none;color:var(--text-m);font-size:20px;cursor:pointer;transition:0.2s}
-.fpp-close:hover{color:var(--text)}
-.fpp-img-wrap{width:100%;height:220px;background:var(--bg-hover);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.fpp-img-wrap img{max-width:100%;max-height:100%;object-fit:contain;padding:20px;transition:transform 0.4s ease}
-.fpp-img-wrap:hover img{transform:scale(1.06)}
-.fpp-body{padding:20px;flex:1;overflow-y:auto}
-.fpp-name{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
-.fpp-desc{font-size:13px;color:var(--text-m);margin-bottom:10px;line-height:1.7}
-.fpp-size{font-size:12px;color:var(--gold);font-weight:600;margin-bottom:14px}
-.fpp-price-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.fpp-price{font-size:28px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
-.fpp-old{font-size:14px;color:var(--text-m);text-decoration:line-through}
-.fpp-benefits{list-style:none;padding:0;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
-.fpp-benefits li{font-size:13px;color:var(--text-m);display:flex;align-items:center;gap:8px}
-.fpp-benefits li::before{content:'✦';color:var(--gold);font-size:10px;flex-shrink:0}
-.fpp-footer{padding:16px 20px;border-top:1px solid var(--border);background:var(--bg-card)}
-.fpp-add-btn{width:100%;font-size:15px;padding:14px}
+      <!-- Loyalty points -->
+      <div class="loyalty-points-badge">
+        🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
+      </div>
 
-/* ========== CART ========== */
-.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;opacity:0;pointer-events:none;transition:0.35s ease}
-.cart-overlay.active{opacity:1;pointer-events:all}
-.cart-sidebar{position:fixed;left:0;top:0;bottom:0;width:420px;background:var(--bg-soft);border-right:1px solid var(--border);z-index:201;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column}
-[dir="rtl"] .cart-sidebar{left:auto;right:0;border-right:none;border-left:1px solid var(--border);transform:translateX(100%)}
-.cart-sidebar.active{transform:translateX(0)}
-.cart-header{display:flex;justify-content:space-between;align-items:center;padding:22px 26px;border-bottom:1px solid var(--border)}
-.cart-header h3{font-size:18px;font-weight:700}
-.cart-close{background:none;border:none;color:var(--text-m);font-size:20px;cursor:pointer;transition:0.2s}
-.cart-close:hover{color:var(--text)}
-.cart-items{flex:1;overflow-y:auto;padding:18px 26px}
-.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;height:280px;text-align:center;color:var(--text-m)}
-.cart-empty svg{width:56px;height:56px;opacity:0.25}
-.cart-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
-.cart-item img{width:60px;height:60px;border-radius:12px;object-fit:contain;border:1px solid var(--border);padding:4px;background:var(--bg-hover)}
-.cart-item-info{flex:1}
-.cart-item-info h4{font-size:13px;font-weight:600;margin-bottom:3px}
-.cart-item-info span{font-size:13px;color:var(--gold);font-weight:700}
-.cart-item-controls{display:flex;align-items:center;gap:6px}
-.qty-btn{background:var(--bg-hover);border:1px solid var(--border);color:var(--text);width:27px;height:27px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:0.2s}
-.qty-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff}
-.qty-val{font-weight:700;font-size:14px;min-width:22px;text-align:center}
-.cart-footer{padding:18px 26px;border-top:1px solid var(--border);background:var(--bg)}
-.cart-discount,.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px}
-.cart-total{font-size:17px;font-weight:700}
-.discount-val{color:#4CAF50;font-weight:700}
-.total-val{color:var(--gold);font-size:22px;font-family:'Playfair Display',serif}
-.cart-checkout-btn{width:100%;margin-top:14px;font-size:15px;padding:14px}
+      <!-- Order summary -->
+      <div class="checkout-section-title" data-ar="ملخص الطلب" data-en="Order Summary">ملخص الطلب</div>
+      <div class="checkout-summary-card" id="checkout-summary-card"></div>
 
-/* ========== CHECKOUT MODAL – FULL FEATURED ========== */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.modal-box{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;max-width:680px;width:100%;max-height:92vh;overflow-y:auto;position:relative;padding:0}
-.modal-close{position:absolute;top:14px;left:14px;background:none;border:none;color:var(--text-m);font-size:20px;cursor:pointer;z-index:10;transition:0.2s}
-.modal-close:hover{color:var(--text)}
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(1)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
+        <button class="btn-gold" style="flex:2" onclick="goToStep(3)" data-ar="التالي: الدفع →" data-en="Next: Payment →">التالي: الدفع →</button>
+      </div>
+    </div>
 
-/* Checkout steps */
-.checkout-steps{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 30px 0;border-bottom:1px solid var(--border);background:var(--bg-soft);border-radius:18px 18px 0 0}
-.checkout-step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-m);font-weight:600;position:relative;padding:0 16px 16px}
-.checkout-step.active{color:var(--gold)}
-.checkout-step.done{color:#4CAF50}
-.step-num{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:0.3s}
-.checkout-step.active .step-num{background:var(--gold);border-color:var(--gold);color:#fff}
-.checkout-step.done .step-num{background:#4CAF50;border-color:#4CAF50;color:#fff}
-.step-line{width:40px;height:2px;background:var(--border);margin-bottom:16px;transition:0.3s}
-.step-line.done{background:#4CAF50}
+    <!-- Step 3: Payment -->
+    <div class="checkout-body" id="checkout-step-3" style="display:none">
+      <div class="checkout-section-title" data-ar="طريقة الدفع" data-en="Payment Method">طريقة الدفع</div>
+      <div class="payment-grid">
+        <div class="payment-method selected" onclick="selectPayment(this,'cash')">
+          <div class="payment-method-icon">💵</div>
+          <div class="payment-method-name" data-ar="الدفع عند الاستلام" data-en="Cash on Delivery">الدفع عند الاستلام</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'card')">
+          <div class="payment-method-icon">💳</div>
+          <div class="payment-method-name" data-ar="بطاقة ائتمان" data-en="Credit Card">بطاقة ائتمان</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'debit')">
+          <div class="payment-method-icon">🏦</div>
+          <div class="payment-method-name" data-ar="بطاقة خصم" data-en="Debit Card">بطاقة خصم</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'vodafone')">
+          <div class="payment-method-icon">📱</div>
+          <div class="payment-method-name">Vodafone Cash</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'instapay')">
+          <div class="payment-method-icon">⚡</div>
+          <div class="payment-method-name">InstaPay</div>
+        </div>
+        <div class="payment-method" style="opacity:0.5;cursor:default" title="قريباً">
+          <div class="payment-method-icon">🍎</div>
+          <div class="payment-method-name" style="font-size:10px">Apple Pay <br><span style="color:var(--text-m);font-size:9px">قريباً</span></div>
+        </div>
+      </div>
 
-.checkout-body{padding:28px 30px}
-.checkout-section-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.checkout-section-title::before{content:'';width:3px;height:18px;background:var(--gold);border-radius:2px;display:block}
+      <!-- Final summary with total -->
+      <div class="checkout-summary-card" id="checkout-final-summary"></div>
 
-/* Form styles */
-.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.form-group label{font-size:12px;font-weight:700;color:var(--text-m);letter-spacing:0.04em}
-.form-group input,.form-group textarea,.form-group select{background:var(--bg-hover);border:1px solid var(--border);color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;padding:12px 14px;border-radius:10px;outline:none;transition:0.2s;text-align:right;width:100%}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(181,119,122,0.1)}
-.form-group input.error{border-color:#f44336}
-.form-group textarea{resize:vertical;min-height:72px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.input-valid{position:relative}
-.input-valid-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#4CAF50;font-size:14px;opacity:0;transition:0.2s}
-.input-valid.valid .input-valid-icon{opacity:1}
-.field-error{font-size:11px;color:#f44336;margin-top:2px}
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(2)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
+        <button class="btn-gold" style="flex:2;position:relative" id="submit-order-btn" onclick="submitOrder()" data-ar="اطلبي الآن 🛍" data-en="Place Order 🛍">اطلبي الآن 🛍</button>
+      </div>
+    </div>
 
-/* Location section */
-.location-selected-badge{background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.2);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:13px;color:#4CAF50;margin-bottom:14px}
+    <!-- Step 4: Success -->
+    <div class="checkout-success" id="checkout-step-success" style="display:none">
+      <div class="checkout-success-icon">🎉</div>
+      <h2 data-ar="تم الطلب بنجاح!" data-en="Order Placed Successfully!">تم الطلب بنجاح!</h2>
+      <p data-ar="شكراً لك! سنتواصل معك قريباً لتأكيد طلبك." data-en="Thank you! We'll contact you soon to confirm your order.">شكراً لك! سنتواصل معك قريباً لتأكيد طلبك.</p>
+      <div class="order-number-box">
+        <span data-ar="رقم طلبك" data-en="Your Order Number">رقم طلبك</span>
+        <strong id="success-order-num">YOURS-000</strong>
+      </div>
+      <div class="countdown-delivery" id="delivery-countdown"></div>
+      <div class="success-actions">
+        <button class="btn-gold" onclick="openWhatsApp()" data-ar="تأكيد عبر واتساب 💬" data-en="Confirm via WhatsApp 💬">تأكيد عبر واتساب 💬</button>
+        <button class="btn-gold-sm" style="background:var(--bg-hover);color:var(--text)" onclick="copyOrderNum()" data-ar="نسخ رقم الطلب" data-en="Copy Order Number">نسخ رقم الطلب</button>
+        <button class="btn-gold-sm" style="background:transparent;color:var(--text-m);border:1px solid var(--border)" onclick="closeCheckout()" data-ar="العودة للتسوق" data-en="Continue Shopping">العودة للتسوق</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-/* Delivery options */
-.delivery-options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.delivery-option{border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:0.25s;display:flex;align-items:center;gap:14px}
-.delivery-option:hover{border-color:var(--gold)}
-.delivery-option.selected{border-color:var(--gold);background:rgba(181,119,122,0.06)}
-.delivery-option-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;position:relative;transition:0.2s}
-.delivery-option.selected .delivery-option-radio{border-color:var(--gold);background:var(--gold)}
-.delivery-option.selected .delivery-option-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:#fff}
-.delivery-option-info{flex:1}
-.delivery-option-name{font-size:14px;font-weight:700;color:var(--text)}
-.delivery-option-desc{font-size:12px;color:var(--text-m);margin-top:2px}
-.delivery-option-price{font-size:15px;font-weight:700;color:var(--gold)}
+<!-- COLLECTION MODAL -->
+<div class="modal-overlay" id="collection-modal" style="display:none">
+  <div class="modal-box collection-modal-box">
+    <button class="modal-close" onclick="closeCollectionModal()">✕</button>
+    <div id="collection-modal-content"></div>
+  </div>
+</div>
 
-/* Payment methods */
-.payment-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px}
-.payment-method{border:2px solid var(--border);border-radius:12px;padding:14px 10px;cursor:pointer;transition:0.25s;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.payment-method:hover{border-color:var(--gold)}
-.payment-method.selected{border-color:var(--gold);background:rgba(181,119,122,0.06)}
-.payment-method-icon{font-size:24px}
-.payment-method-name{font-size:12px;font-weight:700;color:var(--text)}
+<!-- FLOATING PRODUCT PANEL -->
+<div class="fpp-overlay" id="fpp-overlay" onclick="closeFPP()"></div>
+<div class="floating-product-panel" id="floating-product-panel">
+  <div class="fpp-header"><h3 id="fpp-name"></h3><button class="fpp-close" onclick="closeFPP()">✕</button></div>
+  <div class="fpp-img-wrap"><img id="fpp-img" src="" alt=""/></div>
+  <div class="fpp-body">
+    <p class="fpp-desc" id="fpp-desc"></p>
+    <p class="fpp-size" id="fpp-size"></p>
+    <div class="fpp-price-row">
+      <span class="fpp-price" id="fpp-price"></span>
+      <span class="fpp-old" id="fpp-old"></span>
+    </div>
+    <ul class="fpp-benefits" id="fpp-benefits-list"></ul>
+  </div>
+  <div class="fpp-footer">
+    <button class="btn-gold fpp-add-btn" id="fpp-add-btn" data-ar="أضيفي للسلة" data-en="Add to Cart">أضيفي للسلة</button>
+  </div>
+</div>
 
-/* Order summary */
-.checkout-summary-card{background:var(--bg-hover);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px}
-.summary-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.summary-item:last-child{border-bottom:none}
-.summary-total-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:2px solid var(--border);margin-top:8px;font-size:16px;font-weight:700}
-.summary-total-price{color:var(--gold);font-size:24px;font-family:'Playfair Display',serif}
+<!-- CIRCLE POPUP (mobile) -->
+<div id="circle-popup" class="circle-popup">
+  <button class="circle-popup-close" onclick="closeCirclePopup()">✕</button>
+  <div class="circle-popup-inner">
+    <img id="cp-img" src="" alt="" class="circle-popup-img"/>
+    <div class="circle-popup-info">
+      <h4 id="cp-name"></h4>
+      <p id="cp-desc" style="font-size:12px;color:var(--text-m)"></p>
+      <div class="price" id="cp-price"></div>
+    </div>
+  </div>
+  <button class="btn-gold" style="width:100%" id="cp-add" data-ar="أضيفي للسلة" data-en="Add to Cart">أضيفي للسلة</button>
+</div>
 
-/* Bonus features */
-.checkout-extras{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.checkout-extra-option{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:0.2s}
-.checkout-extra-option:hover{border-color:var(--gold)}
-.checkout-extra-option input[type=checkbox]{accent-color:var(--gold);width:16px;height:16px}
-.checkout-extra-option label{font-size:13px;color:var(--text);cursor:pointer;flex:1}
-.checkout-extra-option .extra-price{font-size:12px;color:var(--gold);font-weight:700}
+<!-- CHATBOT -->
+<button class="chatbot-fab" onclick="toggleChatbot()">
+  <div class="chatbot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+  <span data-ar="مساعدك" data-en="Assistant">مساعدك</span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar"><img src="images/logo.jpg" alt="YOURS"/></div>
+    <div><h4>YOURS Assistant</h4><span class="chatbot-online">● <span data-ar="متاحة الآن" data-en="Available now">متاحة الآن</span></span></div>
+    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages">
+    <div class="chat-msg bot"><p data-ar="مرحباً! أنا مساعدتك في YOURS 💛" data-en="Hello! I'm your YOURS assistant 💛">مرحباً! أنا مساعدتك في YOURS 💛</p></div>
+    <div class="chat-quick-replies">
+      <button onclick="quickReply('الأسعار؟')" data-ar="الأسعار؟" data-en="Prices?">الأسعار؟</button>
+      <button onclick="quickReply('الشحن؟')" data-ar="الشحن؟" data-en="Shipping?">الشحن؟</button>
+      <button onclick="quickReply('كود خصم')" data-ar="كود خصم" data-en="Discount Code">كود خصم</button>
+      <button onclick="quickReply('admin')" data-ar="الإدارة" data-en="Admin">الإدارة</button>
+    </div>
+  </div>
+  <div class="chatbot-input-wrap">
+    <input type="text" id="chatbot-input" placeholder="اكتبي هنا..." onkeypress="chatEnterKey(event)"/>
+    <button class="chatbot-send" onclick="sendChatMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
 
-/* Success */
-.checkout-success{text-align:center;padding:40px 30px}
-.checkout-success-icon{font-size:64px;margin-bottom:16px;animation:successBounce 0.6s ease}
-@keyframes successBounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
-.checkout-success h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);margin-bottom:8px}
-.checkout-success p{color:var(--text-m);font-size:14px;margin-bottom:24px}
-.order-number-box{background:var(--bg-hover);border:2px dashed var(--gold);border-radius:12px;padding:16px;margin-bottom:20px}
-.order-number-box span{display:block;font-size:11px;color:var(--text-m);margin-bottom:4px}
-.order-number-box strong{font-size:22px;color:var(--gold);font-weight:700;letter-spacing:0.1em}
-.success-actions{display:flex;flex-direction:column;gap:10px}
-.success-actions button{width:100%}
-.countdown-delivery{font-size:13px;color:var(--text-m);margin-top:12px}
-.countdown-delivery strong{color:var(--gold)}
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo.jpg" alt="YOURS" class="footer-logo"/>
+        <p data-ar="لأنك تستحقين الأفضل" data-en="Because You Deserve The Best">لأنك تستحقين الأفضل</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/yours_by_mona_galal?igsh=MXVlcXg5d2x2d3g3MQ%3D%3D" target="_blank" class="social-link instagram-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.facebook.com/share/1PQFB1QUKT/" target="_blank" class="social-link facebook-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://vt.tiktok.com/ZSX9kuNY7/" target="_blank" class="social-link tiktok-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="https://wa.me/201003884148" target="_blank" class="social-link whatsapp-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+          <a href="tel:+201003884148" class="social-link phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="الأقسام" data-en="Categories">الأقسام</h4>
+        <ul>
+          <li><a href="category/haircare.html" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a></li>
+          <li><a href="category/body.html" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a></li>
+          <li><a href="category/accessories.html" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a></li>
+          <li><a href="category/collections.html" data-ar="المجموعات" data-en="Collections">المجموعات</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="تواصلي" data-en="Contact">تواصلي</h4>
+        <ul>
+          <li><a href="tel:+201003884148">📞 01003884148</a></li>
+          <li><a href="https://wa.me/201003884148" target="_blank">💬 واتساب</a></li>
+          <li><a href="https://www.instagram.com/yours_by_mona_galal" target="_blank">📸 Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="السياسات" data-en="Policies">السياسات</h4>
+        <ul>
+          <li><a href="#" data-ar="الاسترجاع" data-en="Returns">الاسترجاع</a></li>
+          <li><a href="#" data-ar="الخصوصية" data-en="Privacy">الخصوصية</a></li>
+          <li><a href="#" data-ar="الشحن" data-en="Shipping">الشحن</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-ar="© 2025 YOURS by Mona Galal · جميع الحقوق محفوظة" data-en="© 2025 YOURS by Mona Galal · All rights reserved">© 2025 YOURS by Mona Galal · جميع الحقوق محفوظة</p>
+      <p class="footer-love">Made with 💛 for you</p>
+    </div>
+  </div>
+</footer>
 
-/* Loyalty points */
-.loyalty-points-badge{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#fff;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+<div id="copy-toast" class="copy-toast">✓ <span data-ar="تم النسخ!" data-en="Copied!">تم النسخ!</span></div>
 
-/* ========== COLLECTION MODAL ========== */
-.modal-box.collection-modal-box{max-width:600px;padding:36px}
-
-/* ========== VIVIENNE WESTWOOD STYLE POPUP ========== */
-.vw-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.5s ease;backdrop-filter:blur(4px)}
-.vw-popup-overlay.active{opacity:1;pointer-events:all}
-.vw-popup{position:relative;max-width:460px;width:100%;background:var(--bg-card);border:1px solid var(--gold);border-radius:0;overflow:hidden;animation:popupReveal 0.6s cubic-bezier(0.16,1,0.3,1) forwards}
-@keyframes popupReveal{from{transform:translateY(30px) scale(0.96);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-.vw-popup-close{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--text-m);font-size:18px;cursor:pointer;z-index:10;transition:0.2s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)}
-.vw-popup-close:hover{color:var(--text);border-color:var(--gold)}
-.vw-popup-top{background:var(--gold);padding:28px 36px 22px;text-align:center;position:relative;overflow:hidden}
-.vw-popup-top::before{content:'YOURS';position:absolute;font-size:80px;font-weight:900;color:rgba(255,255,255,0.08);top:50%;left:50%;transform:translate(-50%,-50%);letter-spacing:0.15em;font-family:'Playfair Display',serif;white-space:nowrap}
-.vw-popup-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.3em;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:8px}
-.vw-popup-headline{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1.2}
-.vw-popup-body{padding:28px 36px}
-.vw-popup-code-label{font-size:11px;font-weight:700;color:var(--text-m);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;text-align:center}
-.vw-popup-code-box{display:flex;align-items:center;justify-content:space-between;border:2px solid var(--gold);border-radius:0;padding:12px 20px;margin-bottom:20px;cursor:pointer;transition:0.2s;background:rgba(181,119,122,0.04)}
-.vw-popup-code-box:hover{background:rgba(181,119,122,0.1)}
-.vw-popup-code{font-size:22px;font-weight:900;color:var(--gold);letter-spacing:0.25em;font-family:monospace}
-.vw-popup-copy{font-size:11px;color:var(--text-m);display:flex;align-items:center;gap:4px}
-.vw-popup-terms{font-size:11px;color:var(--text-m);text-align:center;line-height:1.6;margin-top:12px}
-.vw-popup-footer{padding:0 36px 28px;display:flex;flex-direction:column;gap:10px}
-.vw-popup-cta{width:100%;background:var(--text);color:var(--bg-card);border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;padding:14px;cursor:pointer;transition:0.3s;letter-spacing:0.05em;border-radius:0}
-.vw-popup-cta:hover{background:var(--gold);color:#fff}
-.vw-popup-skip{background:none;border:none;color:var(--text-m);font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;text-decoration:underline;transition:0.2s;padding:4px}
-.vw-popup-skip:hover{color:var(--text)}
-.vw-popup-visitors{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--text-m);margin-top:6px}
-
-/* ========== CHATBOT ========== */
-.chatbot-fab{position:fixed;bottom:28px;left:28px;background:var(--gold);color:#fff;border-radius:50px;padding:13px 18px;cursor:pointer;z-index:300;display:flex;align-items:center;gap:8px;box-shadow:0 8px 28px rgba(181,119,122,0.4);transition:0.35s ease;font-weight:700;font-size:13px;border:none;font-family:'Cairo',sans-serif}
-[dir="ltr"] .chatbot-fab{left:auto;right:28px}
-.chatbot-fab:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(181,119,122,0.5)}
-.chatbot-icon svg{width:18px;height:18px}
-.chatbot-panel{position:fixed;bottom:84px;left:28px;width:340px;background:var(--bg-soft);border:1px solid var(--border);border-radius:18px;z-index:301;box-shadow:var(--shadow);transform:translateY(16px) scale(0.96);opacity:0;pointer-events:none;transition:0.35s ease;overflow:hidden}
-[dir="ltr"] .chatbot-panel{left:auto;right:28px}
-.chatbot-panel.active{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
-.chatbot-header{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg);border-bottom:1px solid var(--border)}
-.chatbot-avatar img{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold)}
-.chatbot-header h4{font-size:13px;font-weight:700}
-.chatbot-online{font-size:11px;color:#4CAF50}
-.chatbot-close{margin-right:auto;background:none;border:none;color:var(--text-m);cursor:pointer;font-size:15px}
-.chatbot-messages{height:260px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.chat-msg{max-width:86%}
-.chat-msg.bot{align-self:flex-start}
-.chat-msg.user{align-self:flex-end}
-.chat-msg p{padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.6}
-.chat-msg.bot p{background:var(--bg-hover);border:1px solid var(--border);color:var(--text);border-radius:4px 14px 14px 14px}
-.chat-msg.user p{background:var(--gold);color:#fff;font-weight:600;border-radius:14px 4px 14px 14px}
-.chat-quick-replies{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.chat-quick-replies button{background:none;border:1px solid var(--border);color:var(--text-m);font-family:'Cairo',sans-serif;font-size:11px;padding:4px 10px;border-radius:20px;cursor:pointer;transition:0.2s}
-.chat-quick-replies button:hover{border-color:var(--gold);color:var(--gold)}
-.chatbot-input-wrap{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
-#chatbot-input{flex:1;background:var(--bg-hover);border:1px solid var(--border);color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;padding:9px 13px;border-radius:50px;outline:none;text-align:right;transition:0.2s}
-#chatbot-input:focus{border-color:var(--gold)}
-#chatbot-input::placeholder{color:var(--text-m)}
-.chatbot-send{background:var(--gold);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s;flex-shrink:0}
-.chatbot-send svg{width:15px;height:15px}
-.chatbot-send:hover{background:var(--gold-l)}
-
-/* ========== ABOUT ========== */
-.about-section{padding:90px 0;background:var(--bg-soft)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-.about-img-wrap{position:relative}
-.about-img{width:100%;border-radius:18px;border:1px solid var(--border);object-fit:cover;max-height:520px}
-.about-badge{position:absolute;bottom:20px;right:20px;background:var(--gold);color:#fff;font-weight:700;font-size:12px;padding:7px 18px;border-radius:50px}
-.about-text h2{font-family:'Playfair Display',serif;font-size:38px;color:var(--text);margin:10px 0 18px;line-height:1.2}
-.about-text p{color:var(--text-m);font-size:15px;line-height:1.9;margin-bottom:28px}
-.about-stats{display:flex;gap:36px;flex-wrap:wrap}
-.about-stat{display:flex;flex-direction:column;gap:3px}
-.stat-num{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--gold)}
-.stat-label{font-size:12px;color:var(--text-m)}
-
-/* ========== SOCIAL / FOOTER ========== */
-.social-links{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.social-link{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:0.3s;color:var(--text-m)}
-.social-link svg{width:17px;height:17px}
-.instagram-link:hover{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-color:transparent;color:#fff}
-.facebook-link:hover{background:#1877F2;border-color:#1877F2;color:#fff}
-.tiktok-link:hover{background:#000;border-color:#69C9D0;color:#69C9D0}
-.whatsapp-link:hover{background:#25D366;border-color:#25D366;color:#fff}
-.phone-link:hover{background:var(--gold);border-color:var(--gold);color:#fff}
-.footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 36px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:52px}
-.footer-logo{height:56px;width:56px;border-radius:50%;border:1.5px solid var(--border);object-fit:cover;margin-bottom:14px}
-.footer-brand>p{font-size:13px;color:var(--text-m);font-style:italic}
-.footer-col h4{font-size:12px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-.footer-col ul{display:flex;flex-direction:column;gap:9px}
-.footer-col ul li a{font-size:13px;color:var(--text-m);transition:0.2s}
-.footer-col ul li a:hover{color:var(--gold)}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--border);font-size:12px;color:var(--text-m)}
-.footer-love{color:var(--gold)}
-
-/* ========== COPY TOAST ========== */
-.copy-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg-card);border:1px solid var(--gold);color:var(--gold);padding:9px 22px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:0.3s;pointer-events:none}
-.copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ========== CIRCLE POPUP (mobile) ========== */
-.circle-popup{position:fixed;bottom:0;left:0;right:0;background:var(--bg-card);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:24px;z-index:400;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -10px 40px rgba(0,0,0,0.15)}
-.circle-popup.open{transform:translateY(0)}
-.circle-popup-inner{display:flex;gap:16px;align-items:center;margin-bottom:16px}
-.circle-popup-img{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
-.circle-popup-info h4{font-size:15px;font-weight:700;margin-bottom:4px}
-.circle-popup-info .price{color:var(--gold);font-size:18px;font-weight:700}
-.circle-popup-close{position:absolute;top:14px;left:16px;background:none;border:none;color:var(--text-m);font-size:20px;cursor:pointer}
-
-/* ========== RESPONSIVE ========== */
-@media(max-width:1024px){
-  .collections-grid,.categories-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
-  .about-grid{grid-template-columns:1fr;gap:36px}
-  .offers-inner{grid-template-columns:1fr;gap:32px}
-}
-@media(max-width:768px){
-  .nav-container{padding:10px 18px}
-  .main-nav{padding:8px 18px;gap:2px}
-  .main-nav-link{font-size:12px;padding:5px 10px}
-  .hero-content{padding:0 20px;max-width:100%}
-  .hero-title{font-size:32px}
-  .collections-grid,.categories-grid{grid-template-columns:1fr}
-  .products-grid{grid-template-columns:repeat(2,1fr);gap:14px}
-  .container{padding:0 18px}
-  .section{padding:56px 0}
-  .footer-grid{grid-template-columns:1fr;gap:28px}
-  .cart-sidebar{width:100%}
-  .floating-product-panel{width:100%}
-  .chatbot-panel{width:calc(100vw - 32px);left:16px}
-  .about-stats{gap:20px}
-  .hero-live-stats{display:none}
-  .timer-box{min-width:54px;padding:10px 12px}
-  .timer-box span{font-size:26px}
-  .form-row{grid-template-columns:1fr}
-  .payment-grid{grid-template-columns:repeat(3,1fr)}
-  .checkout-body{padding:20px}
-  .vw-popup-top{padding:22px 24px 18px}
-  .vw-popup-body,.vw-popup-footer{padding:20px 24px}
-  .vw-popup-headline{font-size:22px}
-}
-@media(max-width:480px){
-  .products-grid{grid-template-columns:1fr}
-  .hero-btns{flex-direction:column}
-  .hero-btns a{text-align:center}
-  .offers-codes-row{flex-direction:column}
-  .payment-grid{grid-template-columns:repeat(2,1fr)}
-}
+<script src="products-data.js"></script>
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyAjCyaEKRLK8EMWoaBmuNckfoimCUKLHZs",
+    authDomain: "yours-ebc41.firebaseapp.com",
+    projectId: "yours-ebc41",
+    storageBucket: "yours-ebc41.firebasestorage.app",
+    messagingSenderId: "1080966519444",
+    appId: "1:1080966519444:web:2400dd61939ffeae8cb281"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window._firebaseDB = db;
+  window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
+</script>
+<script src="app.js"></script>
+</body>
+</html>
