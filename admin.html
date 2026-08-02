@@ -186,7 +186,7 @@ onkeypress="if(event.key==='Enter')doLogin()"/>
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 const firebaseConfig = {
 apiKey: "AIzaSyAjCyaEKRLK8EMWoaBmuNckfoimCUKLHZs",
 authDomain: "yours-ebc41.firebaseapp.com",
@@ -198,7 +198,7 @@ appId: "1:1080966519444:web:2400dd61939ffeae8cb281"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 window._firebaseDB = db;
-window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
+window._firebaseLib = { collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
 </script>
 <script src="admin.js"></script>
 </body>
