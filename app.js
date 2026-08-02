@@ -728,7 +728,7 @@ const chatReplies = {
   'الأسعار': t => `الأسعار تبدأ من 89 ج للإكسسوارات، وتصل الطقم الكامل لتر بـ2200 ج! 💛`,
   'الشحن': t => `شحن لكل مصر 35-90 ج حسب المحافظة والسرعة. طلبات فوق 500 ج الشحن بفلوس زهيدة جداً 🚚`,
   'كود خصم': t => `استخدمي كود YOURS15 للحصول على خصم 15% على أول طلب! 🎁`,
-  'admin': t => { setTimeout(() => { window.location.href = 'admin.html'; }, 800); return '🔐 جارٍ التوجيه للوحة الإدارة...'; },
+  'admin': t => { setTimeout(() => { window.location.href = window.location.pathname.replace('index.html','').replace(/\/$/,'') + '/admin.html'; }, 800); return '🔐 جارٍ التوجيه للوحة الإدارة...'; },
   'مرحبا': t => 'أهلاً! أنا هنا أساعدك 💛 تقدري تسأليني عن أي حاجة!',
   'prices': t => `Prices start from 89 EGP for accessories to 2200 EGP for the full 1L collection! 💛`,
   'shipping': t => `Shipping across Egypt 35-90 EGP. Orders over 500 EGP get discounted shipping 🚚`,
@@ -806,6 +806,30 @@ function closeCirclePopup() {
     p.style.setProperty('--delay', (Math.random() * 4) + 's');
     container.appendChild(p);
   }
+})();
+
+// ===== VIDEO SOUND TOGGLE =====
+function toggleVideoSound() {
+  const video = document.getElementById('ugc-video');
+  const btn = document.getElementById('ugc-sound-btn');
+  if (!video || !btn) return;
+  video.muted = !video.muted;
+  btn.textContent = video.muted ? '🔇' : '🔊';
+}
+
+// Mute video when scrolled out of view
+(function initVideoScrollMute() {
+  window.addEventListener('scroll', () => {
+    const video = document.getElementById('ugc-video');
+    const btn = document.getElementById('ugc-sound-btn');
+    if (!video || video.muted) return;
+    const rect = video.getBoundingClientRect();
+    const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+    if (!inView) {
+      video.muted = true;
+      if (btn) btn.textContent = '🔇';
+    }
+  }, { passive: true });
 })();
 
 // end of app.js
