@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="rosegold">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOURS – عناية الشعر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .cat-hero{background:linear-gradient(135deg,var(--bg-hover) 0%,var(--bg-soft) 100%);padding:80px 0 56px;text-align:center;border-bottom:1px solid var(--border)}
+    .cat-hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+    .cat-hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);color:var(--text);margin-bottom:12px}
+    .cat-hero p{font-size:15px;color:var(--text-m);max-width:480px;margin:0 auto 28px}
+    .cat-breadcrumb{font-size:12px;color:var(--text-m);margin-bottom:20px}
+    .cat-breadcrumb a{color:var(--gold);text-decoration:none}
+    .cat-page-section{padding:60px 0}
+  </style>
+</head>
+<body>
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  <div class="announcement-track">
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+  </div>
+</div>
+<!-- HEADER -->
+<header class="header" id="header">
+  <nav class="nav-container">
+    <div class="nav-left">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <div class="nav-logo"><a href="../index.html"><img src="../images/logo.jpg" alt="YOURS" class="logo-img"/></a></div>
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="toggleCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
+  <div class="main-nav">
+    <a href="../index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+    <a href="haircare.html" class="main-nav-link" style="color:var(--gold);font-weight:700" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
+    <a href="body.html" class="main-nav-link" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a>
+    <a href="accessories.html" class="main-nav-link" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a>
+    <a href="collections.html" class="main-nav-link" data-ar="المجموعات" data-en="Collections">المجموعات</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <div class="container">
+    <div class="cat-breadcrumb"><a href="../index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a> ← <span data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</span></div>
+    <div class="cat-hero-eyebrow">Hair Care</div>
+    <h1 data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</h1>
+    <p data-ar="شامبو، بلسم، سيروم، وماسك – كل ما تحتاجينه لشعر مشرق وصحي" data-en="Shampoo, conditioner, serum, and mask – everything you need for radiant, healthy hair">شامبو، بلسم، سيروم، وماسك – كل ما تحتاجينه لشعر مشرق وصحي</p>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="cat-page-section">
+  <div class="container">
+    <div class="filter-tabs" id="filter-tabs">
+      <button class="filter-tab active" onclick="filterCat('all',this)" data-ar="الكل" data-en="All">الكل</button>
+      <button class="filter-tab" onclick="filterCat('shampoo',this)" data-ar="شامبو" data-en="Shampoo">شامبو</button>
+      <button class="filter-tab" onclick="filterCat('conditioner',this)" data-ar="بلسم" data-en="Conditioner">بلسم</button>
+      <button class="filter-tab" onclick="filterCat('mask',this)" data-ar="ماسك" data-en="Mask">ماسك</button>
+      <button class="filter-tab" onclick="filterCat('serum',this)" data-ar="سيروم" data-en="Serum">سيروم</button>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</div>
+
+<!-- CART, FPP, etc. (same as index) -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header"><h3 data-ar="سلتك" data-en="Your Cart">سلتك</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><p data-ar="سلتك فارغة" data-en="Cart is empty">سلتك فارغة</p></div></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-discount" id="cart-discount-row" style="display:none"><span data-ar="خصم:" data-en="Discount:">خصم:</span><span id="discount-amount" class="discount-val"></span></div>
+    <div class="cart-total"><span data-ar="الإجمالي:" data-en="Total:">الإجمالي:</span><span id="cart-total" class="total-val">0</span></div>
+    <button class="btn-gold cart-checkout-btn" onclick="proceedToCheckout()" data-ar="أكملي طلبك 🛍" data-en="Complete Order 🛍">أكملي طلبك 🛍</button>
+  </div>
+</div>
+<div class="fpp-overlay" id="fpp-overlay" onclick="closeFPP()"></div>
+<div class="floating-product-panel" id="floating-product-panel">
+  <div class="fpp-header"><h3 id="fpp-name"></h3><button class="fpp-close" onclick="closeFPP()">✕</button></div>
+  <div class="fpp-img-wrap"><img id="fpp-img" src="" alt=""/></div>
+  <div class="fpp-body"><p class="fpp-desc" id="fpp-desc"></p><p class="fpp-size" id="fpp-size"></p><div class="fpp-price-row"><span class="fpp-price" id="fpp-price"></span><span class="fpp-old" id="fpp-old"></span></div><ul class="fpp-benefits" id="fpp-benefits-list"></ul></div>
+  <div class="fpp-footer"><button class="btn-gold fpp-add-btn" id="fpp-add-btn">أضيفي للسلة</button></div>
+</div>
+<!-- Checkout Modal (same structure as index) -->
+<div class="modal-overlay" id="checkout-modal" style="display:none">
+  <div class="modal-box" style="max-width:680px;padding:0">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <div class="checkout-steps">
+      <div class="checkout-step active" id="step-1-tab"><div class="step-num">1</div><span data-ar="بياناتك" data-en="Info">بياناتك</span></div>
+      <div class="step-line" id="step-line-1"></div>
+      <div class="checkout-step" id="step-2-tab"><div class="step-num">2</div><span data-ar="الشحن" data-en="Delivery">الشحن</span></div>
+      <div class="step-line" id="step-line-2"></div>
+      <div class="checkout-step" id="step-3-tab"><div class="step-num">3</div><span data-ar="الدفع" data-en="Payment">الدفع</span></div>
+    </div>
+    <div class="checkout-body" id="checkout-step-1">
+      <div class="checkout-section-title" data-ar="بياناتك" data-en="Your Info">بياناتك</div>
+      <div class="form-row">
+        <div class="form-group"><label data-ar="الاسم *" data-en="Name *">الاسم *</label><div class="input-valid"><input type="text" id="order-name" oninput="validateField('order-name')"/><span class="input-valid-icon">✓</span></div><span class="field-error" id="err-name"></span></div>
+        <div class="form-group"><label data-ar="الموبايل *" data-en="Phone *">الموبايل *</label><div class="input-valid"><input type="tel" id="order-phone" placeholder="01XXXXXXXXX" oninput="validateField('order-phone')"/><span class="input-valid-icon">✓</span></div><span class="field-error" id="err-phone"></span></div>
+      </div>
+      <div class="form-group"><label data-ar="المحافظة *" data-en="Governorate *">المحافظة *</label><select id="order-gov" onchange="updateDeliveryByGov()"><option value="">اختاري...</option><option value="cairo">القاهرة</option><option value="giza">الجيزة</option><option value="alex">الإسكندرية</option><option value="other">محافظات أخرى</option></select><span class="field-error" id="err-gov"></span></div>
+      <div class="form-group"><label data-ar="العنوان *" data-en="Address *">العنوان *</label><input type="text" id="order-address"/><span class="field-error" id="err-address"></span></div>
+      <div class="form-group"><label data-ar="ملاحظات" data-en="Notes">ملاحظات</label><textarea id="order-notes"></textarea></div>
+      <div class="checkout-extras">
+        <div class="checkout-extra-option"><input type="checkbox" id="extra-gift" onchange="updateCheckoutTotal()"/><label for="extra-gift">🎁 <span data-ar="تغليف هدية (+25 ج)" data-en="Gift Wrap (+25 EGP)">تغليف هدية (+25 ج)</span></label></div>
+        <div class="checkout-extra-option"><input type="checkbox" id="extra-newsletter"/><label for="extra-newsletter">💌 <span data-ar="اشتركي في النشرة" data-en="Subscribe to newsletter">اشتركي في النشرة</span></label></div>
+      </div>
+      <button class="btn-gold" style="width:100%;margin-top:8px" onclick="goToStep(2)" data-ar="التالي →" data-en="Next →">التالي →</button>
+    </div>
+    <div class="checkout-body" id="checkout-step-2" style="display:none">
+      <div class="checkout-section-title" data-ar="طريقة الشحن" data-en="Delivery">طريقة الشحن</div>
+      <div class="delivery-options">
+        <div class="delivery-option selected" onclick="selectDelivery(this,'standard',35,'2-4 أيام','2-4 Days')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name" data-ar="شحن عادي" data-en="Standard">شحن عادي</div><div class="delivery-option-desc" data-ar="2-4 أيام" data-en="2-4 days">2-4 أيام</div></div><div class="delivery-option-price">35 ج</div></div>
+        <div class="delivery-option" onclick="selectDelivery(this,'express',65,'24 ساعة','24h')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name" data-ar="شحن سريع" data-en="Express">شحن سريع</div><div class="delivery-option-desc" data-ar="24 ساعة" data-en="24 hours">24 ساعة</div></div><div class="delivery-option-price">65 ج</div></div>
+        <div class="delivery-option" id="sameday-option" style="display:none" onclick="selectDelivery(this,'sameday',90,'اليوم','Same Day')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name" data-ar="نفس اليوم" data-en="Same Day">نفس اليوم</div><div class="delivery-option-desc">🟢 Cairo/Giza</div></div><div class="delivery-option-price">90 ج</div></div>
+      </div>
+      <div class="checkout-summary-card" id="checkout-summary-card"></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(1)" data-ar="السابق" data-en="Back">السابق</button>
+        <button class="btn-gold" style="flex:2" onclick="goToStep(3)" data-ar="الدفع →" data-en="Payment →">الدفع →</button>
+      </div>
+    </div>
+    <div class="checkout-body" id="checkout-step-3" style="display:none">
+      <div class="checkout-section-title" data-ar="طريقة الدفع" data-en="Payment">طريقة الدفع</div>
+      <div class="payment-grid">
+        <div class="payment-method selected" onclick="selectPayment(this,'cash')"><div class="payment-method-icon">💵</div><div class="payment-method-name" data-ar="الدفع عند الاستلام" data-en="Cash on Delivery">الدفع عند الاستلام</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'card')"><div class="payment-method-icon">💳</div><div class="payment-method-name" data-ar="بطاقة" data-en="Card">بطاقة</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'vodafone')"><div class="payment-method-icon">📱</div><div class="payment-method-name">Vodafone Cash</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'instapay')"><div class="payment-method-icon">⚡</div><div class="payment-method-name">InstaPay</div></div>
+      </div>
+      <div class="checkout-summary-card" id="checkout-final-summary"></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(2)" data-ar="السابق" data-en="Back">السابق</button>
+        <button class="btn-gold" style="flex:2" id="submit-order-btn" onclick="submitOrder()" data-ar="اطلبي الآن 🛍" data-en="Place Order 🛍">اطلبي الآن 🛍</button>
+      </div>
+    </div>
+    <div class="checkout-success" id="checkout-step-success" style="display:none">
+      <div class="checkout-success-icon">🎉</div>
+      <h2 data-ar="تم الطلب!" data-en="Order Placed!">تم الطلب!</h2>
+      <p data-ar="سنتواصل معك قريباً" data-en="We'll contact you soon">سنتواصل معك قريباً</p>
+      <div class="order-number-box"><span data-ar="رقم طلبك" data-en="Order Number">رقم طلبك</span><strong id="success-order-num"></strong></div>
+      <div class="countdown-delivery" id="delivery-countdown"></div>
+      <div class="success-actions">
+        <button class="btn-gold" onclick="openWhatsApp()" data-ar="تأكيد واتساب 💬" data-en="WhatsApp Confirm 💬">تأكيد واتساب 💬</button>
+        <button class="btn-gold-sm" style="background:var(--bg-hover);color:var(--text)" onclick="copyOrderNum()" data-ar="نسخ رقم الطلب" data-en="Copy Order #">نسخ رقم الطلب</button>
+        <button class="btn-gold-sm" style="background:transparent;color:var(--text-m);border:1px solid var(--border)" onclick="closeCheckout()" data-ar="متابعة التسوق" data-en="Continue Shopping">متابعة التسوق</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="copy-toast" class="copy-toast">✓</div>
+
+<script>
+  // Category filter
+  const PAGE_CATEGORIES = ['shampoo','conditioner','mask','serum'];
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPageProducts(cat);
+  }
+  function renderPageProducts(cat) {
+    const grid = document.getElementById('products-grid');
+    if (!grid) return;
+    const override = localStorage.getItem('yours_products_override');
+    let products = override ? JSON.parse(override) : (window.YOURS_PRODUCTS || []);
+    const lang = localStorage.getItem('yours_lang') || 'ar';
+    const filtered = cat === 'all' ? products.filter(p => PAGE_CATEGORIES.includes(p.category)) : products.filter(p => p.category === cat);
+    grid.innerHTML = filtered.map((p, i) => {
+      const name = lang === 'ar' ? p.nameAr : p.nameEn;
+      const desc = lang === 'ar' ? p.descAr : p.descEn;
+      const cur = lang === 'ar' ? 'ج' : 'EGP';
+      return `<div class="product-card revealed" onclick="openFPP('${p.id}')">
+        ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
+        <div class="product-img-wrap">
+          <img class="product-full-img" src="../${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/>
+          <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+        </div>
+        <div class="product-info">
+          <h4>${name}</h4>
+          <p class="product-desc">${desc}</p>
+          <p class="product-size">${p.size}</p>
+          <div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div>
+          <button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+        </div>
+      </div>`;
+    }).join('') || `<p style="text-align:center;color:var(--text-m);padding:40px 0">${lang==='ar'?'لا توجد منتجات':'No products found'}</p>`;
+  }
+</script>
+<script src="../products-data.js"></script>
+<script src="../app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    renderPageProducts('all');
+    applyStoredOverrides();
+  });
+</script>
+</body>
+</html>

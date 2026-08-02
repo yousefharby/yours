@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="rosegold">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOURS – إكسسوارات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>.cat-hero{background:linear-gradient(135deg,var(--bg-hover) 0%,var(--bg-soft) 100%);padding:80px 0 56px;text-align:center;border-bottom:1px solid var(--border)}.cat-hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}.cat-hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);color:var(--text);margin-bottom:12px}.cat-hero p{font-size:15px;color:var(--text-m);max-width:480px;margin:0 auto}.cat-breadcrumb{font-size:12px;color:var(--text-m);margin-bottom:20px}.cat-breadcrumb a{color:var(--gold)}.cat-page-section{padding:60px 0}
+  .acc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:0.35s;cursor:pointer}.acc-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g);transform:translateY(-4px)}.acc-img{width:100%;height:220px;object-fit:cover;background:var(--bg-hover)}.acc-body{padding:18px 20px}.acc-body h4{font-size:15px;font-weight:700;margin-bottom:4px}.acc-body .p{font-size:12px;color:var(--text-m);margin-bottom:10px}.acc-price{font-size:20px;font-weight:700;color:var(--gold);margin-bottom:12px}</style>
+</head>
+<body>
+<div class="announcement-bar"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ YOURS – Because You Deserve The Best</span></div></div>
+<header class="header" id="header">
+  <nav class="nav-container">
+    <div class="nav-left"><div class="lang-switcher"><button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button><span class="lang-divider">|</span><button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button></div></div>
+    <div class="nav-logo"><a href="../index.html"><img src="../images/logo.jpg" alt="YOURS" class="logo-img"/></a></div>
+    <div class="nav-right"><button class="nav-icon-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-badge">0</span></button></div>
+  </nav>
+  <div class="main-nav">
+    <a href="../index.html" class="main-nav-link">الرئيسية</a>
+    <a href="haircare.html" class="main-nav-link">عناية الشعر</a>
+    <a href="body.html" class="main-nav-link">العناية بالجسم</a>
+    <a href="accessories.html" class="main-nav-link" style="color:var(--gold);font-weight:700">إكسسوارات</a>
+    <a href="collections.html" class="main-nav-link">المجموعات</a>
+  </div>
+</header>
+<div class="cat-hero">
+  <div class="container">
+    <div class="cat-breadcrumb"><a href="../index.html">الرئيسية</a> ← <span>إكسسوارات</span></div>
+    <div class="cat-hero-eyebrow">Accessories</div>
+    <h1 data-ar="إكسسوارات YOURS" data-en="YOURS Accessories">إكسسوارات YOURS</h1>
+    <p data-ar="بونيه ساتان، مشط احترافي، وفوطة مايكروفايبر لتكتملي عنايتك" data-en="Satin bonnet, professional comb & microfiber towel to complete your care routine">بونيه ساتان، مشط احترافي، وفوطة مايكروفايبر لتكتملي عنايتك</p>
+  </div>
+</div>
+<div class="cat-page-section">
+  <div class="container">
+    <div class="products-grid" id="acc-grid">
+      <!-- Accessories injected by JS from local data -->
+    </div>
+  </div>
+</div>
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar"><div class="cart-header"><h3>سلتك</h3><button class="cart-close" onclick="toggleCart()">✕</button></div><div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><p>سلتك فارغة</p></div></div><div class="cart-footer" id="cart-footer" style="display:none"><div class="cart-total"><span>الإجمالي:</span><span id="cart-total" class="total-val">0</span></div><button class="btn-gold cart-checkout-btn" onclick="proceedToCheckout()">أكملي طلبك 🛍</button></div></div>
+<div class="fpp-overlay" id="fpp-overlay" onclick="closeFPP()"></div>
+<div class="floating-product-panel" id="floating-product-panel"><div class="fpp-header"><h3 id="fpp-name"></h3><button class="fpp-close" onclick="closeFPP()">✕</button></div><div class="fpp-img-wrap"><img id="fpp-img" src="" alt=""/></div><div class="fpp-body"><p class="fpp-desc" id="fpp-desc"></p><p class="fpp-size" id="fpp-size"></p><div class="fpp-price-row"><span class="fpp-price" id="fpp-price"></span><span class="fpp-old" id="fpp-old"></span></div><ul class="fpp-benefits" id="fpp-benefits-list"></ul></div><div class="fpp-footer"><button class="btn-gold fpp-add-btn" id="fpp-add-btn">أضيفي للسلة</button></div></div>
+<div class="modal-overlay" id="checkout-modal" style="display:none"><div class="modal-box" style="max-width:500px;padding:30px"><button class="modal-close" onclick="closeCheckout()">✕</button><h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:20px;text-align:center">أكملي طلبك</h2><div class="form-group"><label>الاسم *</label><input type="text" id="order-name"/></div><div class="form-group"><label>الموبايل *</label><input type="tel" id="order-phone" placeholder="01XXXXXXXXX"/></div><div class="form-group"><label>المحافظة</label><select id="order-gov" onchange="updateDeliveryByGov()"><option value="">اختاري...</option><option value="cairo">القاهرة</option><option value="giza">الجيزة</option><option value="alex">الإسكندرية</option><option value="other">أخرى</option></select></div><div class="form-group"><label>العنوان *</label><input type="text" id="order-address"/></div><div class="form-group"><label>ملاحظات</label><textarea id="order-notes"></textarea></div><div id="checkout-summary-card" style="background:var(--bg-hover);border-radius:10px;padding:14px;margin:14px 0"></div><div id="checkout-final-summary"></div><button class="btn-gold" style="width:100%;font-size:15px;padding:14px;margin-top:8px" id="submit-order-btn" onclick="submitSimple()">اطلبي الآن 🛍</button><div class="checkout-success" id="checkout-step-success" style="display:none;text-align:center;padding:20px 0"><div style="font-size:48px">🎉</div><h3>تم الطلب!</h3><p style="color:var(--text-m)">سنتواصل معك قريباً</p><div class="order-number-box" style="margin:16px 0"><span>رقم طلبك</span><strong id="success-order-num"></strong></div><div id="delivery-countdown"></div><button class="btn-gold" onclick="openWhatsApp()" style="width:100%;margin-top:12px">تأكيد واتساب 💬</button><button style="margin-top:8px;background:none;border:1px solid var(--border);color:var(--text-m);width:100%;padding:10px;border-radius:50px;cursor:pointer;font-family:Cairo,sans-serif" onclick="closeCheckout()">متابعة التسوق</button></div></div></div>
+<div id="copy-toast" class="copy-toast">✓</div>
+<script>
+const ACCESSORIES = [
+  {id:'acc_bonnet',nameAr:'بونيه ساتان YOURS',nameEn:'YOURS Satin Bonnet',descAr:'حافظي على شعرك أثناء النوم بالبونيه الساتان الفاخر',descEn:'Protect your hair while sleeping with our luxury satin bonnet',size:'Free Size',price:149,oldPrice:199,image:'../images/accessories/bonnet.jpg',category:'accessories',soldAlone:true,tag:'جديد'},
+  {id:'acc_towel',nameAr:'فوطة مايكروفايبر YOURS',nameEn:'YOURS Microfiber Towel',descAr:'فوطة ماصة للمياه بتقنية المايكروفايبر لتجفيف سريع وأمان',descEn:'Water-absorbing microfiber towel for fast, gentle drying',size:'Large',price:199,oldPrice:249,image:'../images/accessories/towel.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb1',nameAr:'مشط YOURS الاحترافي',nameEn:'YOURS Professional Comb',descAr:'مشط واسع الأسنان للشعر الرطب بدون كسر أو تقطع',descEn:'Wide-tooth comb for wet hair, no breakage',size:'Standard',price:89,oldPrice:null,image:'../images/accessories/comb.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb2',nameAr:'برش فرد YOURS',nameEn:'YOURS Detangling Brush',descAr:'برش خاص بفرد الشعر بلطف وسهولة',descEn:'Gentle detangling brush for effortless styling',size:'Standard',price:99,oldPrice:null,image:'../images/accessories/brush.jpg',category:'accessories',soldAlone:true,tag:null},
+];
+</script>
+<script src="../products-data.js"></script>
+<script src="../app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  applyStoredOverrides();
+  // Merge accessories into products so addToCart works
+  if(window.YOURS_PRODUCTS) {
+    ACCESSORIES.forEach(a => { if(!window.YOURS_PRODUCTS.find(p=>p.id===a.id)) window.YOURS_PRODUCTS.push(a); });
+  }
+  const lang = localStorage.getItem('yours_lang') || 'ar';
+  const grid = document.getElementById('acc-grid');
+  grid.innerHTML = ACCESSORIES.map(p => {
+    const name = lang==='ar'?p.nameAr:p.nameEn, desc=lang==='ar'?p.descAr:p.descEn, cur=lang==='ar'?'ج':'EGP';
+    return `<div class="product-card revealed" onclick="openFPP('${p.id}')"><div class="product-img-wrap">${p.tag?`<div class="product-tag">${p.tag}</div>`:''}<img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/><button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div><div class="product-info"><h4>${name}</h4><p class="product-desc">${desc}</p><p class="product-size">${p.size}</p><div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div><button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div></div>`;
+  }).join('');
+
+  // Simple checkout for this page
+  window.submitSimple = function() {
+    const name=document.getElementById('order-name').value.trim(), phone=document.getElementById('order-phone').value.trim(), addr=document.getElementById('order-address').value.trim();
+    if(!name||!phone||!addr){alert('يرجى ملء البيانات المطلوبة');return;}
+    const btn=document.getElementById('submit-order-btn');
+    btn.textContent='⏳ جارٍ الإرسال...';btn.disabled=true;
+    const id='YOURS-'+Date.now().toString().slice(-6);
+    window.currentOrderNum=id;
+    const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const order={id,name,phone,gov:document.getElementById('order-gov').value,address:addr,notes:document.getElementById('order-notes').value,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),total:subtotal+35,date:new Date().toLocaleDateString('ar-EG'),status:'جديد',delivery:{type:'standard',price:35}};
+    const orders=JSON.parse(localStorage.getItem('yours_orders')||'[]');
+    orders.unshift(order);localStorage.setItem('yours_orders',JSON.stringify(orders));
+    setTimeout(()=>{
+      document.querySelectorAll('.checkout-body,.form-group,label,#submit-order-btn').forEach(el=>el.style.display='none');
+      document.getElementById('checkout-step-success').style.display='block';
+      document.getElementById('success-order-num').textContent=id;
+      document.getElementById('delivery-countdown').innerHTML='🚚 التوصيل خلال 2-4 أيام';
+      cart=[];saveCart();updateCart();
+      btn.textContent='اطلبي الآن 🛍';btn.disabled=false;
+    },1200);
+  };
+  window.proceedToCheckout = function() {
+    renderCheckoutSummary();
+    document.getElementById('checkout-modal').style.display='flex';
+  };
+  window.closeCheckout = function() {
+    document.getElementById('checkout-modal').style.display='none';
+  };
+  function renderCheckoutSummary() {
+    const el = document.getElementById('checkout-summary-card');
+    if(!el) return;
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    el.innerHTML = cart.map(item=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px"><span>${item.name} ×${item.qty}</span><span style="color:var(--gold)">${item.price*item.qty} ج</span></div>`).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 0;font-weight:700"><span>الإجمالي (+ 35 شحن):</span><span style="color:var(--gold);font-size:18px">${subtotal+35} ج</span></div>`;
+  }
+});
+</script>
+</body>
+</html>

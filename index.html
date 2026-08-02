@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="rosegold">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOURS – Because You Deserve The Best</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- VIVIENNE WESTWOOD STYLE POPUP -->
+<div id="vw-popup-overlay" class="vw-popup-overlay">
+  <div class="vw-popup">
+    <button class="vw-popup-close" onclick="closeVWPopup()">✕</button>
+    <div class="vw-popup-top">
+      <div class="vw-popup-eyebrow" data-ar="عرض لفترة محدودة" data-en="Limited Time Offer">عرض لفترة محدودة</div>
+      <div class="vw-popup-headline" data-ar="خصم 15% على أول طلب" data-en="15% Off Your First Order">خصم 15% على أول طلب</div>
+    </div>
+    <div class="vw-popup-body">
+      <div class="vw-popup-code-label" data-ar="كودك الخاص" data-en="Your Exclusive Code">كودك الخاص</div>
+      <div class="vw-popup-code-box" onclick="copyVWCode()">
+        <span class="vw-popup-code">YOURS15</span>
+        <span class="vw-popup-copy">📋 <span data-ar="انسخي" data-en="Copy">انسخي</span></span>
+      </div>
+      <div class="vw-popup-terms" data-ar="صالح على أول طلب فقط · يُضاف عند إتمام الشراء" data-en="Valid on first order only · Apply at checkout">صالح على أول طلب فقط · يُضاف عند إتمام الشراء</div>
+    </div>
+    <div class="vw-popup-footer">
+      <button class="vw-popup-cta btn-gold" onclick="closeVWPopup()" data-ar="تسوقي الآن" data-en="Shop Now">تسوقي الآن</button>
+      <button class="vw-popup-skip" onclick="closeVWPopup()" data-ar="لاحقاً" data-en="Later">لاحقاً</button>
+      <div class="vw-popup-visitors"><span class="live-dot"></span><span id="popup-visitors-count">247</span> <span data-ar="زائرة الآن" data-en="viewing now">زائرة الآن</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar" id="ann-bar">
+  <div class="announcement-track" id="ann-track">
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <nav class="nav-container">
+    <div class="nav-left">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <div class="nav-logo">
+      <a href="index.html"><img src="images/logo.jpg" alt="YOURS" class="logo-img"/></a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="toggleSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn" onclick="toggleCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
+  <div class="main-nav">
+    <a href="index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+    <a href="category/haircare.html" class="main-nav-link" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
+    <a href="category/body.html" class="main-nav-link" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a>
+    <a href="category/accessories.html" class="main-nav-link" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a>
+    <a href="category/collections.html" class="main-nav-link" data-ar="المجموعات" data-en="Collections">المجموعات</a>
+    <a href="#offers" class="main-nav-link" data-ar="العروض" data-en="Offers">العروض</a>
+    <a href="#about" class="main-nav-link" data-ar="عن يورز" data-en="About">عن يورز</a>
+  </div>
+</header>
+
+<!-- SEARCH -->
+<div class="search-overlay" id="search-overlay">
+  <button class="search-close" onclick="toggleSearch()">✕</button>
+  <div class="search-inner">
+    <h3 data-ar="ابحثي عن منتجاتك" data-en="Search for your products">ابحثي عن منتجاتك</h3>
+    <input type="text" class="search-input" id="search-input" placeholder="شامبو، ماسك، سيروم..." oninput="searchProducts(this.value)"/>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slider">
+    <div class="hero-slide active" style="background-image:url('images/hero2.jpg');background-position:center 30%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="العناية الفاخرة بالشعر" data-en="Luxury Hair Care">العناية الفاخرة بالشعر</span>
+        <h1 class="hero-title" data-ar="لأنك تستحقين الأفضل" data-en="Because You Deserve The Best">لأنك تستحقين الأفضل</h1>
+        <p class="hero-subtitle" data-ar="اكتشفي مجموعة YOURS – بمكونات طبيعية 100% لشعر مشرق وصحي" data-en="Discover YOURS collection – 100% natural ingredients for radiant, healthy hair">اكتشفي مجموعة YOURS – بمكونات طبيعية 100% لشعر مشرق وصحي</p>
+        <div class="hero-btns">
+          <a href="category/collections.html" class="btn-gold" data-ar="تسوقي الآن" data-en="Shop Now">تسوقي الآن</a>
+          <a href="#about" class="btn-outline" data-ar="قصتنا" data-en="Our Story">قصتنا</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image:url('images/hero1.jpg');background-position:center 20%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="العناية بالبروتين" data-en="Protein Treatment">العناية بالبروتين</span>
+        <h1 class="hero-title" data-ar="ارتقي بروتين شعرك" data-en="Elevate Your Hair Protein">ارتقي بروتين شعرك</h1>
+        <p class="hero-subtitle" data-ar="مجموعة YOURS للعناية العميقة – لشعر أقوى وأكثر لمعاناً" data-en="YOURS deep care collection – for stronger, shinier hair">مجموعة YOURS للعناية العميقة – لشعر أقوى وأكثر لمعاناً</p>
+        <div class="hero-btns"><a href="category/haircare.html" class="btn-gold" data-ar="اكتشفي" data-en="Discover">اكتشفي</a></div>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image:url('images/hero5.jpg');background-position:center 35%">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-ar="خط الترطيب" data-en="Hydration Line">خط الترطيب</span>
+        <h1 class="hero-title" data-ar="ترطيب عميق من الجذور" data-en="Deep Hydration from Roots">ترطيب عميق من الجذور</h1>
+        <p class="hero-subtitle" data-ar="ترطيب من الجذور حتى الأطراف – نتائج حقيقية، جمال أصيل" data-en="Hydration from roots to tips – real results, authentic beauty">ترطيب من الجذور حتى الأطراف – نتائج حقيقية، جمال أصيل</p>
+        <div class="hero-btns"><a href="category/collections.html" class="btn-gold" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a></div>
+      </div>
+    </div>
+  </div>
+  <button class="hero-prev" onclick="slideHero(-1)">❮</button>
+  <button class="hero-next" onclick="slideHero(1)">❯</button>
+  <div class="hero-dots">
+    <span class="hero-dot active" onclick="goToSlide(0)"></span>
+    <span class="hero-dot" onclick="goToSlide(1)"></span>
+    <span class="hero-dot" onclick="goToSlide(2)"></span>
+  </div>
+  <div class="hero-live-stats">
+    <div class="live-stat"><span class="live-dot"></span><span id="live-visitors">312</span> <span data-ar="زائرة الآن" data-en="viewing now">زائرة الآن</span></div>
+    <div class="live-stat-divider">·</div>
+    <div class="live-stat"><span id="live-orders">48</span> <span data-ar="طلب اليوم" data-en="orders today">طلب اليوم</span></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="تسوقي حسب القسم" data-en="Shop by Category">تسوقي حسب القسم</span>
+      <h2 class="section-title" data-ar="اكتشفي مجموعاتنا" data-en="Discover Our Collections">اكتشفي مجموعاتنا</h2>
+      <p class="section-sub" data-ar="كل قسم مصمم بعناية لتلبية احتياجات شعرك" data-en="Each category is carefully designed to meet your hair needs">كل قسم مصمم بعناية لتلبية احتياجات شعرك</p>
+    </div>
+    <div class="categories-grid">
+      <div class="cat-card haircare reveal" onclick="window.location.href='category/haircare.html'">
+        <img src="images/cat_haircare.jpg" alt="عناية الشعر" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Hair Care</span>
+          <div class="cat-title" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</div>
+          <div class="cat-count" data-ar="شامبو · بلسم · سيروم" data-en="Shampoo · Conditioner · Serum">شامبو · بلسم · سيروم</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+      <div class="cat-card masks reveal" onclick="window.location.href='category/body.html'">
+        <img src="images/cat_body.jpg" alt="عناية الجسم" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Body Care</span>
+          <div class="cat-title" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</div>
+          <div class="cat-count" data-ar="بودي بوليش · بودي سوفليه" data-en="Body Polish · Body Soufflé">بودي بوليش · بودي سوفليه</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+      <div class="cat-card accessories reveal" onclick="window.location.href='category/accessories.html'">
+        <img src="images/cat_accessories.jpg" alt="إكسسوارات" class="cat-img"/>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <span class="cat-eyebrow">Accessories</span>
+          <div class="cat-title" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</div>
+          <div class="cat-count" data-ar="بونيه · مشط · فوطة" data-en="Bonnet · Comb · Towel">بونيه · مشط · فوطة</div>
+          <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UGC VIDEO SECTION -->
+<section class="ugc-section" id="ugc">
+  <div class="ugc-inner">
+    <div class="ugc-video-wrap reveal-left">
+      <video autoplay muted loop playsinline poster="images/hero2.jpg">
+        <source src="images/WhatsApp_Video_2026-07-25_at_2_47_52_AM.mp4" type="video/mp4"/>
+      </video>
+      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
+    </div>
+    <div class="ugc-text reveal-right">
+      <div class="ugc-eyebrow" data-ar="كما قاله يوسف جو 🎙️" data-en="As told by Yousef Joo 🎙️">كما قاله يوسف جو 🎙️</div>
+      <h2 class="ugc-title" id="ugc-title">لما <span>المشاهير</span> بيتكلموا عنا</h2>
+      <div class="ugc-stars">★★★★★</div>
+      <div class="ugc-quote">"جربت YOURS وبصراحة مش توقعت النتيجة دي — المنتج ده بجد فرّق مع شعري بشكل واضح، خامة عالية وريحة تجنن. أنا مؤيّده وبرشحه لكل الناس!"</div>
+      <div class="ugc-author">
+        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">YJ</div>
+        <div>
+          <div class="ugc-author-name">Yousef Joo</div>
+          <div class="ugc-author-sub">@yousefjoo · كونتنت كريتور</div>
+          <div style="margin-top:5px">
+            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ UGC Creator</span>
+          </div>
+        </div>
+      </div>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيه الآن ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="section collections-section" id="collections">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="أفضل قيمة" data-en="Best Value">أفضل قيمة</span>
+      <h2 class="section-title" data-ar="المجموعات الفاخرة" data-en="Luxury Collections">المجموعات الفاخرة</h2>
+      <p class="section-sub" data-ar="وفري أكثر مع مجموعاتنا المتكاملة" data-en="Save more with our complete collections">وفري أكثر مع مجموعاتنا المتكاملة</p>
+    </div>
+    <div class="collections-grid" id="collections-grid"></div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section" id="products" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="المنتجات" data-en="Products">المنتجات</span>
+      <h2 class="section-title" data-ar="منتجاتنا المميزة" data-en="Our Featured Products">منتجاتنا المميزة</h2>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- OFFERS SECTION -->
+<section class="offers-section" id="offers">
+  <div class="offers-particles" id="offers-particles"></div>
+  <div class="container">
+    <div class="offers-inner">
+      <div class="reveal-left">
+        <div class="offers-fire-badge" data-ar="🔥 عروض حصرية" data-en="🔥 Exclusive Offers">🔥 عروض حصرية</div>
+        <h2 class="offers-big-title">
+          <span data-ar="وفري حتى" data-en="Save up to">وفري حتى</span>
+          <span class="offers-num"> <span class="offers-pct" data-ar="35%" data-en="35%">35%</span></span>
+          <br><span data-ar="على المجموعات الكاملة" data-en="on complete collections">على المجموعات الكاملة</span>
+        </h2>
+        <p class="offers-sub" data-ar='استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي' data-en='Use code <strong>YOURS15</strong> for an extra 15% discount'>استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي</p>
+        <div class="offers-codes-row">
+          <div class="offer-code-pill" onclick="copyCode('YOURS15')">
+            <span>YOURS15</span>
+            <small data-ar="خصم 15%" data-en="15% Off">خصم 15%</small>
+          </div>
+          <div class="offer-code-pill silver" onclick="copyCode('YOURS25')">
+            <span>YOURS25</span>
+            <small data-ar="خصم 25% على لتر" data-en="25% Off 1L size">خصم 25% على لتر</small>
+          </div>
+        </div>
+        <div class="offers-scale-row" style="margin-bottom:24px">
+          <div class="scale-item"><span class="scale-qty">1</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="سعر عادي" data-en="Regular Price">سعر عادي</span></div>
+          <div class="scale-item"><span class="scale-qty">2</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 10%" data-en="10% Off">خصم 10%</span></div>
+          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15%" data-en="15% Off">خصم 15%</span></div>
+        </div>
+        <a href="category/collections.html" class="btn-gold offers-cta" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a>
+      </div>
+      <div class="offers-timer-wrap reveal-right">
+        <div class="timer-label" data-ar="⏳ ينتهي العرض خلال" data-en="⏳ Offer ends in">⏳ ينتهي العرض خلال</div>
+        <div class="timer-boxes">
+          <div class="timer-box"><span id="t-h">12</span><small data-ar="ساعة" data-en="Hours">ساعة</small></div>
+          <span class="timer-sep">:</span>
+          <div class="timer-box"><span id="t-m">00</span><small data-ar="دقيقة" data-en="Mins">دقيقة</small></div>
+          <span class="timer-sep">:</span>
+          <div class="timer-box"><span id="t-s">00</span><small data-ar="ثانية" data-en="Secs">ثانية</small></div>
+        </div>
+        <a href="category/collections.html" class="btn-gold" style="display:block;text-align:center" data-ar="اطلبي الآن 🛍" data-en="Order Now 🛍">اطلبي الآن 🛍</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-ar="آراء العملاء" data-en="Customer Reviews">آراء العملاء</span>
+      <h2 class="section-title" data-ar="ماذا تقول عملاؤنا؟" data-en="What Our Customers Say">ماذا تقول عملاؤنا؟</h2>
+      <p class="section-sub" data-ar="+5000 عميلة سعيدة بالفعل" data-en="+5000 happy customers already">+5000 عميلة سعيدة بالفعل</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="شعري تغير بشكل كامل بعد أسبوعين فقط! الشامبو رائع ومعه البلسم حاجة تانية خالص. بجد أحسن قرار اتخذتيه." data-en="My hair completely changed after just two weeks! The shampoo is amazing and with the conditioner it's something else entirely. Truly the best decision I made.">شعري تغير بشكل كامل بعد أسبوعين فقط! الشامبو رائع ومعه البلسم حاجة تانية خالص. بجد أحسن قرار اتخذتيه.</p>
+        <div class="review-author">
+          <div class="review-avatar">ن</div>
+          <div class="review-author-info">
+            <h5 data-ar="نور أحمد" data-en="Nour Ahmed">نور أحمد</h5>
+            <span data-ar="القاهرة" data-en="Cairo">القاهرة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="الماسك ده بجد سحر! حاسة إن شعري اتنفس من جديد. الريحة حلوة جداً ونتيجة واضحة من أول استخدام. هطلب تاني قطعاً." data-en="This mask is truly magic! I feel like my hair is breathing again. The scent is lovely and results were visible from the very first use. I will definitely order again.">الماسك ده بجد سحر! حاسة إن شعري اتنفس من جديد. الريحة حلوة جداً ونتيجة واضحة من أول استخدام. هطلب تاني قطعاً.</p>
+        <div class="review-author">
+          <div class="review-avatar">م</div>
+          <div class="review-author-info">
+            <h5 data-ar="منة علي" data-en="Menna Ali">منة علي</h5>
+            <span data-ar="الإسكندرية" data-en="Alexandria">الإسكندرية</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="اشتريت المجموعة الكاملة وكانت فرق ضخم في السعر. الخدمة ممتازة والشحن سريع والمنتجات أحسن من اللي توقعته." data-en="I bought the complete collection and the value was incredible. Excellent service, fast shipping, and the products exceeded my expectations.">اشتريت المجموعة الكاملة وكانت فرق ضخم في السعر. الخدمة ممتازة والشحن سريع والمنتجات أحسن من اللي توقعته.</p>
+        <div class="review-author">
+          <div class="review-avatar">ر</div>
+          <div class="review-author-info">
+            <h5 data-ar="رنا خالد" data-en="Rana Khaled">رنا خالد</h5>
+            <span data-ar="الجيزة" data-en="Giza">الجيزة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="بودي بوليش ده أحلى مقشر جربتيه في حياتي! بشرتي ناعمة ومشرقة زي ما متخيلتيش. هطلب مجموعة العناية بالجسم كاملة." data-en="This body polish is the best scrub I have ever tried! My skin is as soft and radiant as I never imagined. I will order the full body care collection.">بودي بوليش ده أحلى مقشر جربتيه في حياتي! بشرتي ناعمة ومشرقة زي ما متخيلتيش. هطلب مجموعة العناية بالجسم كاملة.</p>
+        <div class="review-author">
+          <div class="review-avatar">ه</div>
+          <div class="review-author-info">
+            <h5 data-ar="هناء إبراهيم" data-en="Hana Ibrahim">هناء إبراهيم</h5>
+            <span data-ar="المنصورة" data-en="Mansoura">المنصورة</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="السيروم ده غير حياتي! شعري بيطلع ناعم وبراق من غير أي فرد. وأخيراً منتج مصري يتكلم عن نفسه بشكل مختلف." data-en="This serum changed my life! My hair comes out smooth and shiny without any straightening. Finally an Egyptian product that truly speaks for itself.">السيروم ده غير حياتي! شعري بيطلع ناعم وبراق من غير أي فرد. وأخيراً منتج مصري يتكلم عن نفسه بشكل مختلف.</p>
+        <div class="review-author">
+          <div class="review-avatar">ف</div>
+          <div class="review-author-info">
+            <h5 data-ar="فريدة حسن" data-en="Farida Hassan">فريدة حسن</h5>
+            <span data-ar="أسيوط" data-en="Assiut">أسيوط</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-quote-icon">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-ar="البونيه الساتان ده الأفضل — خفيف، لطيف على الشعر، وشكله فاخر. واضح إن كل منتج في YOURS متفكر فيه بعناية وحب." data-en="The satin bonnet is the best — light, gentle on hair, and looks luxurious. You can tell every YOURS product is thoughtfully and lovingly designed.">البونيه الساتان ده الأفضل — خفيف، لطيف على الشعر، وشكله فاخر. واضح إن كل منتج في YOURS متفكر فيه بعناية وحب.</p>
+        <div class="review-author">
+          <div class="review-avatar">ي</div>
+          <div class="review-author-info">
+            <h5 data-ar="ياسمين عمر" data-en="Yasmin Omar">ياسمين عمر</h5>
+            <span data-ar="الأقصر" data-en="Luxor">الأقصر</span>
+            <div class="review-verified">✓ <span data-ar="عملية مؤكدة" data-en="Verified Purchase">عملية مؤكدة</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img src="images/hero3.jpg" alt="YOURS Brand" class="about-img"/>
+        <div class="about-badge" data-ar="100% طبيعي" data-en="100% Natural">100% طبيعي</div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="section-eyebrow" data-ar="قصتنا" data-en="Our Story">قصتنا</span>
+        <h2 data-ar="يورز – لأنك تستحقين الأفضل دائماً" data-en="YOURS – Because You Always Deserve the Best">يورز – لأنك تستحقين الأفضل دائماً</h2>
+        <p data-ar="YOURS وُلدت من شغف حقيقي بالعناية الطبيعية. كل منتج نصنعه يحمل وعداً بالجودة والأمان والنتيجة المرئية. نحن نؤمن أن كل فتاة تستحق أن تشعر بالثقة والجمال في كل يوم." data-en="YOURS was born from a genuine passion for natural care. Every product we make carries a promise of quality, safety, and visible results. We believe every woman deserves to feel confident and beautiful every day.">YOURS وُلدت من شغف حقيقي بالعناية الطبيعية. كل منتج نصنعه يحمل وعداً بالجودة والأمان والنتيجة المرئية. نحن نؤمن أن كل فتاة تستحق أن تشعر بالثقة والجمال في كل يوم.</p>
+        <div class="about-stats">
+          <div class="about-stat"><span class="stat-num">5K+</span><span class="stat-label" data-ar="عميلة سعيدة" data-en="Happy Customers">عميلة سعيدة</span></div>
+          <div class="about-stat"><span class="stat-num">100%</span><span class="stat-label" data-ar="طبيعي" data-en="Natural">طبيعي</span></div>
+          <div class="about-stat"><span class="stat-num">12+</span><span class="stat-label" data-ar="منتج" data-en="Products">منتج</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h3 data-ar="سلتك" data-en="Your Cart">سلتك</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty" id="cart-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p data-ar="سلتك فارغة" data-en="Your cart is empty">سلتك فارغة</p>
+      <button class="btn-gold-sm" style="width:auto;padding:9px 22px" onclick="toggleCart()" data-ar="ابدئي التسوق" data-en="Start Shopping">ابدئي التسوق</button>
+    </div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-discount" id="cart-discount-row" style="display:none">
+      <span data-ar="خصم الباقة:" data-en="Bundle discount:">خصم الباقة:</span><span id="discount-amount" class="discount-val">- 0 ج</span>
+    </div>
+    <div class="cart-total"><span data-ar="الإجمالي:" data-en="Total:">الإجمالي:</span><span id="cart-total" class="total-val">0 ج</span></div>
+    <button class="btn-gold cart-checkout-btn" onclick="proceedToCheckout()" data-ar="أكملي طلبك 🛍" data-en="Complete Order 🛍">أكملي طلبك 🛍</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal" style="display:none">
+  <div class="modal-box" style="max-width:680px;padding:0">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <!-- Steps -->
+    <div class="checkout-steps">
+      <div class="checkout-step active" id="step-1-tab">
+        <div class="step-num">1</div>
+        <span data-ar="بياناتك" data-en="Your Info">بياناتك</span>
+      </div>
+      <div class="step-line" id="step-line-1"></div>
+      <div class="checkout-step" id="step-2-tab">
+        <div class="step-num">2</div>
+        <span data-ar="الشحن" data-en="Delivery">الشحن</span>
+      </div>
+      <div class="step-line" id="step-line-2"></div>
+      <div class="checkout-step" id="step-3-tab">
+        <div class="step-num">3</div>
+        <span data-ar="الدفع" data-en="Payment">الدفع</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Customer Info -->
+    <div class="checkout-body" id="checkout-step-1">
+      <div class="checkout-section-title" data-ar="بياناتك الشخصية" data-en="Your Personal Information">بياناتك الشخصية</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-ar="الاسم الكامل *" data-en="Full Name *">الاسم الكامل *</label>
+          <div class="input-valid">
+            <input type="text" id="order-name" placeholder="اسمك هنا..." oninput="validateField('order-name')"/>
+            <span class="input-valid-icon">✓</span>
+          </div>
+          <span class="field-error" id="err-name"></span>
+        </div>
+        <div class="form-group">
+          <label data-ar="رقم الموبايل *" data-en="Phone Number *">رقم الموبايل *</label>
+          <div class="input-valid">
+            <input type="tel" id="order-phone" placeholder="01XXXXXXXXX" oninput="validateField('order-phone')"/>
+            <span class="input-valid-icon">✓</span>
+          </div>
+          <span class="field-error" id="err-phone"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-ar="المحافظة *" data-en="Governorate *">المحافظة *</label>
+        <select id="order-gov" onchange="updateDeliveryByGov()">
+          <option value="" data-ar="اختاري المحافظة..." data-en="Select Governorate...">اختاري المحافظة...</option>
+          <option value="cairo">القاهرة / Cairo</option>
+          <option value="giza">الجيزة / Giza</option>
+          <option value="alex">الإسكندرية / Alexandria</option>
+          <option value="other" data-ar="محافظات أخرى" data-en="Other Governorates">محافظات أخرى</option>
+        </select>
+        <span class="field-error" id="err-gov"></span>
+      </div>
+      <div class="form-group">
+        <label data-ar="العنوان التفصيلي *" data-en="Detailed Address *">العنوان التفصيلي *</label>
+        <input type="text" id="order-address" placeholder="الحي، الشارع، رقم المبنى..."/>
+        <span class="field-error" id="err-address"></span>
+      </div>
+      <div class="form-group">
+        <label data-ar="ملاحظات (اختياري)" data-en="Notes (optional)">ملاحظات (اختياري)</label>
+        <textarea id="order-notes" placeholder="أي تفاصيل إضافية..."></textarea>
+      </div>
+      <!-- Extras -->
+      <div class="checkout-section-title" data-ar="خيارات إضافية" data-en="Extra Options">خيارات إضافية</div>
+      <div class="checkout-extras">
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-gift" onchange="updateCheckoutTotal()"/>
+          <label for="extra-gift">🎁 <span data-ar="تغليف هدية (+25 ج)" data-en="Gift Wrapping (+25 EGP)">تغليف هدية (+25 ج)</span></label>
+        </div>
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-invoice"/>
+          <label for="extra-invoice">🧾 <span data-ar="أريد فاتورة رسمية" data-en="I want an official invoice">أريد فاتورة رسمية</span></label>
+        </div>
+        <div class="checkout-extra-option">
+          <input type="checkbox" id="extra-newsletter"/>
+          <label for="extra-newsletter">💌 <span data-ar="أشتركي في النشرة البريدية للعروض الحصرية" data-en="Subscribe to newsletter for exclusive offers">أشتركي في النشرة البريدية للعروض الحصرية</span></label>
+        </div>
+      </div>
+      <button class="btn-gold" style="width:100%;margin-top:8px" onclick="goToStep(2)" data-ar="التالي: الشحن →" data-en="Next: Delivery →">التالي: الشحن →</button>
+    </div>
+
+    <!-- Step 2: Delivery -->
+    <div class="checkout-body" id="checkout-step-2" style="display:none">
+      <div class="checkout-section-title" data-ar="اختاري طريقة الشحن" data-en="Choose Delivery Method">اختاري طريقة الشحن</div>
+      <div class="delivery-options" id="delivery-options">
+        <div class="delivery-option selected" onclick="selectDelivery(this,'standard',35,'2-4 أيام','2-4 Days')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="شحن عادي" data-en="Standard Delivery">شحن عادي</div>
+            <div class="delivery-option-desc" data-ar="يصلك خلال 2-4 أيام عمل" data-en="Arrives within 2-4 business days">يصلك خلال 2-4 أيام عمل</div>
+          </div>
+          <div class="delivery-option-price">35 ج</div>
+        </div>
+        <div class="delivery-option" onclick="selectDelivery(this,'express',65,'24 ساعة','24 Hours')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="شحن سريع" data-en="Express Delivery">شحن سريع</div>
+            <div class="delivery-option-desc" data-ar="يصلك خلال 24 ساعة" data-en="Arrives within 24 hours">يصلك خلال 24 ساعة</div>
+          </div>
+          <div class="delivery-option-price">65 ج</div>
+        </div>
+        <div class="delivery-option" id="sameday-option" style="display:none" onclick="selectDelivery(this,'sameday',90,'اليوم نفسه','Same Day')">
+          <div class="delivery-option-radio"></div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name" data-ar="توصيل في نفس اليوم" data-en="Same Day Delivery">توصيل في نفس اليوم</div>
+            <div class="delivery-option-desc" data-ar="🟢 متاح في القاهرة والجيزة" data-en="🟢 Available in Cairo & Giza">🟢 متاح في القاهرة والجيزة</div>
+          </div>
+          <div class="delivery-option-price">90 ج</div>
+        </div>
+      </div>
+
+      <!-- Loyalty points -->
+      <div class="loyalty-points-badge">
+        🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
+      </div>
+
+      <!-- Order summary -->
+      <div class="checkout-section-title" data-ar="ملخص الطلب" data-en="Order Summary">ملخص الطلب</div>
+      <div class="checkout-summary-card" id="checkout-summary-card"></div>
+
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(1)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
+        <button class="btn-gold" style="flex:2" onclick="goToStep(3)" data-ar="التالي: الدفع →" data-en="Next: Payment →">التالي: الدفع →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Payment -->
+    <div class="checkout-body" id="checkout-step-3" style="display:none">
+      <div class="checkout-section-title" data-ar="طريقة الدفع" data-en="Payment Method">طريقة الدفع</div>
+      <div class="payment-grid">
+        <div class="payment-method selected" onclick="selectPayment(this,'cash')">
+          <div class="payment-method-icon">💵</div>
+          <div class="payment-method-name" data-ar="الدفع عند الاستلام" data-en="Cash on Delivery">الدفع عند الاستلام</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'card')">
+          <div class="payment-method-icon">💳</div>
+          <div class="payment-method-name" data-ar="بطاقة ائتمان" data-en="Credit Card">بطاقة ائتمان</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'debit')">
+          <div class="payment-method-icon">🏦</div>
+          <div class="payment-method-name" data-ar="بطاقة خصم" data-en="Debit Card">بطاقة خصم</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'vodafone')">
+          <div class="payment-method-icon">📱</div>
+          <div class="payment-method-name">Vodafone Cash</div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this,'instapay')">
+          <div class="payment-method-icon">⚡</div>
+          <div class="payment-method-name">InstaPay</div>
+        </div>
+        <div class="payment-method" style="opacity:0.5;cursor:default" title="قريباً">
+          <div class="payment-method-icon">🍎</div>
+          <div class="payment-method-name" style="font-size:10px">Apple Pay <br><span style="color:var(--text-m);font-size:9px">قريباً</span></div>
+        </div>
+      </div>
+
+      <!-- Final summary with total -->
+      <div class="checkout-summary-card" id="checkout-final-summary"></div>
+
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(2)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
+        <button class="btn-gold" style="flex:2;position:relative" id="submit-order-btn" onclick="submitOrder()" data-ar="اطلبي الآن 🛍" data-en="Place Order 🛍">اطلبي الآن 🛍</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="checkout-success" id="checkout-step-success" style="display:none">
+      <div class="checkout-success-icon">🎉</div>
+      <h2 data-ar="تم الطلب بنجاح!" data-en="Order Placed Successfully!">تم الطلب بنجاح!</h2>
+      <p data-ar="شكراً لك! سنتواصل معك قريباً لتأكيد طلبك." data-en="Thank you! We'll contact you soon to confirm your order.">شكراً لك! سنتواصل معك قريباً لتأكيد طلبك.</p>
+      <div class="order-number-box">
+        <span data-ar="رقم طلبك" data-en="Your Order Number">رقم طلبك</span>
+        <strong id="success-order-num">YOURS-000</strong>
+      </div>
+      <div class="countdown-delivery" id="delivery-countdown"></div>
+      <div class="success-actions">
+        <button class="btn-gold" onclick="openWhatsApp()" data-ar="تأكيد عبر واتساب 💬" data-en="Confirm via WhatsApp 💬">تأكيد عبر واتساب 💬</button>
+        <button class="btn-gold-sm" style="background:var(--bg-hover);color:var(--text)" onclick="copyOrderNum()" data-ar="نسخ رقم الطلب" data-en="Copy Order Number">نسخ رقم الطلب</button>
+        <button class="btn-gold-sm" style="background:transparent;color:var(--text-m);border:1px solid var(--border)" onclick="closeCheckout()" data-ar="العودة للتسوق" data-en="Continue Shopping">العودة للتسوق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COLLECTION MODAL -->
+<div class="modal-overlay" id="collection-modal" style="display:none">
+  <div class="modal-box collection-modal-box">
+    <button class="modal-close" onclick="closeCollectionModal()">✕</button>
+    <div id="collection-modal-content"></div>
+  </div>
+</div>
+
+<!-- FLOATING PRODUCT PANEL -->
+<div class="fpp-overlay" id="fpp-overlay" onclick="closeFPP()"></div>
+<div class="floating-product-panel" id="floating-product-panel">
+  <div class="fpp-header"><h3 id="fpp-name"></h3><button class="fpp-close" onclick="closeFPP()">✕</button></div>
+  <div class="fpp-img-wrap"><img id="fpp-img" src="" alt=""/></div>
+  <div class="fpp-body">
+    <p class="fpp-desc" id="fpp-desc"></p>
+    <p class="fpp-size" id="fpp-size"></p>
+    <div class="fpp-price-row">
+      <span class="fpp-price" id="fpp-price"></span>
+      <span class="fpp-old" id="fpp-old"></span>
+    </div>
+    <ul class="fpp-benefits" id="fpp-benefits-list"></ul>
+  </div>
+  <div class="fpp-footer">
+    <button class="btn-gold fpp-add-btn" id="fpp-add-btn" data-ar="أضيفي للسلة" data-en="Add to Cart">أضيفي للسلة</button>
+  </div>
+</div>
+
+<!-- CIRCLE POPUP (mobile) -->
+<div id="circle-popup" class="circle-popup">
+  <button class="circle-popup-close" onclick="closeCirclePopup()">✕</button>
+  <div class="circle-popup-inner">
+    <img id="cp-img" src="" alt="" class="circle-popup-img"/>
+    <div class="circle-popup-info">
+      <h4 id="cp-name"></h4>
+      <p id="cp-desc" style="font-size:12px;color:var(--text-m)"></p>
+      <div class="price" id="cp-price"></div>
+    </div>
+  </div>
+  <button class="btn-gold" style="width:100%" id="cp-add" data-ar="أضيفي للسلة" data-en="Add to Cart">أضيفي للسلة</button>
+</div>
+
+<!-- CHATBOT -->
+<button class="chatbot-fab" onclick="toggleChatbot()">
+  <div class="chatbot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+  <span data-ar="مساعدك" data-en="Assistant">مساعدك</span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar"><img src="images/logo.jpg" alt="YOURS"/></div>
+    <div><h4>YOURS Assistant</h4><span class="chatbot-online">● <span data-ar="متاحة الآن" data-en="Available now">متاحة الآن</span></span></div>
+    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages">
+    <div class="chat-msg bot"><p data-ar="مرحباً! أنا مساعدتك في YOURS 💛" data-en="Hello! I'm your YOURS assistant 💛">مرحباً! أنا مساعدتك في YOURS 💛</p></div>
+    <div class="chat-quick-replies">
+      <button onclick="quickReply('الأسعار؟')" data-ar="الأسعار؟" data-en="Prices?">الأسعار؟</button>
+      <button onclick="quickReply('الشحن؟')" data-ar="الشحن؟" data-en="Shipping?">الشحن؟</button>
+      <button onclick="quickReply('كود خصم')" data-ar="كود خصم" data-en="Discount Code">كود خصم</button>
+      <button onclick="quickReply('admin')" data-ar="الإدارة" data-en="Admin">الإدارة</button>
+    </div>
+  </div>
+  <div class="chatbot-input-wrap">
+    <input type="text" id="chatbot-input" placeholder="اكتبي هنا..." onkeypress="chatEnterKey(event)"/>
+    <button class="chatbot-send" onclick="sendChatMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo.jpg" alt="YOURS" class="footer-logo"/>
+        <p data-ar="لأنك تستحقين الأفضل" data-en="Because You Deserve The Best">لأنك تستحقين الأفضل</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/yours_by_mona_galal?igsh=MXVlcXg5d2x2d3g3MQ%3D%3D" target="_blank" class="social-link instagram-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.facebook.com/share/1PQFB1QUKT/" target="_blank" class="social-link facebook-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://vt.tiktok.com/ZSX9kuNY7/" target="_blank" class="social-link tiktok-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="https://wa.me/201003884148" target="_blank" class="social-link whatsapp-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+          <a href="tel:+201003884148" class="social-link phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="الأقسام" data-en="Categories">الأقسام</h4>
+        <ul>
+          <li><a href="category/haircare.html" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a></li>
+          <li><a href="category/body.html" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a></li>
+          <li><a href="category/accessories.html" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a></li>
+          <li><a href="category/collections.html" data-ar="المجموعات" data-en="Collections">المجموعات</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="تواصلي" data-en="Contact">تواصلي</h4>
+        <ul>
+          <li><a href="tel:+201003884148">📞 01003884148</a></li>
+          <li><a href="https://wa.me/201003884148" target="_blank">💬 واتساب</a></li>
+          <li><a href="https://www.instagram.com/yours_by_mona_galal" target="_blank">📸 Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-ar="السياسات" data-en="Policies">السياسات</h4>
+        <ul>
+          <li><a href="#" data-ar="الاسترجاع" data-en="Returns">الاسترجاع</a></li>
+          <li><a href="#" data-ar="الخصوصية" data-en="Privacy">الخصوصية</a></li>
+          <li><a href="#" data-ar="الشحن" data-en="Shipping">الشحن</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-ar="© 2025 YOURS by Mona Galal · جميع الحقوق محفوظة" data-en="© 2025 YOURS by Mona Galal · All rights reserved">© 2025 YOURS by Mona Galal · جميع الحقوق محفوظة</p>
+      <p class="footer-love">Made with 💛 for you</p>
+    </div>
+  </div>
+</footer>
+
+<div id="copy-toast" class="copy-toast">✓ <span data-ar="تم النسخ!" data-en="Copied!">تم النسخ!</span></div>
+
+<script src="products-data.js"></script>
+<script src="app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="rosegold">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOURS – المجموعات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .cat-hero{background:linear-gradient(135deg,var(--bg-hover) 0%,var(--bg-soft) 100%);padding:80px 0 56px;text-align:center;border-bottom:1px solid var(--border)}
+    .cat-hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+    .cat-hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);color:var(--text);margin-bottom:12px}
+    .cat-hero p{font-size:15px;color:var(--text-m);max-width:500px;margin:0 auto}
+    .cat-breadcrumb{font-size:12px;color:var(--text-m);margin-bottom:20px}
+    .cat-breadcrumb a{color:var(--gold);text-decoration:none}
+    .collections-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:32px;padding:60px 0}
+    .col-detail-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:0.4s ease}
+    .col-detail-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g);transform:translateY(-6px)}
+    .col-img-area{padding:36px;background:radial-gradient(circle,var(--bg-hover) 0%,var(--bg) 100%);display:flex;justify-content:center;position:relative}
+    .col-circle{width:200px;height:200px;border-radius:50%;overflow:hidden;border:2px solid var(--border);transition:0.4s}
+    .col-detail-card:hover .col-circle{border-color:var(--gold)}
+    .col-circle img{width:100%;height:100%;object-fit:cover}
+    .col-badge-abs{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px}
+    .col-body{padding:26px}
+    .col-body h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);margin-bottom:8px}
+    .col-body p{font-size:13px;color:var(--text-m);margin-bottom:16px;line-height:1.7}
+    .col-items-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .col-item-chip{background:var(--bg-hover);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text-m);padding:4px 10px}
+    .col-price-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .col-new-price{font-size:28px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+    .col-old-price{font-size:14px;color:var(--text-m);text-decoration:line-through}
+    .col-saving{font-size:12px;color:#4CAF50;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.2);border-radius:20px;padding:4px 12px;display:inline-block;margin-bottom:14px}
+    @media(max-width:768px){.collections-page-grid{grid-template-columns:1fr;padding:40px 0}}
+  </style>
+</head>
+<body>
+<div class="announcement-bar"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ YOURS – Because You Deserve The Best</span></div></div>
+<header class="header" id="header">
+  <nav class="nav-container">
+    <div class="nav-left"><div class="lang-switcher"><button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button><span class="lang-divider">|</span><button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button></div></div>
+    <div class="nav-logo"><a href="../index.html"><img src="../images/logo.jpg" alt="YOURS" class="logo-img"/></a></div>
+    <div class="nav-right"><button class="nav-icon-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-badge">0</span></button></div>
+  </nav>
+  <div class="main-nav">
+    <a href="../index.html" class="main-nav-link">الرئيسية</a>
+    <a href="haircare.html" class="main-nav-link">عناية الشعر</a>
+    <a href="body.html" class="main-nav-link">العناية بالجسم</a>
+    <a href="accessories.html" class="main-nav-link">إكسسوارات</a>
+    <a href="collections.html" class="main-nav-link" style="color:var(--gold);font-weight:700">المجموعات</a>
+  </div>
+</header>
+
+<div class="cat-hero">
+  <div class="container">
+    <div class="cat-breadcrumb"><a href="../index.html">الرئيسية</a> ← <span data-ar="المجموعات" data-en="Collections">المجموعات</span></div>
+    <div class="cat-hero-eyebrow">Collections</div>
+    <h1 data-ar="المجموعات الفاخرة" data-en="Luxury Collections">المجموعات الفاخرة</h1>
+    <p data-ar="وفري أكثر مع طقمنا المتكاملة المصممة لكل احتياجات عنايتك" data-en="Save more with our complete sets designed for all your care needs">وفري أكثر مع طقمنا المتكاملة المصممة لكل احتياجات عنايتك</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="collections-page-grid" id="collections-page-grid"></div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header"><h3 data-ar="سلتك" data-en="Cart">سلتك</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><p>سلتك فارغة</p></div></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-total"><span>الإجمالي:</span><span id="cart-total" class="total-val">0</span></div>
+    <button class="btn-gold cart-checkout-btn" onclick="proceedToCheckout()">أكملي طلبك 🛍</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal" style="display:none">
+  <div class="modal-box" style="max-width:680px;padding:0">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <div class="checkout-steps">
+      <div class="checkout-step active" id="step-1-tab"><div class="step-num">1</div><span>بياناتك</span></div>
+      <div class="step-line" id="step-line-1"></div>
+      <div class="checkout-step" id="step-2-tab"><div class="step-num">2</div><span>الشحن</span></div>
+      <div class="step-line" id="step-line-2"></div>
+      <div class="checkout-step" id="step-3-tab"><div class="step-num">3</div><span>الدفع</span></div>
+    </div>
+    <div class="checkout-body" id="checkout-step-1">
+      <div class="checkout-section-title">بياناتك الشخصية</div>
+      <div class="form-row">
+        <div class="form-group"><label>الاسم *</label><div class="input-valid"><input type="text" id="order-name" oninput="validateField('order-name')"/><span class="input-valid-icon">✓</span></div><span class="field-error" id="err-name"></span></div>
+        <div class="form-group"><label>الموبايل *</label><div class="input-valid"><input type="tel" id="order-phone" placeholder="01XXXXXXXXX" oninput="validateField('order-phone')"/><span class="input-valid-icon">✓</span></div><span class="field-error" id="err-phone"></span></div>
+      </div>
+      <div class="form-group"><label>المحافظة *</label><select id="order-gov" onchange="updateDeliveryByGov()"><option value="">اختاري...</option><option value="cairo">القاهرة</option><option value="giza">الجيزة</option><option value="alex">الإسكندرية</option><option value="other">أخرى</option></select><span class="field-error" id="err-gov"></span></div>
+      <div class="form-group"><label>العنوان *</label><input type="text" id="order-address"/><span class="field-error" id="err-address"></span></div>
+      <div class="form-group"><label>ملاحظات</label><textarea id="order-notes"></textarea></div>
+      <div class="checkout-extras">
+        <div class="checkout-extra-option"><input type="checkbox" id="extra-gift" onchange="updateCheckoutTotal()"/><label for="extra-gift">🎁 تغليف هدية (+25 ج)</label></div>
+        <div class="checkout-extra-option"><input type="checkbox" id="extra-newsletter"/><label for="extra-newsletter">💌 اشتركي في النشرة البريدية</label></div>
+      </div>
+      <button class="btn-gold" style="width:100%;margin-top:8px" onclick="goToStep(2)">التالي: الشحن →</button>
+    </div>
+    <div class="checkout-body" id="checkout-step-2" style="display:none">
+      <div class="checkout-section-title">طريقة الشحن</div>
+      <div class="delivery-options">
+        <div class="delivery-option selected" onclick="selectDelivery(this,'standard',35,'2-4 أيام','2-4 Days')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name">شحن عادي</div><div class="delivery-option-desc">يصلك خلال 2-4 أيام عمل</div></div><div class="delivery-option-price">35 ج</div></div>
+        <div class="delivery-option" onclick="selectDelivery(this,'express',65,'24 ساعة','24h')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name">شحن سريع</div><div class="delivery-option-desc">يصلك خلال 24 ساعة</div></div><div class="delivery-option-price">65 ج</div></div>
+        <div class="delivery-option" id="sameday-option" style="display:none" onclick="selectDelivery(this,'sameday',90,'اليوم','Same Day')"><div class="delivery-option-radio"></div><div class="delivery-option-info"><div class="delivery-option-name">توصيل في نفس اليوم</div><div class="delivery-option-desc">🟢 متاح في القاهرة والجيزة</div></div><div class="delivery-option-price">90 ج</div></div>
+      </div>
+      <div class="loyalty-points-badge">🌟 ستكسبين 120 نقطة ولاء بهذا الطلب!</div>
+      <div class="checkout-section-title">ملخص الطلب</div>
+      <div class="checkout-summary-card" id="checkout-summary-card"></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(1)">السابق</button>
+        <button class="btn-gold" style="flex:2" onclick="goToStep(3)">التالي: الدفع →</button>
+      </div>
+    </div>
+    <div class="checkout-body" id="checkout-step-3" style="display:none">
+      <div class="checkout-section-title">طريقة الدفع</div>
+      <div class="payment-grid">
+        <div class="payment-method selected" onclick="selectPayment(this,'cash')"><div class="payment-method-icon">💵</div><div class="payment-method-name">الدفع عند الاستلام</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'card')"><div class="payment-method-icon">💳</div><div class="payment-method-name">بطاقة ائتمان</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'debit')"><div class="payment-method-icon">🏦</div><div class="payment-method-name">بطاقة خصم</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'vodafone')"><div class="payment-method-icon">📱</div><div class="payment-method-name">Vodafone Cash</div></div>
+        <div class="payment-method" onclick="selectPayment(this,'instapay')"><div class="payment-method-icon">⚡</div><div class="payment-method-name">InstaPay</div></div>
+      </div>
+      <div class="checkout-summary-card" id="checkout-final-summary"></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(2)">السابق</button>
+        <button class="btn-gold" style="flex:2" id="submit-order-btn" onclick="submitOrder()">اطلبي الآن 🛍</button>
+      </div>
+    </div>
+    <div class="checkout-success" id="checkout-step-success" style="display:none">
+      <div class="checkout-success-icon">🎉</div>
+      <h2>تم الطلب بنجاح!</h2>
+      <p>شكراً لك! سنتواصل معك قريباً لتأكيد طلبك.</p>
+      <div class="order-number-box"><span>رقم طلبك</span><strong id="success-order-num"></strong></div>
+      <div class="countdown-delivery" id="delivery-countdown"></div>
+      <div class="success-actions">
+        <button class="btn-gold" onclick="openWhatsApp()">تأكيد عبر واتساب 💬</button>
+        <button class="btn-gold-sm" style="background:var(--bg-hover);color:var(--text)" onclick="copyOrderNum()">نسخ رقم الطلب</button>
+        <button class="btn-gold-sm" style="background:transparent;color:var(--text-m);border:1px solid var(--border)" onclick="closeCheckout()">متابعة التسوق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="copy-toast" class="copy-toast">✓</div>
+<script src="../products-data.js"></script>
+<script src="../app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  applyStoredOverrides();
+  const lang = localStorage.getItem('yours_lang') || 'ar';
+  const cols = window.YOURS_COLLECTIONS || {};
+  const products = window.YOURS_PRODUCTS || [];
+  const grid = document.getElementById('collections-page-grid');
+  grid.innerHTML = Object.entries(cols).map(([id, col]) => {
+    const name = lang==='ar'?col.nameAr:col.nameEn;
+    const desc = lang==='ar'?col.descAr:(col.descEn||col.descAr);
+    const cur = lang==='ar'?'ج':'EGP';
+    const items = (col.products||[]).map(pid => products.find(p=>p.id===pid)).filter(Boolean);
+    return `<div class="col-detail-card reveal">
+      <div class="col-img-area">
+        <div class="col-circle"><img src="../${col.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/></div>
+        <span class="col-badge-abs">${col.badge||''}</span>
+      </div>
+      <div class="col-body">
+        <h3>${name}</h3>
+        <p>${desc}</p>
+        <div class="col-items-list">${items.map(p=>`<span class="col-item-chip">${lang==='ar'?p.nameAr:p.nameEn}</span>`).join('')}</div>
+        <div class="col-price-row">
+          <span class="col-new-price">${col.price} ${cur}</span>
+          <span class="col-old-price">${col.oldPrice} ${cur}</span>
+        </div>
+        <div class="col-saving">🎁 ${lang==='ar'?`وفري ${col.saving} ج`:`Save ${col.saving} EGP`}</div>
+        <button class="btn-gold" style="width:100%;font-size:15px;padding:14px" onclick="addCollectionToCart('${id}');toggleCart()">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+      </div>
+    </div>`;
+  }).join('');
+  initReveal();
+});
+</script>
+</body>
+</html>
