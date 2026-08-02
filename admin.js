@@ -40,7 +40,7 @@ function doLogin() {
     err.textContent = '';
     showDashboard();
   } else {
-    err.textContent = 'اسم المستخدم غير صحيح';
+    err.textContent = 'كلمة المرور غير صحيحة';
     document.getElementById('admin-pass').value = '';
   }
 }
