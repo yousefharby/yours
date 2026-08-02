@@ -58,7 +58,6 @@ async function loadDashboard() {
     onSnapshot(q, (snapshot) => {
       if (snapshot.empty) return;
       const firestoreOrders = snapshot.docs.map(d => ({ ...d.data(), _docId: d.id }));
-      // Merge: Firestore is source of truth, keep localStorage for offline
       const localIds = new Set(allOrders.map(o => o.id));
       firestoreOrders.forEach(fo => {
         if (!localIds.has(fo.id)) allOrders.unshift(fo);
@@ -73,6 +72,7 @@ async function loadDashboard() {
       renderOrdersTable(allOrders);
       renderStatsTab();
     });
+    }
   } catch (err) {
     console.warn('Firestore sync failed, using localStorage:', err);
   }
