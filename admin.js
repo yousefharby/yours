@@ -17,11 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== AUTH =====
 function checkAuth() {
-  if (localStorage.getItem('yours_admin_auth') === '1') {
-    showDashboard();
-  } else {
-    showLogin();
-  }
+  // فتح الداشبورد مباشرة بدون login
+  localStorage.setItem('yours_admin_auth', '1');
+  showDashboard();
 }
 function showLogin() {
   document.getElementById('login-wrap').style.display = 'flex';
@@ -33,20 +31,11 @@ function showDashboard() {
   loadDashboard();
 }
 function doLogin() {
-  const pass = document.getElementById('admin-pass').value.trim();
-  const err = document.getElementById('login-err');
-  if (ADMIN_PASS.includes(pass)) {
-    localStorage.setItem('yours_admin_auth', '1');
-    err.textContent = '';
-    showDashboard();
-  } else {
-    err.textContent = 'كلمة المرور غير صحيحة';
-    document.getElementById('admin-pass').value = '';
-  }
+  localStorage.setItem('yours_admin_auth', '1');
+  showDashboard();
 }
 function doLogout() {
-  localStorage.removeItem('yours_admin_auth');
-  showLogin();
+  showDashboard();
 }
 
 // ===== DASHBOARD LOAD =====
