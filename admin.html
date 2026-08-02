@@ -1,206 +1,204 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YOURS – لوحة الإدارة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="admin.css"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YOURS – لوحة الإدارة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="admin.css"/>
 </head>
 <body id="body-root">
 
-<!-- LOGIN -->
-<div class="login-wrap" id="login-wrap" style="display:flex">
-  <div class="login-box">
-    <img src="images/logo.jpg" alt="YOURS" class="login-logo"/>
-    <h2>لوحة الإدارة</h2>
-    <p>YOURS Admin Panel</p>
-    <div class="form-group">
-      <label>كلمة المرور</label>
-      <input type="password" id="admin-pass" placeholder="ادخلي كلمة المرور..."
-             onkeypress="if(event.key==='Enter')doLogin()"/>
-    </div>
-    <button class="btn-gold-admin" onclick="doLogin()">دخول</button>
-    <p class="login-err" id="login-err"></p>
-  </div>
+<!-- LOGIN (مخفي دايماً) -->
+<div class="login-wrap" id="login-wrap" style="display:none">
+<div class="login-box">
+<img src="images/logo.jpg" alt="YOURS" class="login-logo"/>
+<h2>لوحة الإدارة</h2>
+<p>YOURS Admin Panel</p>
+<div class="form-group">
+<label>كلمة المرور</label>
+<input type="password" id="admin-pass" placeholder="ادخلي كلمة المرور..."
+onkeypress="if(event.key==='Enter')doLogin()"/>
+</div>
+<button class="btn-gold-admin" onclick="doLogin()">دخول</button>
+<p class="login-err" id="login-err"></p>
+</div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="admin-wrap" id="admin-wrap" style="display:none">
+<!-- DASHBOARD (يظهر على طول) -->
+<div class="admin-wrap" id="admin-wrap" style="display:grid">
+<!-- Sidebar -->
+<aside class="sidebar">
+<div class="sidebar-logo">
+<img src="images/logo.jpg" alt="YOURS"/>
+<span>Admin</span>
+</div>
+<nav class="sidebar-nav">
+<a href="#" class="nav-item active" onclick="showTab('orders',this);return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+الطلبات
+</a>
+<a href="#" class="nav-item" onclick="showTab('products',this);return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg>
+المنتجات
+</a>
+<a href="#" class="nav-item" onclick="showTab('add-product',this);return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+إضافة منتج
+</a>
+<a href="#" class="nav-item" onclick="showTab('collections',this);return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+المجموعات
+</a>
+<a href="#" class="nav-item" onclick="showTab('stats',this);return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+الإحصائيات
+</a>
+<a href="#" class="nav-item" onclick="showTab('theme',this);loadAdminTheme();return false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 1 7 7c0 3.87-3.13 7-7 7s-7-3.13-7-7a7 7 0 0 1 7-7z"/></svg>
+الثيم
+</a>
+</nav>
+<a href="index.html" class="sidebar-back">← العودة للموقع</a>
+<button class="sidebar-logout" onclick="doLogout()">تسجيل خروج</button>
+</aside>
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <img src="images/logo.jpg" alt="YOURS"/>
-      <span>Admin</span>
-    </div>
-    <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" onclick="showTab('orders',this);return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-        الطلبات
-      </a>
-      <a href="#" class="nav-item" onclick="showTab('products',this);return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg>
-        المنتجات
-      </a>
-      <a href="#" class="nav-item" onclick="showTab('add-product',this);return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        إضافة منتج
-      </a>
-      <a href="#" class="nav-item" onclick="showTab('collections',this);return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        المجموعات
-      </a>
-      <a href="#" class="nav-item" onclick="showTab('stats',this);return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        الإحصائيات
-      </a>
-      <a href="#" class="nav-item" onclick="showTab('theme',this);loadAdminTheme();return false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 1 7 7c0 3.87-3.13 7-7 7s-7-3.13-7-7a7 7 0 0 1 7-7z"/></svg>
-        الثيم
-      </a>
-    </nav>
-    <a href="index.html" class="sidebar-back">← العودة للموقع</a>
-    <button class="sidebar-logout" onclick="doLogout()">تسجيل خروج</button>
-  </aside>
+<!-- Main -->
+<main class="admin-main">
+<!-- Header -->
+<div class="admin-header">
+<div>
+<h1 id="tab-title">الطلبات</h1>
+<p id="tab-sub">إدارة ومتابعة الطلبات الواردة</p>
+</div>
+<div class="admin-header-right">
+<div class="live-badge"><span class="live-dot"></span> مباشر</div>
+<span id="admin-date"></span>
+</div>
+</div>
 
-  <!-- Main -->
-  <main class="admin-main">
+<!-- ORDERS TAB -->
+<div class="tab-content active" id="tab-orders">
+<div class="stats-row">
+<div class="stat-card"><span class="stat-icon">📦</span><div><span class="stat-num" id="stat-total-orders">0</span><span class="stat-label">إجمالي الطلبات</span></div></div>
+<div class="stat-card"><span class="stat-icon">🆕</span><div><span class="stat-num" id="stat-new-orders">0</span><span class="stat-label">طلبات جديدة</span></div></div>
+<div class="stat-card"><span class="stat-icon">💰</span><div><span class="stat-num" id="stat-revenue">0 ج</span><span class="stat-label">إجمالي المبيعات</span></div></div>
+<div class="stat-card"><span class="stat-icon">✅</span><div><span class="stat-num" id="stat-completed">0</span><span class="stat-label">مكتملة</span></div></div>
+</div>
+<div class="orders-toolbar">
+<input type="text" class="admin-search" placeholder="ابحثي باسم العميل أو رقم الطلب..." oninput="filterOrders(this.value)"/>
+<select class="admin-select" onchange="filterByStatus(this.value)">
+<option value="">كل الطلبات</option>
+<option value="جديد">جديد</option>
+<option value="قيد التجهيز">قيد التجهيز</option>
+<option value="تم الشحن">تم الشحن</option>
+<option value="مكتمل">مكتمل</option>
+<option value="ملغي">ملغي</option>
+</select>
+<button class="btn-gold-admin sm" onclick="exportOrders()">تصدير Excel</button>
+</div>
+<div class="orders-table-wrap">
+<table class="orders-table">
+<thead>
+<tr>
+<th>رقم الطلب</th><th>العميلة</th><th>الموبايل</th><th>المنتجات</th>
+<th>الإجمالي</th><th>التاريخ</th><th>الحالة</th><th>إجراءات</th>
+</tr>
+</thead>
+<tbody id="orders-tbody">
+<tr><td colspan="8" style="text-align:center;padding:40px;color:#555">لا توجد طلبات بعد</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
-    <!-- Header -->
-    <div class="admin-header">
-      <div>
-        <h1 id="tab-title">الطلبات</h1>
-        <p id="tab-sub">إدارة ومتابعة الطلبات الواردة</p>
-      </div>
-      <div class="admin-header-right">
-        <div class="live-badge"><span class="live-dot"></span> مباشر</div>
-        <span id="admin-date"></span>
-      </div>
-    </div>
+<!-- PRODUCTS TAB -->
+<div class="tab-content" id="tab-products">
+<div class="products-admin-grid" id="products-admin-grid"></div>
+</div>
 
-    <!-- ORDERS TAB -->
-    <div class="tab-content active" id="tab-orders">
-      <div class="stats-row">
-        <div class="stat-card"><span class="stat-icon">📦</span><div><span class="stat-num" id="stat-total-orders">0</span><span class="stat-label">إجمالي الطلبات</span></div></div>
-        <div class="stat-card"><span class="stat-icon">🆕</span><div><span class="stat-num" id="stat-new-orders">0</span><span class="stat-label">طلبات جديدة</span></div></div>
-        <div class="stat-card"><span class="stat-icon">💰</span><div><span class="stat-num" id="stat-revenue">0 ج</span><span class="stat-label">إجمالي المبيعات</span></div></div>
-        <div class="stat-card"><span class="stat-icon">✅</span><div><span class="stat-num" id="stat-completed">0</span><span class="stat-label">مكتملة</span></div></div>
-      </div>
-      <div class="orders-toolbar">
-        <input type="text" class="admin-search" placeholder="ابحثي باسم العميل أو رقم الطلب..." oninput="filterOrders(this.value)"/>
-        <select class="admin-select" onchange="filterByStatus(this.value)">
-          <option value="">كل الطلبات</option>
-          <option value="جديد">جديد</option>
-          <option value="قيد التجهيز">قيد التجهيز</option>
-          <option value="تم الشحن">تم الشحن</option>
-          <option value="مكتمل">مكتمل</option>
-          <option value="ملغي">ملغي</option>
-        </select>
-        <button class="btn-gold-admin sm" onclick="exportOrders()">تصدير Excel</button>
-      </div>
-      <div class="orders-table-wrap">
-        <table class="orders-table">
-          <thead>
-            <tr>
-              <th>رقم الطلب</th><th>العميلة</th><th>الموبايل</th><th>المنتجات</th>
-              <th>الإجمالي</th><th>التاريخ</th><th>الحالة</th><th>إجراءات</th>
-            </tr>
-          </thead>
-          <tbody id="orders-tbody">
-            <tr><td colspan="8" style="text-align:center;padding:40px;color:#555">لا توجد طلبات بعد</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<!-- ADD PRODUCT TAB -->
+<div class="tab-content" id="tab-add-product">
+<div class="form-card">
+<h3 id="product-form-title">إضافة / تعديل منتج</h3>
+<div class="form-grid">
+<div class="form-group"><label>اسم المنتج (عربي)</label><input type="text" id="p-name-ar" placeholder="شامبو YOURS..."/></div>
+<div class="form-group"><label>اسم المنتج (إنجليزي)</label><input type="text" id="p-name-en" placeholder="YOURS Shampoo..."/></div>
+<div class="form-group"><label>الوصف (عربي)</label><input type="text" id="p-desc-ar" placeholder="وصف المنتج..."/></div>
+<div class="form-group"><label>الوصف (إنجليزي)</label><input type="text" id="p-desc-en" placeholder="Product description..."/></div>
+<div class="form-group"><label>الحجم / الوزن</label><input type="text" id="p-size" placeholder="500 ml"/></div>
+<div class="form-group"><label>الفئة</label>
+<select id="p-category">
+<option value="shampoo">شامبو</option>
+<option value="conditioner">بلسم</option>
+<option value="mask">ماسك</option>
+<option value="serum">سيروم</option>
+<option value="body">عناية الجسم</option>
+<option value="accessories">إكسسوارات</option>
+</select>
+</div>
+<div class="form-group"><label>السعر (ج)</label><input type="number" id="p-price" placeholder="320"/></div>
+<div class="form-group"><label>السعر القديم (ج)</label><input type="number" id="p-old-price" placeholder="400"/></div>
+<div class="form-group"><label>رابط الصورة</label><input type="text" id="p-image" placeholder="images/products/..."/></div>
+<div class="form-group"><label>علامة مميزة (اختياري)</label><input type="text" id="p-tag" placeholder="الأكثر مبيعاً / جديد"/></div>
+<div class="form-group"><label>يُباع بشكل فردي؟</label>
+<select id="p-sold-alone">
+<option value="true">نعم</option>
+<option value="false">لا (مجموعات فقط)</option>
+</select>
+</div>
+</div>
+<button class="btn-gold-admin" onclick="saveProduct()">💾 حفظ المنتج</button>
+<p class="save-msg" id="product-save-msg"></p>
+</div>
+</div>
 
-    <!-- PRODUCTS TAB -->
-    <div class="tab-content" id="tab-products">
-      <div class="products-admin-grid" id="products-admin-grid"></div>
-    </div>
+<!-- COLLECTIONS TAB -->
+<div class="tab-content" id="tab-collections">
+<div class="collections-admin-grid" id="collections-admin-grid"></div>
+</div>
 
-    <!-- ADD PRODUCT TAB -->
-    <div class="tab-content" id="tab-add-product">
-      <div class="form-card">
-        <h3 id="product-form-title">إضافة / تعديل منتج</h3>
-        <div class="form-grid">
-          <div class="form-group"><label>اسم المنتج (عربي)</label><input type="text" id="p-name-ar" placeholder="شامبو YOURS..."/></div>
-          <div class="form-group"><label>اسم المنتج (إنجليزي)</label><input type="text" id="p-name-en" placeholder="YOURS Shampoo..."/></div>
-          <div class="form-group"><label>الوصف (عربي)</label><input type="text" id="p-desc-ar" placeholder="وصف المنتج..."/></div>
-          <div class="form-group"><label>الوصف (إنجليزي)</label><input type="text" id="p-desc-en" placeholder="Product description..."/></div>
-          <div class="form-group"><label>الحجم / الوزن</label><input type="text" id="p-size" placeholder="500 ml"/></div>
-          <div class="form-group"><label>الفئة</label>
-            <select id="p-category">
-              <option value="shampoo">شامبو</option>
-              <option value="conditioner">بلسم</option>
-              <option value="mask">ماسك</option>
-              <option value="serum">سيروم</option>
-              <option value="body">عناية الجسم</option>
-              <option value="accessories">إكسسوارات</option>
-            </select>
-          </div>
-          <div class="form-group"><label>السعر (ج)</label><input type="number" id="p-price" placeholder="320"/></div>
-          <div class="form-group"><label>السعر القديم (ج)</label><input type="number" id="p-old-price" placeholder="400"/></div>
-          <div class="form-group"><label>رابط الصورة</label><input type="text" id="p-image" placeholder="images/products/..."/></div>
-          <div class="form-group"><label>علامة مميزة (اختياري)</label><input type="text" id="p-tag" placeholder="الأكثر مبيعاً / جديد"/></div>
-          <div class="form-group"><label>يُباع بشكل فردي؟</label>
-            <select id="p-sold-alone">
-              <option value="true">نعم</option>
-              <option value="false">لا (مجموعات فقط)</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn-gold-admin" onclick="saveProduct()">💾 حفظ المنتج</button>
-        <p class="save-msg" id="product-save-msg"></p>
-      </div>
-    </div>
+<!-- STATS TAB -->
+<div class="tab-content" id="tab-stats">
+<div class="stats-big-row">
+<div class="stats-chart-card"><h3>مبيعات حسب اليوم</h3><canvas id="chart-daily" width="400" height="200"></canvas></div>
+<div class="stats-chart-card"><h3>المنتجات الأكثر مبيعاً</h3><div id="top-products-list"></div></div>
+</div>
+</div>
 
-    <!-- COLLECTIONS TAB -->
-    <div class="tab-content" id="tab-collections">
-      <div class="collections-admin-grid" id="collections-admin-grid"></div>
-    </div>
+<!-- THEME TAB -->
+<div class="tab-content" id="tab-theme">
+<div id="theme-admin-content" style="padding:10px 0"></div>
+</div>
 
-    <!-- STATS TAB -->
-    <div class="tab-content" id="tab-stats">
-      <div class="stats-big-row">
-        <div class="stats-chart-card"><h3>مبيعات حسب اليوم</h3><canvas id="chart-daily" width="400" height="200"></canvas></div>
-        <div class="stats-chart-card"><h3>المنتجات الأكثر مبيعاً</h3><div id="top-products-list"></div></div>
-      </div>
-    </div>
-
-    <!-- THEME TAB -->
-    <div class="tab-content" id="tab-theme">
-      <div id="theme-admin-content" style="padding:10px 0"></div>
-    </div>
-
-  </main>
+</main>
 </div>
 
 <!-- Order Modal -->
 <div class="modal-overlay-admin" id="order-modal" style="display:none">
-  <div class="modal-box-admin">
-    <button class="modal-close-admin" onclick="closeOrderModal()">✕</button>
-    <div id="order-modal-content"></div>
-  </div>
+<div class="modal-box-admin">
+<button class="modal-close-admin" onclick="closeOrderModal()">✕</button>
+<div id="order-modal-content"></div>
+</div>
 </div>
 
 <script src="products-data.js"></script>
 <!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyAjCyaEKRLK8EMWoaBmuNckfoimCUKLHZs",
-    authDomain: "yours-ebc41.firebaseapp.com",
-    projectId: "yours-ebc41",
-    storageBucket: "yours-ebc41.firebasestorage.app",
-    messagingSenderId: "1080966519444",
-    appId: "1:1080966519444:web:2400dd61939ffeae8cb281"
-  };
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  window._firebaseDB = db;
-  window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+const firebaseConfig = {
+apiKey: "AIzaSyAjCyaEKRLK8EMWoaBmuNckfoimCUKLHZs",
+authDomain: "yours-ebc41.firebaseapp.com",
+projectId: "yours-ebc41",
+storageBucket: "yours-ebc41.firebasestorage.app",
+messagingSenderId: "1080966519444",
+appId: "1:1080966519444:web:2400dd61939ffeae8cb281"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+window._firebaseDB = db;
+window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
 </script>
 <script src="admin.js"></script>
 </body>
