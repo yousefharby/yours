@@ -188,10 +188,17 @@
 <section class="ugc-section" id="ugc">
   <div class="ugc-inner">
     <div class="ugc-video-wrap reveal-left">
-      <video autoplay muted loop playsinline poster="images/hero2.jpg">
+      <video id="ugc-video" autoplay muted loop playsinline poster="images/hero2.jpg">
         <source src="images/WhatsApp_Video_2026-07-25_at_2_47_52_AM.mp4" type="video/mp4"/>
       </video>
       <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
+      <button id="ugc-sound-btn" onclick="toggleVideoSound()" title="تشغيل الصوت" style="
+        position:absolute;bottom:14px;left:14px;
+        background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
+        border:none;border-radius:50%;width:38px;height:38px;
+        cursor:pointer;display:flex;align-items:center;justify-content:center;
+        font-size:18px;color:#fff;z-index:10;transition:background .2s;
+      ">🔇</button>
     </div>
     <div class="ugc-text reveal-right">
       <div class="ugc-eyebrow" data-ar="كما قاله يوسف جو 🎙️" data-en="As told by Yousef Joo 🎙️">كما قاله يوسف جو 🎙️</div>
