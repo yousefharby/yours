@@ -2,7 +2,7 @@
 // YOURS Admin v5 – Full Admin Logic
 // ============================================
 
-const ADMIN_PASS = ['admin', 'ادمن', 'Admin'];
+const ADMIN_PASS = ['admin', 'ادمن', 'Admin', 'mona', 'Mona', 'MONA'];
 let allOrders = [];
 let editingProductId = null;
 
@@ -40,7 +40,7 @@ function doLogin() {
     err.textContent = '';
     showDashboard();
   } else {
-    err.textContent = 'كلمة المرور غير صحيحة';
+    err.textContent = 'اسم المستخدم غير صحيح';
     document.getElementById('admin-pass').value = '';
   }
 }
