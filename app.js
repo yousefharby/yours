@@ -26,7 +26,46 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemePanel();
   setTimeout(showVWPopup, 2800);
   applyStoredOverrides();
+  syncThemeFromFirebase();
 });
+
+// ===== FIREBASE THEME SYNC =====
+// بيقرأ الثيم من Firebase عشان يطبق اللي اختارته الأدمن على كل الأجهزة
+function syncThemeFromFirebase() {
+  // Firebase بتاخد وقت تتجهز، فبننتظرها
+  const wait = setInterval(() => {
+    if (window._firebaseDB && window._firebaseLib) {
+      clearInterval(wait);
+      _doSyncTheme();
+    }
+  }, 200);
+  // لو Firebase مش موجودة خالص بعد 5 ثواني، وقف
+  setTimeout(() => clearInterval(wait), 5000);
+}
+
+async function _doSyncTheme() {
+  try {
+    const { doc, getDoc, onSnapshot } = window._firebaseLib;
+    const themeDoc = doc(window._firebaseDB, 'siteSettings', 'theme');
+
+    // اقرأ فوراً
+    const snap = await getDoc(themeDoc);
+    if (snap.exists() && snap.data().name) {
+      applyTheme(snap.data().name);
+    }
+
+    // واستمع للتغييرات في الوقت الفعلي
+    // (لو الأدمن غير الثيم، الموقع هيتحدث تلقائياً من غير ريفريش)
+    onSnapshot(themeDoc, (s) => {
+      if (s.exists() && s.data().name) {
+        applyTheme(s.data().name);
+      }
+    });
+  } catch (err) {
+    // لو Firebase فشلت، كمل بالثيم المحفوظ محلياً
+    console.warn('Theme sync failed, using local theme:', err);
+  }
+}
 
 // ===== THEME =====
 const THEMES = [
