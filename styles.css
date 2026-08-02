@@ -79,7 +79,7 @@ ul{list-style:none}
 /* ========== ANNOUNCEMENT ========== */
 .announcement-bar{background:var(--ann-bg);color:var(--ann-text);overflow:hidden;height:36px;display:flex;align-items:center}
 .announcement-track{display:flex;gap:60px;white-space:nowrap;animation:slideRight 28s linear infinite;font-size:12px;font-weight:600;letter-spacing:0.05em}
-@keyframes slideRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes slideRight{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ========== HEADER ========== */
 .header{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow 0.3s,background 0.5s}
