@@ -96,6 +96,7 @@ function showTab(name, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('tab-' + name)?.classList.add('active');
   if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   const titles = {
     orders: ['الطلبات', 'إدارة ومتابعة الطلبات الواردة'],
     products: ['المنتجات', 'عرض وإدارة المنتجات'],
