@@ -155,6 +155,8 @@ window.YOURS_COLLECTIONS = {
     badge: 'الأكثر مبيعاً',
     saving: 600
   },
+
+  
   col2: {
     nameAr: 'مجموعة YOURS المتوسطة – 4 قطع',
     nameEn: 'YOURS Mid Collection – 4 Pieces',
