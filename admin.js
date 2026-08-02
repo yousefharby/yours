@@ -372,10 +372,23 @@ function saveCollectionPrice(id) {
 }
 
 // ===== THEME TAB (Admin controls user theme) =====
-function loadAdminTheme() {
+async function loadAdminTheme() {
   const tab = document.getElementById('theme-admin-content') || document.getElementById('tab-theme');
   if (!tab) return;
-  const current = localStorage.getItem('yours_theme_user') || 'rosegold';
+
+  // اقرأ الثيم من Firebase أولاً عشان يكون متزامن
+  let current = localStorage.getItem('yours_theme_user') || 'rosegold';
+  try {
+    if (window._firebaseDB && window._firebaseLib) {
+      const { doc, getDoc } = window._firebaseLib;
+      const snap = await getDoc(doc(window._firebaseDB, 'siteSettings', 'theme'));
+      if (snap.exists() && snap.data().name) {
+        current = snap.data().name;
+        localStorage.setItem('yours_theme_user', current);
+        localStorage.setItem('yours_theme', current);
+      }
+    }
+  } catch (err) { /* استخدم localStorage كـ fallback */ }
   const THEMES = [
     { id:'rosegold', name:'Rose Gold', desc:'ثيم روز جولد الافتراضي – فاتح وأنثوي', colors:['#FDF6F4','#B5777A','#2D1F1F'] },
     { id:'dark',     name:'Dark Gold', desc:'الكلاسيكي الداكن – أسود وذهبي', colors:['#0A0A0A','#C9A84C','#1E1E1E'] },
@@ -403,11 +416,24 @@ function loadAdminTheme() {
     </div>`;
 }
 
-function applyUserTheme(id) {
+async function applyUserTheme(id) {
   localStorage.setItem('yours_theme_user', id);
   localStorage.setItem('yours_theme', id);
   loadAdminTheme();
-  // Show confirmation
+
+  // حفظ الثيم في Firebase عشان يظهر على كل الأجهزة
+  try {
+    if (window._firebaseDB && window._firebaseLib) {
+      const { doc, setDoc } = window._firebaseLib;
+      await setDoc(doc(window._firebaseDB, 'siteSettings', 'theme'), {
+        name: id,
+        updatedAt: new Date().toISOString()
+      });
+    }
+  } catch (err) {
+    console.warn('Firebase theme save failed:', err);
+  }
+
   const msg = document.createElement('div');
   msg.textContent = '✓ تم تغيير ثيم الموقع للزوار!';
   msg.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;padding:10px 24px;border-radius:50px;font-weight:700;font-size:13px;z-index:9999';
