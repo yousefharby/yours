@@ -63,8 +63,9 @@ async function loadDashboard() {
 
   // Then sync from Firestore (cloud)
   try {
-    const { db, collection, query, orderBy, onSnapshot } = await import('./firebase-config.js');
-    const q = query(collection(db, 'orders'), orderBy('date', 'desc'));
+    if (window._firebaseDB && window._firebaseLib) {
+      const { collection, query, orderBy, onSnapshot } = window._firebaseLib;
+      const q = query(collection(window._firebaseDB, 'orders'), orderBy('date', 'desc'));
     onSnapshot(q, (snapshot) => {
       if (snapshot.empty) return;
       const firestoreOrders = snapshot.docs.map(d => ({ ...d.data(), _docId: d.id }));
@@ -177,10 +178,12 @@ async function updateOrderStatus(id, status) {
     updateStats();
     // Sync to Firestore
     try {
-      const { db, collection, query, getDocs, doc, updateDoc } = await import('./firebase-config.js');
-      const snap = await getDocs(collection(db, 'orders'));
-      const docRef = snap.docs.find(d => d.data().id === id);
-      if (docRef) await updateDoc(doc(db, 'orders', docRef.id), { status });
+      if (window._firebaseDB && window._firebaseLib) {
+        const { collection, getDocs, doc, updateDoc } = window._firebaseLib;
+        const snap = await getDocs(collection(window._firebaseDB, 'orders'));
+        const docRef = snap.docs.find(d => d.data().id === id);
+        if (docRef) await updateDoc(doc(window._firebaseDB, 'orders', docRef.id), { status });
+      }
     } catch (err) { console.warn('Firestore status update failed:', err); }
   }
 }
@@ -192,10 +195,12 @@ async function deleteOrder(id) {
   updateStats();
   // Sync to Firestore
   try {
-    const { db, collection, getDocs, doc, deleteDoc } = await import('./firebase-config.js');
-    const snap = await getDocs(collection(db, 'orders'));
-    const docRef = snap.docs.find(d => d.data().id === id);
-    if (docRef) await deleteDoc(doc(db, 'orders', docRef.id));
+    if (window._firebaseDB && window._firebaseLib) {
+      const { collection, getDocs, doc, deleteDoc } = window._firebaseLib;
+      const snap = await getDocs(collection(window._firebaseDB, 'orders'));
+      const docRef = snap.docs.find(d => d.data().id === id);
+      if (docRef) await deleteDoc(doc(window._firebaseDB, 'orders', docRef.id));
+    }
   } catch (err) { console.warn('Firestore delete failed:', err); }
 }
 function viewOrder(id) {
@@ -481,12 +486,4 @@ function renderStatsTab() {
   });
 }
 
-// ===== EXPOSE FUNCTIONS TO WINDOW (required for type="module") =====
-Object.assign(window, {
-  checkAuth, showLogin, showDashboard, doLogin, doLogout,
-  updateStats, showTab, renderOrdersTable, filterOrders, filterByStatus,
-  updateOrderStatus, deleteOrder, viewOrder, closeOrderModal, exportOrders,
-  renderProductsAdmin, editProduct, deleteProduct, saveProduct,
-  renderCollectionsAdmin, saveCollectionPrice,
-  loadAdminTheme, applyUserTheme, renderStatsTab, loadDashboard
-});
+// end of admin.js
