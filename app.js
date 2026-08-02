@@ -562,8 +562,10 @@ async function submitOrder() {
 
   // ===== 2) SAVE TO FIRESTORE (cloud - doesn't break app if fails) =====
   try {
-    const { db, collection, addDoc } = await import('./firebase-config.js');
-    await addDoc(collection(db, 'orders'), order);
+    if (window._firebaseDB && window._firebaseLib) {
+      const { collection, addDoc } = window._firebaseLib;
+      await addDoc(collection(window._firebaseDB, 'orders'), order);
+    }
   } catch (err) {
     console.warn('Firestore save failed (order already in localStorage):', err);
   }
@@ -806,14 +808,4 @@ function closeCirclePopup() {
   }
 })();
 
-// ===== EXPOSE FUNCTIONS TO WINDOW (required for type="module") =====
-Object.assign(window, {
-  switchLang, toggleSearch, toggleCart, slideHero, goToSlide,
-  copyCode, closeVWPopup, copyVWCode,
-  addToCart, removeFromCart, changeQty, proceedToCheckout,
-  closeCheckout, goToStep, updateDeliveryByGov, selectDelivery,
-  selectPayment, updateCheckoutTotal, submitOrder, openWhatsApp, copyOrderNum,
-  openCollectionModal, closeCollectionModal, addCollectionToCart,
-  openCirclePopup, closeCirclePopup, applyTheme, handleChatInput,
-  sendChat, sendTelegramNotification
-});
+// end of app.js
