@@ -27,7 +27,43 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(showVWPopup, 2800);
   applyStoredOverrides();
   syncThemeFromFirebase();
+  syncProductsFromFirebase();
 });
+
+
+// ===== FIREBASE PRODUCTS SYNC =====
+function syncProductsFromFirebase() {
+  const wait = setInterval(() => {
+    if (window._firebaseDB && window._firebaseLib) {
+      clearInterval(wait);
+      _doSyncProducts();
+    }
+  }, 200);
+  setTimeout(() => clearInterval(wait), 5000);
+}
+
+async function _doSyncProducts() {
+  try {
+    const { doc, getDoc, onSnapshot } = window._firebaseLib;
+    const prodDoc = doc(window._firebaseDB, 'siteSettings', 'products');
+    const snap = await getDoc(prodDoc);
+    if (snap.exists() && snap.data().list && snap.data().list.length) {
+      window.YOURS_PRODUCTS = snap.data().list;
+      localStorage.setItem('yours_products_override', JSON.stringify(snap.data().list));
+      renderProducts();
+    }
+    // Listen for real-time updates
+    onSnapshot(prodDoc, (s) => {
+      if (s.exists() && s.data().list && s.data().list.length) {
+        window.YOURS_PRODUCTS = s.data().list;
+        localStorage.setItem('yours_products_override', JSON.stringify(s.data().list));
+        renderProducts();
+      }
+    });
+  } catch(err) {
+    console.warn('Products sync failed, using local:', err);
+  }
+}
 
 // ===== FIREBASE THEME SYNC =====
 // بيقرأ الثيم من Firebase عشان يطبق اللي اختارته الأدمن على كل الأجهزة
