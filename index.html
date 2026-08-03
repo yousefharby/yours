@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-
 <!-- VIVIENNE WESTWOOD STYLE POPUP -->
 <div id="vw-popup-overlay" class="vw-popup-overlay" onclick="if(event.target===this)document.getElementById('vw-popup-overlay').classList.remove('active')">
   <div class="vw-popup">
@@ -34,31 +33,19 @@
     </div>
   </div>
 </div>
-
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement-bar" id="ann-bar">
   <div class="announcement-track" id="ann-track">
-    <!-- AR items (shown when Arabic) -->
-    <span class="ann-ar">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span class="ann-ar">✦ مكونات طبيعية 100%</span>
-    <span class="ann-ar">✦ ضمان الجودة أو استرداد كامل</span>
-    <span class="ann-ar">✦ YOURS – لأنك تستحقين الأفضل</span>
-    <span class="ann-ar">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span class="ann-ar">✦ مكونات طبيعية 100%</span>
-    <span class="ann-ar">✦ ضمان الجودة أو استرداد كامل</span>
-    <span class="ann-ar">✦ YOURS – لأنك تستحقين الأفضل</span>
-    <!-- EN items (shown when English) -->
-    <span class="ann-en" style="display:none">✦ Free shipping on orders over 500 EGP</span>
-    <span class="ann-en" style="display:none">✦ 100% Natural Ingredients</span>
-    <span class="ann-en" style="display:none">✦ Quality Guarantee or Full Refund</span>
-    <span class="ann-en" style="display:none">✦ YOURS – Because You Deserve The Best</span>
-    <span class="ann-en" style="display:none">✦ Free shipping on orders over 500 EGP</span>
-    <span class="ann-en" style="display:none">✦ 100% Natural Ingredients</span>
-    <span class="ann-en" style="display:none">✦ Quality Guarantee or Full Refund</span>
-    <span class="ann-en" style="display:none">✦ YOURS – Because You Deserve The Best</span>
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
   </div>
 </div>
-
 <!-- HEADER -->
 <header class="header" id="header">
   <nav class="nav-container">
@@ -92,7 +79,6 @@
     <a href="#about" class="main-nav-link" data-ar="عن يورز" data-en="About">عن يورز</a>
   </div>
 </header>
-
 <!-- SEARCH -->
 <div class="search-overlay" id="search-overlay">
   <button class="search-close" onclick="toggleSearch()">✕</button>
@@ -102,7 +88,6 @@
     <div class="search-results" id="search-results"></div>
   </div>
 </div>
-
 <!-- HERO -->
 <section class="hero">
   <div class="hero-slider">
@@ -170,6 +155,8 @@
           <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
         </div>
       </div>
+
+      <!-- ✅ التعديل 1: hero5.jpg اتبدلت بـ hero6.jpg -->
       <div class="cat-card masks reveal" onclick="window.location.href='category/body.html'">
         <img src="images/hero6.jpg" alt="عناية الجسم" class="cat-img"/>
         <div class="cat-overlay"></div>
@@ -180,6 +167,7 @@
           <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
         </div>
       </div>
+
       <div class="cat-card accessories reveal" onclick="window.location.href='category/accessories.html'">
         <img src="images/accessories/bonnet_collection.jpg" alt="إكسسوارات" class="cat-img"/>
         <div class="cat-overlay"></div>
@@ -194,8 +182,10 @@
   </div>
 </section>
 
-<!-- UGC VIDEO SECTION -->
+<!-- ✅ التعديل 2: UGC SECTION — يوسف جو + صفاء جلال تحته مباشرة -->
 <section class="ugc-section" id="ugc">
+
+  <!-- UGC #1: يوسف جو (زي ما كان) -->
   <div class="ugc-inner">
     <div class="ugc-video-wrap reveal-left">
       <video id="ugc-video" autoplay muted loop playsinline poster="images/hero2.jpg">
@@ -203,11 +193,11 @@
       </video>
       <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
       <button id="ugc-sound-btn" onclick="toggleVideoSound()" title="تشغيل الصوت" style="
-        position:absolute;bottom:14px;left:14px;
-        background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
-        border:none;border-radius:50%;width:38px;height:38px;
-        cursor:pointer;display:flex;align-items:center;justify-content:center;
-        font-size:18px;color:#fff;z-index:10;transition:background .2s;
+position:absolute;bottom:14px;left:14px;
+background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
+border:none;border-radius:50%;width:38px;height:38px;
+cursor:pointer;display:flex;align-items:center;justify-content:center;
+font-size:18px;color:#fff;z-index:10;transition:background .2s;
       ">🔇</button>
     </div>
     <div class="ugc-text reveal-right">
@@ -228,6 +218,41 @@
       <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيه الآن ←</a>
     </div>
   </div>
+
+  <!-- UGC #2: صفاء جلال — فيديو بدل الصورة، تحت يوسف جو مباشرة -->
+  <div class="ugc-inner" style="border-top:1px solid var(--border);margin-top:0;padding-top:60px">
+    <div class="ugc-text reveal-left">
+      <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
+      <h2 class="ugc-title">لما <span>الممثلات</span> تختار YOURS</h2>
+      <div class="ugc-stars">★★★★★</div>
+      <div class="ugc-quote">"جربت YOURS وحسيت بفرق حقيقي من أول استخدام — شعري اتنعم وبريق رجع. تاني منتج راقي بكل المقاييس وأنا بنصح بيه بكل ثقة!"</div>
+      <div class="ugc-author">
+        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">SG</div>
+        <div>
+          <div class="ugc-author-name">صفاء جلال</div>
+          <div class="ugc-author-sub">safaa_galal@ · ممثلة</div>
+          <div style="margin-top:5px">
+            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ Celebrity</span>
+          </div>
+        </div>
+      </div>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيها الآن ←</a>
+    </div>
+    <div class="ugc-video-wrap reveal-right">
+      <video id="ugc-video-2" autoplay muted loop playsinline poster="images/hero2.jpg">
+        <source src="images/WhatsApp Video 2026-08-03 at 3.56.00 AM.mp4" type="video/mp4"/>
+      </video>
+      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
+      <button id="ugc-sound-btn-2" onclick="toggleVideoSound2()" title="تشغيل الصوت" style="
+position:absolute;bottom:14px;left:14px;
+background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
+border:none;border-radius:50%;width:38px;height:38px;
+cursor:pointer;display:flex;align-items:center;justify-content:center;
+font-size:18px;color:#fff;z-index:10;transition:background .2s;
+      ">🔇</button>
+    </div>
+  </div>
+
 </section>
 
 <!-- COLLECTIONS -->
@@ -389,44 +414,6 @@
   </div>
 </section>
 
-<!-- UGC VIDEO SECTION 2 – صفاء جلال -->
-<section class="ugc-section" id="ugc2" style="background:var(--bg-soft)">
-  <div class="ugc-inner" style="direction:rtl">
-    <div class="ugc-text reveal-left">
-      <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--text);line-height:1.25;margin-bottom:10px">
-        لما <span style="color:var(--gold)">الممثلات</span> تختار YOURS
-      </h2>
-      <div class="ugc-stars">★★★★★</div>
-      <div class="ugc-quote">"جربت YOURS وحسيت بفرق حقيقي من أول استخدام — شعري اتنعم وبريق رجع تاني. منتج راقي بكل المقاييس وأنا بنصح بيه بكل ثقة!"</div>
-      <div class="ugc-author">
-        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">SG</div>
-        <div>
-          <div class="ugc-author-name">صفاء جلال</div>
-          <div class="ugc-author-sub">ممثلة · @safaa_galal</div>
-          <div style="margin-top:5px">
-            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ Celebrity</span>
-          </div>
-        </div>
-      </div>
-      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيها الآن ←</a>
-    </div>
-    <div class="ugc-video-wrap reveal-right">
-      <video autoplay muted loop playsinline poster="images/hero2.jpg" id="ugc-video2">
-        <source src="images/WhatsApp_Video_2026-08-03_at_3_56_00_AM.mp4" type="video/mp4"/>
-      </video>
-      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
-      <button onclick="toggleVideoSound2()" title="تشغيل الصوت" id="ugc-sound-btn2" style="
-        position:absolute;bottom:14px;left:14px;
-        background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
-        border:none;border-radius:50%;width:38px;height:38px;
-        cursor:pointer;display:flex;align-items:center;justify-content:center;
-        font-size:18px;color:#fff;z-index:10;transition:background .2s;
-      ">🔇</button>
-    </div>
-  </div>
-</section>
-
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="container">
@@ -476,7 +463,6 @@
 <div class="modal-overlay" id="checkout-modal" style="display:none">
   <div class="modal-box" style="max-width:680px;padding:0">
     <button class="modal-close" onclick="closeCheckout()">✕</button>
-    <!-- Steps -->
     <div class="checkout-steps">
       <div class="checkout-step active" id="step-1-tab">
         <div class="step-num">1</div>
@@ -493,8 +479,6 @@
         <span data-ar="الدفع" data-en="Payment">الدفع</span>
       </div>
     </div>
-
-    <!-- Step 1: Customer Info -->
     <div class="checkout-body" id="checkout-step-1">
       <div class="checkout-section-title" data-ar="بياناتك الشخصية" data-en="Your Personal Information">بياناتك الشخصية</div>
       <div class="form-row">
@@ -535,7 +519,6 @@
         <label data-ar="ملاحظات (اختياري)" data-en="Notes (optional)">ملاحظات (اختياري)</label>
         <textarea id="order-notes" placeholder="أي تفاصيل إضافية..."></textarea>
       </div>
-      <!-- Extras -->
       <div class="checkout-section-title" data-ar="خيارات إضافية" data-en="Extra Options">خيارات إضافية</div>
       <div class="checkout-extras">
         <div class="checkout-extra-option">
@@ -553,8 +536,6 @@
       </div>
       <button class="btn-gold" style="width:100%;margin-top:8px" onclick="goToStep(2)" data-ar="التالي: الشحن →" data-en="Next: Delivery →">التالي: الشحن →</button>
     </div>
-
-    <!-- Step 2: Delivery -->
     <div class="checkout-body" id="checkout-step-2" style="display:none">
       <div class="checkout-section-title" data-ar="اختاري طريقة الشحن" data-en="Choose Delivery Method">اختاري طريقة الشحن</div>
       <div class="delivery-options" id="delivery-options">
@@ -583,23 +564,16 @@
           <div class="delivery-option-price">90 ج</div>
         </div>
       </div>
-
-      <!-- Loyalty points -->
       <div class="loyalty-points-badge">
-        🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
+🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
       </div>
-
-      <!-- Order summary -->
       <div class="checkout-section-title" data-ar="ملخص الطلب" data-en="Order Summary">ملخص الطلب</div>
       <div class="checkout-summary-card" id="checkout-summary-card"></div>
-
       <div style="display:flex;gap:12px;margin-top:16px">
         <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(1)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
         <button class="btn-gold" style="flex:2" onclick="goToStep(3)" data-ar="التالي: الدفع →" data-en="Next: Payment →">التالي: الدفع →</button>
       </div>
     </div>
-
-    <!-- Step 3: Payment -->
     <div class="checkout-body" id="checkout-step-3" style="display:none">
       <div class="checkout-section-title" data-ar="طريقة الدفع" data-en="Payment Method">طريقة الدفع</div>
       <div class="payment-grid">
@@ -628,17 +602,12 @@
           <div class="payment-method-name" style="font-size:10px">Apple Pay <br><span style="color:var(--text-m);font-size:9px">قريباً</span></div>
         </div>
       </div>
-
-      <!-- Final summary with total -->
       <div class="checkout-summary-card" id="checkout-final-summary"></div>
-
       <div style="display:flex;gap:12px;margin-top:16px">
         <button class="btn-outline" style="flex:1;color:var(--text);border-color:var(--border)" onclick="goToStep(2)" data-ar="→ السابق" data-en="← Back">→ السابق</button>
         <button class="btn-gold" style="flex:2;position:relative" id="submit-order-btn" onclick="submitOrder()" data-ar="اطلبي الآن 🛍" data-en="Place Order 🛍">اطلبي الآن 🛍</button>
       </div>
     </div>
-
-    <!-- Step 4: Success -->
     <div class="checkout-success" id="checkout-step-success" style="display:none">
       <div class="checkout-success-icon">🎉</div>
       <h2 data-ar="تم الطلب بنجاح!" data-en="Order Placed Successfully!">تم الطلب بنجاح!</h2>
@@ -774,15 +743,14 @@
   </div>
 </footer>
 
-  
-
 <div id="copy-toast" class="copy-toast">✓ <span data-ar="تم النسخ!" data-en="Copied!">تم النسخ!</span></div>
 
 <script src="products-data.js"></script>
+
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
   const firebaseConfig = {
     apiKey: "AIzaSyAjCyaEKRLK8EMWoaBmuNckfoimCUKLHZs",
     authDomain: "yours-ebc41.firebaseapp.com",
@@ -794,44 +762,24 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   window._firebaseDB = db;
-  window._firebaseLib = { collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
+  window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
 </script>
-<script src="app.js"></script>
-<script>
-// ===== ANNOUNCEMENT BAR LANGUAGE SYNC =====
-function syncAnnouncement(lang) {
-  const isAr = (lang === 'ar');
-  document.querySelectorAll('.ann-ar').forEach(el => el.style.display = isAr ? '' : 'none');
-  document.querySelectorAll('.ann-en').forEach(el => el.style.display = isAr ? 'none' : '');
-}
-// Hook into language change - observe html lang attribute
-const _annObserver = new MutationObserver(() => {
-  syncAnnouncement(document.documentElement.lang || 'ar');
-});
-_annObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
-// Run on load
-document.addEventListener('DOMContentLoaded', () => {
-  syncAnnouncement(document.documentElement.lang || 'ar');
-});
 
+<!-- ✅ دالة الصوت للفيديو التاني -->
+<script>
 function toggleVideoSound2() {
-  const video = document.getElementById('ugc-video2');
-  const btn = document.getElementById('ugc-sound-btn2');
-  if (!video || !btn) return;
-  video.muted = !video.muted;
-  btn.textContent = video.muted ? '🔇' : '🔊';
-}
-// Mute video2 when scrolled out of view
-window.addEventListener('scroll', () => {
-  const video = document.getElementById('ugc-video2');
-  const btn = document.getElementById('ugc-sound-btn2');
-  if (!video || video.muted) return;
-  const rect = video.getBoundingClientRect();
-  if (rect.bottom < 0 || rect.top > window.innerHeight) {
+  const video = document.getElementById('ugc-video-2');
+  const btn = document.getElementById('ugc-sound-btn-2');
+  if (video.muted) {
+    video.muted = false;
+    btn.textContent = '🔊';
+  } else {
     video.muted = true;
-    if (btn) btn.textContent = '🔇';
+    btn.textContent = '🔇';
   }
-}, { passive: true });
+}
 </script>
+
+<script src="app.js"></script>
 </body>
 </html>
