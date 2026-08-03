@@ -5,7 +5,8 @@
 // ===== STATE =====
 let cart = JSON.parse(localStorage.getItem('yours_cart') || '[]');
 let currentLang = localStorage.getItem('yours_lang') || 'ar';
-let currentTheme = localStorage.getItem('yours_theme') || 'rosegold';
+// الثيم بيجي من Firebase فقط – مش من localStorage – عشان يكون موحد على كل الأجهزة
+let currentTheme = 'rosegold';
 let heroIndex = 0, heroTimer;
 let selectedDelivery = { type: 'standard', price: 35, label: '2-4 أيام' };
 let selectedPayment = 'cash';
@@ -126,9 +127,7 @@ function initThemePanel() {
 function applyTheme(id) {
   currentTheme = id;
   document.documentElement.setAttribute('data-theme', id);
-  localStorage.setItem('yours_theme', id);
-  // Save for user-side (admin can change it)
-  localStorage.setItem('yours_theme_user', id);
+  // لا نحفظ الثيم في localStorage – الثيم بيجي من Firebase عشان يكون موحد على كل الأجهزة
   document.querySelectorAll('.theme-option').forEach(el => {
     el.classList.toggle('active', el.getAttribute('onclick').includes(`'${id}'`));
   });
@@ -253,10 +252,7 @@ function applyStoredOverrides() {
   });
   const prodOverride = localStorage.getItem('yours_products_override');
   if (prodOverride) { try { window.YOURS_PRODUCTS = JSON.parse(prodOverride); } catch(e) {} }
-  const themeOverride = localStorage.getItem('yours_theme_user');
-  if (themeOverride && themeOverride !== currentTheme) {
-    applyTheme(themeOverride);
-  }
+  // تم حذف localStorage theme override – الثيم بيجي من Firebase فقط
 }
 
 // ===== RENDER COLLECTIONS =====
