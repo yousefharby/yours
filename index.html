@@ -38,14 +38,24 @@
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement-bar" id="ann-bar">
   <div class="announcement-track" id="ann-track">
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    <!-- AR items (shown when Arabic) -->
+    <span class="ann-ar">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span class="ann-ar">✦ مكونات طبيعية 100%</span>
+    <span class="ann-ar">✦ ضمان الجودة أو استرداد كامل</span>
+    <span class="ann-ar">✦ YOURS – لأنك تستحقين الأفضل</span>
+    <span class="ann-ar">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+    <span class="ann-ar">✦ مكونات طبيعية 100%</span>
+    <span class="ann-ar">✦ ضمان الجودة أو استرداد كامل</span>
+    <span class="ann-ar">✦ YOURS – لأنك تستحقين الأفضل</span>
+    <!-- EN items (shown when English) -->
+    <span class="ann-en" style="display:none">✦ Free shipping on orders over 500 EGP</span>
+    <span class="ann-en" style="display:none">✦ 100% Natural Ingredients</span>
+    <span class="ann-en" style="display:none">✦ Quality Guarantee or Full Refund</span>
+    <span class="ann-en" style="display:none">✦ YOURS – Because You Deserve The Best</span>
+    <span class="ann-en" style="display:none">✦ Free shipping on orders over 500 EGP</span>
+    <span class="ann-en" style="display:none">✦ 100% Natural Ingredients</span>
+    <span class="ann-en" style="display:none">✦ Quality Guarantee or Full Refund</span>
+    <span class="ann-en" style="display:none">✦ YOURS – Because You Deserve The Best</span>
   </div>
 </div>
 
@@ -161,7 +171,7 @@
         </div>
       </div>
       <div class="cat-card masks reveal" onclick="window.location.href='category/body.html'">
-        <img src="images/hero5.jpg" alt="عناية الجسم" class="cat-img"/>
+        <img src="images/hero6.jpg" alt="عناية الجسم" class="cat-img"/>
         <div class="cat-overlay"></div>
         <div class="cat-content">
           <span class="cat-eyebrow">Body Care</span>
@@ -385,7 +395,7 @@
     <div class="ugc-text reveal-left">
       <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
       <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--text);line-height:1.25;margin-bottom:10px">
-        لما <span style="color:var(--gold)">الممثلات</span> بتختاري YOURS
+        لما <span style="color:var(--gold)">الممثلات</span> تختار YOURS
       </h2>
       <div class="ugc-stars">★★★★★</div>
       <div class="ugc-quote">"جربت YOURS وحسيت بفرق حقيقي من أول استخدام — شعري اتنعم وبريق رجع تاني. منتج راقي بكل المقاييس وأنا بنصح بيه بكل ثقة!"</div>
@@ -788,6 +798,22 @@
 </script>
 <script src="app.js"></script>
 <script>
+// ===== ANNOUNCEMENT BAR LANGUAGE SYNC =====
+function syncAnnouncement(lang) {
+  const isAr = (lang === 'ar');
+  document.querySelectorAll('.ann-ar').forEach(el => el.style.display = isAr ? '' : 'none');
+  document.querySelectorAll('.ann-en').forEach(el => el.style.display = isAr ? 'none' : '');
+}
+// Hook into language change - observe html lang attribute
+const _annObserver = new MutationObserver(() => {
+  syncAnnouncement(document.documentElement.lang || 'ar');
+});
+_annObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+// Run on load
+document.addEventListener('DOMContentLoaded', () => {
+  syncAnnouncement(document.documentElement.lang || 'ar');
+});
+
 function toggleVideoSound2() {
   const video = document.getElementById('ugc-video2');
   const btn = document.getElementById('ugc-sound-btn2');
