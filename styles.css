@@ -220,9 +220,9 @@ ul{list-style:none}
 .ugc-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase}
 .ugc-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--text);line-height:1.25}
 .ugc-title span{color:var(--gold)}
-.ugc-desc{font-size:15px;color:var(--text-m);line-height:1.9}
+.ugc-desc{font-size:15px;color:var(--text);line-height:1.9}
 .ugc-stars{display:flex;gap:4px;color:#FFD700;font-size:18px}
-.ugc-quote{font-style:italic;font-size:15px;color:var(--text-m);border-right:3px solid var(--gold);padding-right:16px;line-height:1.7}
+.ugc-quote{font-style:italic;font-size:15px;color:var(--text);border-right:3px solid var(--gold);padding-right:16px;line-height:1.7}
 .ugc-author{display:flex;align-items:center;gap:12px;margin-top:6px}
 .ugc-author-img{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:var(--bg-hover)}
 .ugc-author-name{font-size:14px;font-weight:700;color:var(--text)}
