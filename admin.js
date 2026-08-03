@@ -35,7 +35,8 @@ function doLogin() {
   showDashboard();
 }
 function doLogout() {
-  showDashboard();
+  localStorage.removeItem('yours_admin_auth');
+  window.location.href = 'index.html';
 }
 
 // ===== DASHBOARD LOAD =====
@@ -56,17 +57,14 @@ async function loadDashboard() {
       const { collection, query, orderBy, onSnapshot } = window._firebaseLib;
       const q = query(collection(window._firebaseDB, 'orders'), orderBy('date', 'desc'));
     onSnapshot(q, (snapshot) => {
-      if (snapshot.empty) return;
+      // Firestore هو المصدر الرئيسي - استبدل كل الأوردرات بيه
       const firestoreOrders = snapshot.docs.map(d => ({ ...d.data(), _docId: d.id }));
-      const localIds = new Set(allOrders.map(o => o.id));
-      firestoreOrders.forEach(fo => {
-        if (!localIds.has(fo.id)) allOrders.unshift(fo);
-        else {
-          const idx = allOrders.findIndex(o => o.id === fo.id);
-          if (idx !== -1) allOrders[idx] = { ...allOrders[idx], ...fo };
-        }
-      });
-      allOrders.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
+      // دمج الأوردرات المحلية اللي مش موجودة في Firestore
+      const cloudIds = new Set(firestoreOrders.map(o => o.id));
+      const localOnly = JSON.parse(localStorage.getItem('yours_orders') || '[]')
+        .filter(o => !cloudIds.has(o.id));
+      allOrders = [...firestoreOrders, ...localOnly];
+      allOrders.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
       localStorage.setItem('yours_orders', JSON.stringify(allOrders));
       updateStats();
       renderOrdersTable(allOrders);
