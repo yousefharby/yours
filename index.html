@@ -379,6 +379,44 @@
   </div>
 </section>
 
+<!-- UGC VIDEO SECTION 2 – صفاء جلال -->
+<section class="ugc-section" id="ugc2" style="background:var(--bg-soft)">
+  <div class="ugc-inner" style="direction:rtl">
+    <div class="ugc-text reveal-left">
+      <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--text);line-height:1.25;margin-bottom:10px">
+        لما <span style="color:var(--gold)">الممثلات</span> بتختاري YOURS
+      </h2>
+      <div class="ugc-stars">★★★★★</div>
+      <div class="ugc-quote">"جربت YOURS وحسيت بفرق حقيقي من أول استخدام — شعري اتنعم وبريق رجع تاني. منتج راقي بكل المقاييس وأنا بنصح بيه بكل ثقة!"</div>
+      <div class="ugc-author">
+        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">SG</div>
+        <div>
+          <div class="ugc-author-name">صفاء جلال</div>
+          <div class="ugc-author-sub">ممثلة · @safaa_galal</div>
+          <div style="margin-top:5px">
+            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ Celebrity</span>
+          </div>
+        </div>
+      </div>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيها الآن ←</a>
+    </div>
+    <div class="ugc-video-wrap reveal-right">
+      <video autoplay muted loop playsinline poster="images/hero2.jpg" id="ugc-video2">
+        <source src="images/WhatsApp_Video_2026-08-03_at_3_56_00_AM.mp4" type="video/mp4"/>
+      </video>
+      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
+      <button onclick="toggleVideoSound2()" title="تشغيل الصوت" id="ugc-sound-btn2" style="
+        position:absolute;bottom:14px;left:14px;
+        background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
+        border:none;border-radius:50%;width:38px;height:38px;
+        cursor:pointer;display:flex;align-items:center;justify-content:center;
+        font-size:18px;color:#fff;z-index:10;transition:background .2s;
+      ">🔇</button>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="container">
@@ -749,5 +787,25 @@
   window._firebaseLib = { collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
 </script>
 <script src="app.js"></script>
+<script>
+function toggleVideoSound2() {
+  const video = document.getElementById('ugc-video2');
+  const btn = document.getElementById('ugc-sound-btn2');
+  if (!video || !btn) return;
+  video.muted = !video.muted;
+  btn.textContent = video.muted ? '🔇' : '🔊';
+}
+// Mute video2 when scrolled out of view
+window.addEventListener('scroll', () => {
+  const video = document.getElementById('ugc-video2');
+  const btn = document.getElementById('ugc-sound-btn2');
+  if (!video || video.muted) return;
+  const rect = video.getBoundingClientRect();
+  if (rect.bottom < 0 || rect.top > window.innerHeight) {
+    video.muted = true;
+    if (btn) btn.textContent = '🔇';
+  }
+}, { passive: true });
+</script>
 </body>
 </html>
