@@ -35,8 +35,7 @@ function doLogin() {
   showDashboard();
 }
 function doLogout() {
-  localStorage.removeItem('yours_admin_auth');
-  window.location.href = 'index.html';
+  showDashboard();
 }
 
 // ===== DASHBOARD LOAD =====
@@ -57,14 +56,17 @@ async function loadDashboard() {
       const { collection, query, orderBy, onSnapshot } = window._firebaseLib;
       const q = query(collection(window._firebaseDB, 'orders'), orderBy('date', 'desc'));
     onSnapshot(q, (snapshot) => {
-      // Firestore هو المصدر الرئيسي - استبدل كل الأوردرات بيه
+      if (snapshot.empty) return;
       const firestoreOrders = snapshot.docs.map(d => ({ ...d.data(), _docId: d.id }));
-      // دمج الأوردرات المحلية اللي مش موجودة في Firestore
-      const cloudIds = new Set(firestoreOrders.map(o => o.id));
-      const localOnly = JSON.parse(localStorage.getItem('yours_orders') || '[]')
-        .filter(o => !cloudIds.has(o.id));
-      allOrders = [...firestoreOrders, ...localOnly];
-      allOrders.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      const localIds = new Set(allOrders.map(o => o.id));
+      firestoreOrders.forEach(fo => {
+        if (!localIds.has(fo.id)) allOrders.unshift(fo);
+        else {
+          const idx = allOrders.findIndex(o => o.id === fo.id);
+          if (idx !== -1) allOrders[idx] = { ...allOrders[idx], ...fo };
+        }
+      });
+      allOrders.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
       localStorage.setItem('yours_orders', JSON.stringify(allOrders));
       updateStats();
       renderOrdersTable(allOrders);
@@ -253,6 +255,20 @@ function renderProductsAdmin() {
     </div>`).join('');
 }
 
+// ===== IMAGE UPLOAD PREVIEW =====
+function previewProductImage(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const base64 = e.target.result;
+    document.getElementById('p-image').value = base64;
+    const preview = document.getElementById('p-image-preview');
+    if (preview) { preview.src = base64; preview.style.display = 'block'; }
+  };
+  reader.readAsDataURL(file);
+}
+
 function editProduct(id) {
   const override = localStorage.getItem('yours_products_override');
   const products = override ? JSON.parse(override) : (window.YOURS_PRODUCTS || []);
@@ -270,6 +286,9 @@ function editProduct(id) {
   document.getElementById('p-image').value = p.image || '';
   document.getElementById('p-tag').value = p.tag || '';
   document.getElementById('p-sold-alone').value = p.soldAlone ? 'true' : 'false';
+  document.getElementById('p-image').value = p.image || '';
+  const preview = document.getElementById('p-image-preview');
+  if (preview && p.image) { preview.src = p.image; preview.style.display = 'block'; }
   showTab('add-product', document.querySelector('[onclick*="add-product"]'));
 }
 
@@ -282,7 +301,7 @@ function deleteProduct(id) {
   renderProductsAdmin();
 }
 
-function saveProduct() {
+async function saveProduct() {
   const nameAr = document.getElementById('p-name-ar').value.trim();
   const nameEn = document.getElementById('p-name-en').value.trim();
   if (!nameAr) { document.getElementById('product-save-msg').textContent = '⚠ الاسم مطلوب'; return; }
@@ -316,9 +335,21 @@ function saveProduct() {
   window.YOURS_PRODUCTS = products;
   editingProductId = null;
 
+  // Save to Firestore
+  try {
+    if (window._firebaseDB && window._firebaseLib) {
+      const { doc, setDoc } = window._firebaseLib;
+      await setDoc(doc(window._firebaseDB, 'siteSettings', 'products'), { list: products });
+    }
+  } catch(err) { console.warn('Firestore products save failed:', err); }
+
   // Reset form
   ['p-name-ar','p-name-en','p-desc-ar','p-desc-en','p-size','p-price','p-old-price','p-image','p-tag'].forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('p-sold-alone').value = 'true';
+  const preview = document.getElementById('p-image-preview');
+  if (preview) { preview.src = ''; preview.style.display = 'none'; }
+  const fileInput = document.getElementById('p-image-file');
+  if (fileInput) fileInput.value = '';
 
   const msg = document.getElementById('product-save-msg');
   msg.textContent = '✓ تم الحفظ بنجاح!';
