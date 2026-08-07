@@ -906,3 +906,19 @@ function toggleVideoSound() {
 
 
 // end of app.js
+
+// ===== MOBILE NAV =====
+function openMobileNav() {
+  const dropdown = document.getElementById('mobile-nav-dropdown');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  if (dropdown) { dropdown.classList.add('open'); }
+  if (overlay) { overlay.classList.add('open'); }
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  const dropdown = document.getElementById('mobile-nav-dropdown');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  if (dropdown) { dropdown.classList.remove('open'); }
+  if (overlay) { overlay.classList.remove('open'); }
+  document.body.style.overflow = '';
+}
