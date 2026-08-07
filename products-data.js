@@ -33,6 +33,21 @@ window.YOURS_PRODUCTS = [
   },
   // ===== CONDITIONER =====
   {
+    id: 'conditioner_1000',
+    category: 'conditioner',
+    nameAr: 'بلسم YOURS – لتر كامل',
+    nameEn: 'YOURS Conditioner – 1000ml',
+    descAr: 'بلسم ترميم عميق بالأرجان للشعر الجاف والتالف',
+    descEn: 'Deep repair argan conditioner for dry and damaged hair',
+    size: '1000 ml',
+    price: 550,
+    oldPrice: 700,
+    image: 'images/products/conditioner_1000ml.jpg',
+    inCollection: ['col1'],
+    soldAlone: true,
+    tag: null
+  },
+  {
     id: 'conditioner_500',
     category: 'conditioner',
     nameAr: 'بلسم YOURS – 500 مل',
@@ -43,7 +58,7 @@ window.YOURS_PRODUCTS = [
     price: 320,
     oldPrice: 400,
     image: 'images/products/conditioner_500ml.jpg',
-    inCollection: ['col1', 'col2'],
+    inCollection: ['col2'],
     soldAlone: true,
     tag: null
   },
@@ -147,9 +162,9 @@ window.YOURS_COLLECTIONS = {
   col1: {
     nameAr: 'مجموعة YOURS الفاخرة – 4 قطع',
     nameEn: 'YOURS Luxury Collection – 4 Pieces',
-    products: ['shampoo_1000', 'conditioner_500', 'mask_500', 'serum_100'],
-    price: 2200,
-    oldPrice: 2800,
+    products: ['shampoo_1000', 'conditioner_1000', 'mask_500', 'serum_100'],
+    price: 2520,
+    oldPrice: 3120,
     image: 'images/collections/collection1.jpg',
     descAr: 'الطقم الأمثل للعناية الكاملة – شامبو لتر + بلسم لتر + ماسك 500 جرام + سيروم 100 مل',
     badge: 'الأكثر مبيعاً',
