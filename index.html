@@ -67,8 +67,31 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-badge" id="cart-badge">0</span>
       </button>
+      <button class="hamburger-btn" onclick="openMobileNav()" aria-label="القائمة">
+        <span class="hamburger-dot"></span>
+        <span class="hamburger-dot"></span>
+        <span class="hamburger-dot"></span>
+      </button>
     </div>
   </nav>
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+  <!-- MOBILE NAV DROPDOWN -->
+  <div class="mobile-nav-dropdown" id="mobile-nav-dropdown">
+    <div class="mobile-nav-header">
+      <span class="mobile-nav-logo">YOURS</span>
+      <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link active-link"><span class="nav-icon">🏠</span><span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a>
+      <a href="category/haircare.html" class="mobile-nav-link"><span class="nav-icon">💆</span><span data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</span></a>
+      <a href="category/body.html" class="mobile-nav-link"><span class="nav-icon">🌿</span><span data-ar="الترطيب العميق" data-en="Body Care">الترطيب العميق</span></a>
+      <a href="category/accessories.html" class="mobile-nav-link"><span class="nav-icon">✨</span><span data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</span></a>
+      <a href="category/collections.html" class="mobile-nav-link"><span class="nav-icon">🎁</span><span data-ar="المجموعات" data-en="Collections">المجموعات</span></a>
+      <a href="#offers" class="mobile-nav-link" onclick="closeMobileNav()"><span class="nav-icon">🔥</span><span data-ar="العروض" data-en="Offers">العروض</span></a>
+      <a href="#about" class="mobile-nav-link" onclick="closeMobileNav()"><span class="nav-icon">💝</span><span data-ar="عن يورز" data-en="About">عن يورز</span></a>
+    </nav>
+  </div>
   <div class="main-nav">
     <a href="index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
     <a href="category/haircare.html" class="main-nav-link" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
@@ -290,21 +313,21 @@ font-size:18px;color:#fff;z-index:10;transition:background .2s;
           <span class="offers-num"> <span class="offers-pct" data-ar="35%" data-en="35%">35%</span></span>
           <br><span data-ar="على المجموعات الكاملة" data-en="on complete collections">على المجموعات الكاملة</span>
         </h2>
-        <p class="offers-sub" data-ar='استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي' data-en='Use code <strong>YOURS15</strong> for an extra 15% discount'>استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي</p>
+        <p class="offers-sub" data-ar='كلما اشتريتي أكتر، وفرتي أكتر 🎁' data-en='The more you buy, the more you save 🎁'>كلما اشتريتي أكتر، وفرتي أكتر 🎁</p>
         <div class="offers-codes-row">
           <div class="offer-code-pill" onclick="copyCode('YOURS15')">
             <span>YOURS15</span>
-            <small data-ar="خصم 15%" data-en="15% Off">خصم 15%</small>
+            <small data-ar="خصم 15% عند شراء 3 قطع" data-en="15% Off when buying 3 pieces">خصم 15% عند شراء 3 قطع</small>
           </div>
           <div class="offer-code-pill silver" onclick="copyCode('YOURS25')">
             <span>YOURS25</span>
-            <small data-ar="خصم 25% على لتر" data-en="25% Off 1L size">خصم 25% على لتر</small>
+            <small data-ar="خصم 25% على مجموعة اللتر بالكامل" data-en="25% Off the full 1L collection">خصم 25% على مجموعة اللتر كاملة</small>
           </div>
         </div>
         <div class="offers-scale-row" style="margin-bottom:24px">
           <div class="scale-item"><span class="scale-qty">1</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="سعر عادي" data-en="Regular Price">سعر عادي</span></div>
           <div class="scale-item"><span class="scale-qty">2</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 10%" data-en="10% Off">خصم 10%</span></div>
-          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15%" data-en="15% Off">خصم 15%</span></div>
+          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15% على الـ 3 قطع" data-en="15% Off all 3 pieces">خصم 15% على الـ 3 قطع</span></div>
         </div>
         <a href="category/collections.html" class="btn-gold offers-cta" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a>
       </div>
@@ -783,6 +806,3 @@ function toggleVideoSound2() {
 <script src="app.js"></script>
 </body>
 </html>
-
-
-
