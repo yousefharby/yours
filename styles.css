@@ -214,7 +214,7 @@ ul{list-style:none}
 .ugc-section{padding:80px 0;background:var(--bg)}
 .ugc-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;padding:0 40px}
 .ugc-video-wrap{position:relative;border-radius:24px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-g);background:var(--bg-card)}
-.ugc-video-wrap video{width:100%;height:auto;display:block;border-radius:22px}
+.ugc-video-wrap video{width:100%;height:100%;display:block;border-radius:22px;object-fit:cover;object-position:center 70%;min-height:300px;max-height:480px}
 .ugc-video-badge{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.05em}
 .ugc-text{display:flex;flex-direction:column;gap:20px}
 .ugc-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase}
@@ -733,26 +733,131 @@ ul{list-style:none}
   .lang-divider{font-size:12px}
 }
 
+/* ========== HAMBURGER MENU ========== */
+.hamburger-btn{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:8px;
+  flex-direction:column;
+  gap:5px;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  transition:background 0.2s;
+}
+.hamburger-btn:hover{background:var(--bg-hover)}
+.hamburger-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--text);
+  display:block;
+  transition:background 0.2s;
+}
+.hamburger-btn:hover .hamburger-dot{background:var(--gold)}
+
+/* Mobile dropdown nav */
+.mobile-nav-dropdown{
+  display:none;
+  position:fixed;
+  top:0;
+  right:0;
+  width:280px;
+  height:100vh;
+  background:var(--bg-card);
+  border-left:1px solid var(--border);
+  box-shadow:-8px 0 40px rgba(0,0,0,0.15);
+  z-index:999;
+  padding:0;
+  flex-direction:column;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+[dir="rtl"] .mobile-nav-dropdown{
+  right:0;
+  left:auto;
+  border-left:1px solid var(--border);
+  border-right:none;
+  transform:translateX(100%);
+}
+.mobile-nav-dropdown.open{
+  display:flex;
+  transform:translateX(0);
+}
+.mobile-nav-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 22px;
+  border-bottom:1px solid var(--border);
+}
+.mobile-nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  font-weight:700;
+  color:var(--gold);
+}
+.mobile-nav-close{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:20px;
+  color:var(--text-m);
+  padding:4px 8px;
+  border-radius:8px;
+  transition:background 0.2s;
+}
+.mobile-nav-close:hover{background:var(--bg-hover)}
+.mobile-nav-links{
+  flex:1;
+  padding:16px 0;
+}
+.mobile-nav-link{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 24px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:500;
+  transition:background 0.2s,color 0.2s;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+}
+.mobile-nav-link:hover,.mobile-nav-link.active-link{
+  background:var(--bg-hover);
+  color:var(--gold);
+}
+.mobile-nav-link .nav-icon{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:var(--bg-hover);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  flex-shrink:0;
+}
+.mobile-nav-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:998;
+}
+.mobile-nav-overlay.open{display:block}
+
 /* ========== MAIN NAV (الشريط الثاني) FIX ========== */
 @media(max-width:768px){
   .main-nav{
-    padding:6px 10px;
-    gap:2px;
-    /* scrollable بالأفقي */
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    justify-content:flex-start; /* لا يبدأ من المركز */
+    display:none; /* نخبي الشريط الثاني على موبايل - بنستعمل الـ hamburger */
   }
-
-  .main-nav::-webkit-scrollbar{display:none}
-
-  .main-nav-link{
-    font-size:11px;
-    padding:5px 10px;
-    white-space:nowrap;
-    border-radius:16px;
-    flex-shrink:0; /* لا يتضغط */
+  .hamburger-btn{
+    display:flex;
   }
 }
 
@@ -831,8 +936,13 @@ ul{list-style:none}
 
   .ugc-video-wrap{
     border-radius:16px;
-    max-height:300px;
     overflow:hidden;
+  }
+  .ugc-video-wrap video{
+    min-height:260px;
+    max-height:360px;
+    object-fit:cover;
+    object-position:center 70%;
   }
 
   .ugc-title{font-size:clamp(20px,5vw,28px)}
