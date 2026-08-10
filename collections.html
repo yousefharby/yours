@@ -12,24 +12,30 @@
     .cat-hero p{font-size:15px;color:var(--text-m);max-width:500px;margin:0 auto}
     .cat-breadcrumb{font-size:12px;color:var(--text-m);margin-bottom:20px}
     .cat-breadcrumb a{color:var(--gold);text-decoration:none}
-    .collections-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:32px;padding:60px 0}
+    .collections-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:32px;padding:60px 0}
     .col-detail-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:0.4s ease}
     .col-detail-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g);transform:translateY(-6px)}
-    .col-img-area{padding:36px;background:radial-gradient(circle,var(--bg-hover) 0%,var(--bg) 100%);display:flex;justify-content:center;position:relative}
-    .col-circle{width:200px;height:200px;border-radius:50%;overflow:hidden;border:2px solid var(--border);transition:0.4s}
-    .col-detail-card:hover .col-circle{border-color:var(--gold)}
-    .col-circle img{width:100%;height:100%;object-fit:cover}
-    .col-badge-abs{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px}
-    .col-body{padding:26px}
-    .col-body h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);margin-bottom:8px}
-    .col-body p{font-size:13px;color:var(--text-m);margin-bottom:16px;line-height:1.7}
-    .col-items-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-    .col-item-chip{background:var(--bg-hover);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text-m);padding:4px 10px}
-    .col-price-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .col-img-area{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg-hover)}
+    .col-circle{width:100%;height:100%;border-radius:0;overflow:hidden;border:none}
+    .col-detail-card:hover .col-circle{border:none}
+    .col-circle img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 0.6s ease;display:block}
+    .col-detail-card:hover .col-circle img{transform:scale(1.05)}
+    .col-badge-abs{position:absolute;top:14px;right:14px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:2}
+    .col-body{padding:22px 24px 24px}
+    .col-body h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);margin-bottom:8px;line-height:1.35}
+    .col-body p{font-size:12px;color:var(--text-m);margin-bottom:12px;line-height:1.7}
+    .col-items-detail{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .col-item-row{display:flex;align-items:center;gap:10px;background:var(--bg-hover);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+    .col-item-row img{width:44px;height:44px;object-fit:contain;border-radius:6px;background:var(--bg);padding:3px;flex-shrink:0}
+    .col-item-row-info{flex:1;min-width:0}
+    .col-item-name{display:block;font-size:12px;font-weight:700;color:var(--text);line-height:1.3}
+    .col-item-size{display:block;font-size:11px;color:var(--gold);margin-top:1px}
+    .col-item-inc{font-size:10px;color:var(--text-m);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 7px;white-space:nowrap;flex-shrink:0}
+    .col-price-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
     .col-new-price{font-size:28px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
     .col-old-price{font-size:14px;color:var(--text-m);text-decoration:line-through}
     .col-saving{font-size:12px;color:#4CAF50;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.2);border-radius:20px;padding:4px 12px;display:inline-block;margin-bottom:14px}
-    @media(max-width:768px){.collections-page-grid{grid-template-columns:1fr;padding:40px 0}}
+    @media(max-width:768px){.collections-page-grid{grid-template-columns:1fr;padding:40px 0}.col-img-area{aspect-ratio:4/3}.col-body{padding:16px 18px 18px}.col-new-price{font-size:22px}.col-item-row img{width:38px;height:38px}}
   </style>
 </head>
 <body>
@@ -172,26 +178,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const cols = window.YOURS_COLLECTIONS || {};
   const products = window.YOURS_PRODUCTS || [];
   const grid = document.getElementById('collections-page-grid');
-  grid.innerHTML = Object.entries(cols).map(([id, col]) => {
+  grid.innerHTML = Object.entries(cols).filter(([,col]) => col.active !== false).map(([id, col]) => {
     const name = lang==='ar'?col.nameAr:col.nameEn;
     const desc = lang==='ar'?col.descAr:(col.descEn||col.descAr);
     const cur = lang==='ar'?'ج':'EGP';
     const items = (col.products||[]).map(pid => products.find(p=>p.id===pid)).filter(Boolean);
+    const itemsHtml = items.map(p => `
+      <div class="col-item-row">
+        <img src="../${p.image}" alt="${lang==='ar'?p.nameAr:p.nameEn}"
+             onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
+        <div class="col-item-row-info">
+          <span class="col-item-name">${lang==='ar'?p.nameAr:p.nameEn}</span>
+          <span class="col-item-size">${p.size}</span>
+        </div>
+        <span class="col-item-inc">${lang==='ar'?'مشمول':'Included'}</span>
+      </div>`).join('');
     return `<div class="col-detail-card reveal">
       <div class="col-img-area">
-        <div class="col-circle"><img src="../${col.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/></div>
+        <div class="col-circle"><img src="../${col.image}" alt="${name}"
+             onerror="this.onerror=null;this.src='../images/placeholder.png'"/></div>
         <span class="col-badge-abs">${col.badge||''}</span>
       </div>
       <div class="col-body">
         <h3>${name}</h3>
         <p>${desc}</p>
-        <div class="col-items-list">${items.map(p=>`<span class="col-item-chip">${lang==='ar'?p.nameAr:p.nameEn}</span>`).join('')}</div>
+        <div class="col-items-detail">${itemsHtml}</div>
         <div class="col-price-row">
           <span class="col-new-price">${col.price} ${cur}</span>
           <span class="col-old-price">${col.oldPrice} ${cur}</span>
         </div>
         <div class="col-saving">🎁 ${lang==='ar'?`وفري ${col.saving} ج`:`Save ${col.saving} EGP`}</div>
-        <button class="btn-gold" style="width:100%;font-size:15px;padding:14px" onclick="addCollectionToCart('${id}');toggleCart()">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+        <button class="btn-gold" style="width:100%;font-size:15px;padding:14px"
+                onclick="addCollectionToCart('${id}');toggleCart()">
+          ${lang==='ar'?'أضيفي الطقم للسلة':'Add Bundle to Cart'}
+        </button>
       </div>
     </div>`;
   }).join('');
