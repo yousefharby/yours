@@ -189,36 +189,63 @@
 <div id="copy-toast" class="copy-toast">✓</div>
 
 <script>
-  // Category filter
+  // Hair Care page – one representative soldAlone product per category
   const PAGE_CATEGORIES = ['shampoo','conditioner','mask','serum'];
+
   function filterCat(cat, btn) {
     document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderPageProducts(cat);
   }
+
   function renderPageProducts(cat) {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
     const override = localStorage.getItem('yours_products_override');
     let products = override ? JSON.parse(override) : (window.YOURS_PRODUCTS || []);
     const lang = localStorage.getItem('yours_lang') || 'ar';
-    const filtered = cat === 'all' ? products.filter(p => PAGE_CATEGORIES.includes(p.category)) : products.filter(p => p.category === cat && PAGE_CATEGORIES.includes(p.category));
-    grid.innerHTML = filtered.map((p, i) => {
+
+    let filtered;
+    if (cat === 'all') {
+      const seen = {};
+      filtered = products.filter(p => {
+        if (!PAGE_CATEGORIES.includes(p.category) || !p.soldAlone) return false;
+        if (seen[p.category]) return false;
+        seen[p.category] = true;
+        return true;
+      });
+    } else {
+      filtered = products.filter(p =>
+        p.category === cat && PAGE_CATEGORIES.includes(p.category) && p.soldAlone
+      ).slice(0, 1);
+    }
+
+    grid.innerHTML = filtered.map(p => {
       const name = lang === 'ar' ? p.nameAr : p.nameEn;
       const desc = lang === 'ar' ? p.descAr : p.descEn;
-      const cur = lang === 'ar' ? 'ج' : 'EGP';
+      const cur  = lang === 'ar' ? 'ج' : 'EGP';
       return `<div class="product-card revealed" onclick="openFPP('${p.id}')">
         ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
         <div class="product-img-wrap">
-          <img class="product-full-img" src="../${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/>
-          <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+          <img class="product-full-img" src="../${p.image}" alt="${name}"
+               onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
+          <button class="product-hover-btn"
+                  onclick="event.stopPropagation();addToCart('${p.id}')">
+            ${lang==='ar'?'أضيفي للسلة':'Add to Cart'}
+          </button>
         </div>
         <div class="product-info">
           <h4>${name}</h4>
           <p class="product-desc">${desc}</p>
           <p class="product-size">${p.size}</p>
-          <div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div>
-          <button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+          <div class="product-price">
+            <span class="price-new">${p.price} ${cur}</span>
+            ${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}
+          </div>
+          <button class="btn-gold-sm"
+                  onclick="event.stopPropagation();addToCart('${p.id}')">
+            ${lang==='ar'?'أضيفي للسلة':'Add to Cart'}
+          </button>
         </div>
       </div>`;
     }).join('') || `<p style="text-align:center;color:var(--text-m);padding:40px 0">${lang==='ar'?'لا توجد منتجات':'No products found'}</p>`;
