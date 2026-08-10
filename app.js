@@ -222,7 +222,7 @@ function searchProducts(q) {
   ).slice(0, 6);
   res.innerHTML = matches.length ? matches.map(p => `
     <div class="search-result-item" onclick="openFPP('${p.id}');toggleSearch()">
-      <img src="${p.image}" alt="${p.nameAr}" onerror="this.src='images/logo.jpg'"/>
+      <img src="${p.image}" alt="${p.nameAr}" onerror="this.onerror=null;this.src='images/placeholder.png'"/>
       <div style="flex:1">
         <h4>${currentLang==='ar'?p.nameAr:p.nameEn}</h4>
         <p style="font-size:12px;color:var(--text-m)">${currentLang==='ar'?p.descAr:p.descEn}</p>
@@ -260,15 +260,18 @@ function renderCollections() {
   const grid = document.getElementById('collections-grid');
   if (!grid) return;
   const cols = getCollections();
-  grid.innerHTML = Object.entries(cols).map(([id, col]) => {
-    const name = currentLang === 'ar' ? col.nameAr : col.nameEn;
-    const desc = currentLang === 'ar' ? col.descAr : (col.descEn || col.descAr);
-    const saving = t(`وفري ${col.saving} ج`, `Save ${col.saving} EGP`);
-    return `
+  grid.innerHTML = Object.entries(cols)
+    .filter(([, col]) => col.active !== false)
+    .map(([id, col]) => {
+      const name = currentLang === 'ar' ? col.nameAr : col.nameEn;
+      const desc = currentLang === 'ar' ? col.descAr : (col.descEn || col.descAr);
+      const saving = t(`وفري ${col.saving} ج`, `Save ${col.saving} EGP`);
+      return `
     <div class="collection-card reveal" onclick="openCollectionModal('${id}')">
       <div class="collection-img-wrap">
         <div class="collection-circle">
-          <img src="${col.image}" alt="${name}" class="collection-img" onerror="this.src='images/logo.jpg'"/>
+          <img src="${col.image}" alt="${name}" class="collection-img"
+               onerror="this.onerror=null;this.src='images/placeholder.png'"/>
         </div>
         <span class="collection-badge">${col.badge || ''}</span>
       </div>
@@ -283,7 +286,7 @@ function renderCollections() {
         <button class="btn-gold-sm">${t('اطلبي الآن','Order Now')}</button>
       </div>
     </div>`;
-  }).join('');
+    }).join('');
   initReveal();
 }
 
@@ -299,7 +302,7 @@ function renderProducts() {
     <div class="product-card" style="transition-delay:${i * 0.08}s" onclick="openFPP('${p.id}')">
       ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
       <div class="product-img-wrap">
-        <img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.src='images/logo.jpg'"/>
+        <img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.onerror=null;this.src='images/placeholder.png'"/>
         <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${t('أضيفي للسلة','Add to Cart')}</button>
       </div>
       <div class="product-info">
@@ -351,32 +354,35 @@ function closeFPP() {
 // ===== COLLECTION MODAL =====
 function openCollectionModal(id) {
   const col = getCollections()[id];
-  if (!col) return;
+  if (!col || col.active === false) return;
   const name = currentLang === 'ar' ? col.nameAr : col.nameEn;
   const desc = currentLang === 'ar' ? col.descAr : (col.descEn || col.descAr);
   const products = getProducts();
   const items = (col.products || []).map(pid => products.find(p => p.id === pid)).filter(Boolean);
   const content = document.getElementById('collection-modal-content');
   if (!content) return;
+  const itemsHtml = items.map(p => `
+    <div style="display:flex;align-items:center;gap:12px;background:var(--bg-hover);border:1px solid var(--border);border-radius:12px;padding:10px 12px">
+      <img src="${p.image}" style="width:52px;height:52px;object-fit:contain;border-radius:8px;background:var(--bg);padding:4px;flex-shrink:0"
+           onerror="this.onerror=null;this.src='images/placeholder.png'"/>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.3">${currentLang==='ar'?p.nameAr:p.nameEn}</div>
+        <div style="font-size:11px;color:var(--gold);margin-top:2px">${p.size}</div>
+      </div>
+      <span style="font-size:10px;color:var(--text-m);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px;white-space:nowrap;flex-shrink:0">${t('مشمول','Included')}</span>
+    </div>`).join('');
   content.innerHTML = `
-    <h2 style="font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);margin-bottom:6px">${name}</h2>
-    <p style="color:var(--text-m);font-size:13px;margin-bottom:20px">${desc}</p>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px">
-      ${items.map(p => `
-        <div style="display:flex;align-items:center;gap:10px;background:var(--bg-hover);border-radius:10px;padding:10px">
-          <img src="${p.image}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:1px solid var(--border)" onerror="this.src='images/logo.jpg'"/>
-          <div>
-            <div style="font-size:13px;font-weight:700">${currentLang==='ar'?p.nameAr:p.nameEn}</div>
-            <div style="font-size:12px;color:var(--gold)">${p.price} ${t('ج','EGP')}</div>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-      <span style="font-size:28px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif">${col.price} ${t('ج','EGP')}</span>
+    <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px">${name}</h2>
+    <p style="color:var(--text-m);font-size:12px;margin-bottom:14px;line-height:1.6">${desc}</p>
+    <p style="font-size:11px;font-weight:700;color:var(--text-m);letter-spacing:.05em;margin-bottom:10px;text-transform:uppercase">${t('محتويات الطقم','What\'s Inside')}</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">${itemsHtml}</div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px">
+      <span style="font-size:30px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif">${col.price} ${t('ج','EGP')}</span>
       <span style="font-size:14px;color:var(--text-m);text-decoration:line-through">${col.oldPrice} ${t('ج','EGP')}</span>
     </div>
-    <div style="font-size:13px;color:#4CAF50;margin-bottom:20px">🎁 ${t(`وفري ${col.saving} ج`,`Save ${col.saving} EGP`)}</div>
-    <button class="btn-gold" style="width:100%;font-size:15px;padding:14px" onclick="addCollectionToCart('${id}');closeCollectionModal()">${t('أضيفي للسلة','Add to Cart')}</button>`;
+    <div style="font-size:12px;color:#4CAF50;background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:20px;padding:5px 14px;display:inline-block;margin-bottom:18px">🎁 ${t(`وفري ${col.saving} ج`,`Save ${col.saving} EGP`)}</div>
+    <button class="btn-gold" style="width:100%;font-size:15px;padding:14px;display:block"
+            onclick="addCollectionToCart('${id}');closeCollectionModal()">${t('أضيفي الطقم للسلة','Add Bundle to Cart')}</button>`;
   document.getElementById('collection-modal').style.display = 'flex';
 }
 function closeCollectionModal() {
@@ -398,14 +404,13 @@ function addToCart(id) {
 }
 function addCollectionToCart(colId) {
   const col = getCollections()[colId];
-  if (!col) return;
-  const name = currentLang === 'ar' ? col.nameAr : col.nameEn;
+  if (!col || col.active === false) return;
   const existing = cart.find(i => i.id === colId);
   if (existing) existing.qty++;
   else cart.push({ id: colId, name: col.nameAr, nameEn: col.nameEn, price: col.price, image: col.image, qty: 1, isCollection: true });
   saveCart();
   updateCart();
-  showToast(t('✓ المجموعة أُضيفت!','✓ Collection Added!'));
+  showToast(t('✓ الطقم أُضيف للسلة!','✓ Bundle Added!'));
 }
 function removeFromCart(id) {
   cart = cart.filter(i => i.id !== id);
@@ -448,7 +453,7 @@ function updateCart() {
     const name = currentLang === 'ar' ? item.name : (item.nameEn || item.name);
     return `
     <div class="cart-item">
-      <img src="${item.image}" alt="${name}" onerror="this.src='images/logo.jpg'"/>
+      <img src="${item.image}" alt="${name}" onerror="this.onerror=null;this.src='images/placeholder.png'"/>
       <div class="cart-item-info">
         <h4>${name}</h4>
         <span>${item.price * item.qty} ${t('ج','EGP')}</span>
