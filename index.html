@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+
 <!-- VIVIENNE WESTWOOD STYLE POPUP -->
 <div id="vw-popup-overlay" class="vw-popup-overlay" onclick="if(event.target===this)document.getElementById('vw-popup-overlay').classList.remove('active')">
   <div class="vw-popup">
@@ -33,6 +34,7 @@
     </div>
   </div>
 </div>
+
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement-bar" id="ann-bar">
   <div class="announcement-track" id="ann-track">
@@ -46,6 +48,7 @@
     <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
   </div>
 </div>
+
 <!-- HEADER -->
 <header class="header" id="header">
   <nav class="nav-container">
@@ -67,41 +70,19 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-badge" id="cart-badge">0</span>
       </button>
-      <button class="hamburger-btn" onclick="openMobileNav()" aria-label="القائمة">
-        <span class="hamburger-dot"></span>
-        <span class="hamburger-dot"></span>
-        <span class="hamburger-dot"></span>
-      </button>
     </div>
   </nav>
-  <!-- MOBILE NAV OVERLAY -->
-  <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
-  <!-- MOBILE NAV DROPDOWN -->
-  <div class="mobile-nav-dropdown" id="mobile-nav-dropdown">
-    <div class="mobile-nav-header">
-      <span class="mobile-nav-logo">YOURS</span>
-      <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
-    </div>
-    <nav class="mobile-nav-links">
-      <a href="index.html" class="mobile-nav-link active-link"><span class="nav-icon">🏠</span><span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a>
-      <a href="category/haircare.html" class="mobile-nav-link"><span class="nav-icon">💆</span><span data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</span></a>
-      <a href="category/body.html" class="mobile-nav-link"><span class="nav-icon">🌿</span><span data-ar="الترطيب العميق" data-en="Body Care">الترطيب العميق</span></a>
-      <a href="category/accessories.html" class="mobile-nav-link"><span class="nav-icon">✨</span><span data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</span></a>
-      <a href="category/collections.html" class="mobile-nav-link"><span class="nav-icon">🎁</span><span data-ar="المجموعات" data-en="Collections">المجموعات</span></a>
-      <a href="#offers" class="mobile-nav-link" onclick="closeMobileNav()"><span class="nav-icon">🔥</span><span data-ar="العروض" data-en="Offers">العروض</span></a>
-      <a href="#about" class="mobile-nav-link" onclick="closeMobileNav()"><span class="nav-icon">💝</span><span data-ar="عن يورز" data-en="About">عن يورز</span></a>
-    </nav>
-  </div>
   <div class="main-nav">
     <a href="index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
     <a href="category/haircare.html" class="main-nav-link" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
-    <a href="category/body.html" class="main-nav-link" data-ar="الترطيب العميق" data-en="Body Care">الترطيب العميق</a>
+    <a href="category/body.html" class="main-nav-link" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</a>
     <a href="category/accessories.html" class="main-nav-link" data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</a>
     <a href="category/collections.html" class="main-nav-link" data-ar="المجموعات" data-en="Collections">المجموعات</a>
     <a href="#offers" class="main-nav-link" data-ar="العروض" data-en="Offers">العروض</a>
     <a href="#about" class="main-nav-link" data-ar="عن يورز" data-en="About">عن يورز</a>
   </div>
 </header>
+
 <!-- SEARCH -->
 <div class="search-overlay" id="search-overlay">
   <button class="search-close" onclick="toggleSearch()">✕</button>
@@ -111,6 +92,7 @@
     <div class="search-results" id="search-results"></div>
   </div>
 </div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-slider">
@@ -178,19 +160,16 @@
           <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
         </div>
       </div>
-
-      <!-- ✅ التعديل 1: hero5.jpg اتبدلت بـ hero6.jpg -->
       <div class="cat-card masks reveal" onclick="window.location.href='category/body.html'">
-        <img src="images/hero5.jpg" alt="الترطيب العميق" class="cat-img"/>
+        <img src="images/hero5.jpg" alt="عناية الجسم" class="cat-img"/>
         <div class="cat-overlay"></div>
         <div class="cat-content">
-          <span class="cat-eyebrow">Deep Hydration</span>
-          <div class="cat-title" data-ar="الترطيب العميق" data-en="Body Care">الترطيب العميق</div>
+          <span class="cat-eyebrow">Body Care</span>
+          <div class="cat-title" data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</div>
           <div class="cat-count" data-ar="بودي بوليش · بودي سوفليه" data-en="Body Polish · Body Soufflé">بودي بوليش · بودي سوفليه</div>
           <span class="cat-btn" data-ar="تسوقي القسم ←" data-en="Shop Now →">تسوقي القسم ←</span>
         </div>
       </div>
-
       <div class="cat-card accessories reveal" onclick="window.location.href='category/accessories.html'">
         <img src="images/accessories/bonnet_collection.jpg" alt="إكسسوارات" class="cat-img"/>
         <div class="cat-overlay"></div>
@@ -205,23 +184,21 @@
   </div>
 </section>
 
-<!-- ✅ التعديل 2: UGC SECTION — يوسف جو + صفاء جلال تحته مباشرة -->
+<!-- UGC VIDEO SECTION -->
 <section class="ugc-section" id="ugc">
-
-  <!-- UGC #1: يوسف جو (زي ما كان) -->
   <div class="ugc-inner">
     <div class="ugc-video-wrap reveal-left">
-      <video id="ugc-video" autoplay muted loop playsinline poster="images/hero2.jpg">
-        <source src="images/WhatsApp_Video_2026-07-25_at_2_47_52_AM.mp4" type="video/mp4"/>
-      </video>
+      <!-- ✅ Google Drive video embed - رابط محدّث -->
+      <iframe
+        id="ugc-video-iframe"
+        src="https://drive.google.com/file/d/1k6P0BM9SLVgB35hbggYg9KInfUOKS6Qb/preview"
+        width="100%"
+        height="100%"
+        allow="autoplay"
+        allowfullscreen
+        style="border:none;border-radius:inherit;position:absolute;top:0;left:0;width:100%;height:100%;"
+      ></iframe>
       <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
-      <button id="ugc-sound-btn" onclick="toggleVideoSound()" title="تشغيل الصوت" style="
-position:absolute;bottom:14px;left:14px;
-background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
-border:none;border-radius:50%;width:38px;height:38px;
-cursor:pointer;display:flex;align-items:center;justify-content:center;
-font-size:18px;color:#fff;z-index:10;transition:background .2s;
-      ">🔇</button>
     </div>
     <div class="ugc-text reveal-right">
       <div class="ugc-eyebrow" data-ar="كما قاله يوسف جو 🎙️" data-en="As told by Yousef Joo 🎙️">كما قاله يوسف جو 🎙️</div>
@@ -241,41 +218,6 @@ font-size:18px;color:#fff;z-index:10;transition:background .2s;
       <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيه الآن ←</a>
     </div>
   </div>
-
-  <!-- UGC #2: صفاء جلال — فيديو بدل الصورة، تحت يوسف جو مباشرة -->
-  <div class="ugc-inner" style="border-top:1px solid var(--border);margin-top:0;padding-top:60px">
-    <div class="ugc-text reveal-left">
-      <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
-      <h2 class="ugc-title">لما <span>الممثلات</span> تختار YOURS</h2>
-      <div class="ugc-stars">★★★★★</div>
-      <div class="ugc-quote">"جربت YOURS وحسيت بفرق حقيقي من أول استخدام — شعري اتنعم وبريق رجع. تاني منتج راقي بكل المقاييس وأنا بنصح بيه بكل ثقة!"</div>
-      <div class="ugc-author">
-        <div class="ugc-author-img" style="background:linear-gradient(135deg,var(--gold),var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">SG</div>
-        <div>
-          <div class="ugc-author-name">صفاء جلال</div>
-          <div class="ugc-author-sub">safaa_galal@ · ممثلة</div>
-          <div style="margin-top:5px">
-            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ Celebrity</span>
-          </div>
-        </div>
-      </div>
-      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيها الآن ←</a>
-    </div>
-    <div class="ugc-video-wrap reveal-right">
-      <video id="ugc-video-2" autoplay muted loop playsinline poster="images/hero2.jpg">
-        <source src="images/WhatsApp Video 2026-08-03 at 3.56.00 AM.mp4" type="video/mp4"/>
-      </video>
-      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
-      <button id="ugc-sound-btn-2" onclick="toggleVideoSound2()" title="تشغيل الصوت" style="
-position:absolute;bottom:14px;left:14px;
-background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);
-border:none;border-radius:50%;width:38px;height:38px;
-cursor:pointer;display:flex;align-items:center;justify-content:center;
-font-size:18px;color:#fff;z-index:10;transition:background .2s;
-      ">🔇</button>
-    </div>
-  </div>
-
 </section>
 
 <!-- COLLECTIONS -->
@@ -313,21 +255,21 @@ font-size:18px;color:#fff;z-index:10;transition:background .2s;
           <span class="offers-num"> <span class="offers-pct" data-ar="35%" data-en="35%">35%</span></span>
           <br><span data-ar="على المجموعات الكاملة" data-en="on complete collections">على المجموعات الكاملة</span>
         </h2>
-        <p class="offers-sub" data-ar='كلما اشتريتي أكتر، وفرتي أكتر 🎁' data-en='The more you buy, the more you save 🎁'>كلما اشتريتي أكتر، وفرتي أكتر 🎁</p>
+        <p class="offers-sub" data-ar='استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي' data-en='Use code <strong>YOURS15</strong> for an extra 15% discount'>استخدمي كود <strong>YOURS15</strong> للحصول على 15% خصم إضافي</p>
         <div class="offers-codes-row">
           <div class="offer-code-pill" onclick="copyCode('YOURS15')">
             <span>YOURS15</span>
-            <small data-ar="خصم 15% عند شراء 3 قطع" data-en="15% Off when buying 3 pieces">خصم 15% عند شراء 3 قطع</small>
+            <small data-ar="خصم 15%" data-en="15% Off">خصم 15%</small>
           </div>
           <div class="offer-code-pill silver" onclick="copyCode('YOURS25')">
             <span>YOURS25</span>
-            <small data-ar="خصم 25% على مجموعة اللتر بالكامل" data-en="25% Off the full 1L collection">خصم 25% على مجموعة اللتر كاملة</small>
+            <small data-ar="خصم 25% على لتر" data-en="25% Off 1L size">خصم 25% على لتر</small>
           </div>
         </div>
         <div class="offers-scale-row" style="margin-bottom:24px">
           <div class="scale-item"><span class="scale-qty">1</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="سعر عادي" data-en="Regular Price">سعر عادي</span></div>
           <div class="scale-item"><span class="scale-qty">2</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 10%" data-en="10% Off">خصم 10%</span></div>
-          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15% على الـ 3 قطع" data-en="15% Off all 3 pieces">خصم 15% على الـ 3 قطع</span></div>
+          <div class="scale-item hot"><span class="scale-qty">3+</span><span class="scale-arrow">↓</span><span class="scale-disc" data-ar="خصم 15%" data-en="15% Off">خصم 15%</span></div>
         </div>
         <a href="category/collections.html" class="btn-gold offers-cta" data-ar="تسوقي المجموعات" data-en="Shop Collections">تسوقي المجموعات</a>
       </div>
@@ -588,7 +530,7 @@ font-size:18px;color:#fff;z-index:10;transition:background .2s;
         </div>
       </div>
       <div class="loyalty-points-badge">
-🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
+        🌟 <span data-ar="ستكسبين 120 نقطة ولاء بهذا الطلب!" data-en="You'll earn 120 loyalty points with this order!">ستكسبين 120 نقطة ولاء بهذا الطلب!</span>
       </div>
       <div class="checkout-section-title" data-ar="ملخص الطلب" data-en="Order Summary">ملخص الطلب</div>
       <div class="checkout-summary-card" id="checkout-summary-card"></div>
@@ -786,21 +728,6 @@ font-size:18px;color:#fff;z-index:10;transition:background .2s;
   const db = getFirestore(app);
   window._firebaseDB = db;
   window._firebaseLib = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, onSnapshot };
-</script>
-
-<!-- ✅ دالة الصوت للفيديو التاني -->
-<script>
-function toggleVideoSound2() {
-  const video = document.getElementById('ugc-video-2');
-  const btn = document.getElementById('ugc-sound-btn-2');
-  if (video.muted) {
-    video.muted = false;
-    btn.textContent = '🔊';
-  } else {
-    video.muted = true;
-    btn.textContent = '🔇';
-  }
-}
 </script>
 
 <script src="app.js"></script>
