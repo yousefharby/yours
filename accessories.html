@@ -9,31 +9,13 @@
   .acc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:0.35s;cursor:pointer}.acc-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g);transform:translateY(-4px)}.acc-img{width:100%;height:220px;object-fit:cover;background:var(--bg-hover)}.acc-body{padding:18px 20px}.acc-body h4{font-size:15px;font-weight:700;margin-bottom:4px}.acc-body .p{font-size:12px;color:var(--text-m);margin-bottom:10px}.acc-price{font-size:20px;font-weight:700;color:var(--gold);margin-bottom:12px}</style>
 </head>
 <body>
-<div class="announcement-bar"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ YOURS – Because You Deserve The Best</span></div></div>
+<div class="announcement-bar"><div class="announcement-ticker"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span></div></div></div>
 <header class="header" id="header">
   <nav class="nav-container">
     <div class="nav-left"><div class="lang-switcher"><button class="lang-btn active" id="btn-ar" onclick="switchLang('ar')">🇪🇬 عربي</button><span class="lang-divider">|</span><button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button></div></div>
     <div class="nav-logo"><a href="../index.html"><img src="../images/logo.jpg" alt="YOURS" class="logo-img"/></a></div>
-    <div class="nav-right"><button class="nav-icon-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-badge">0</span>
-      <button class="hamburger-btn" onclick="openMobileNav()" aria-label="القائمة"><span class="hamburger-dot"></span><span class="hamburger-dot"></span><span class="hamburger-dot"></span></button>
-      </button></div>
+    <div class="nav-right"><button class="nav-icon-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-badge">0</span></button></div>
   </nav>
-  <!-- MOBILE NAV OVERLAY -->
-  <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
-  <!-- MOBILE NAV DROPDOWN -->
-  <div class="mobile-nav-dropdown" id="mobile-nav-dropdown">
-    <div class="mobile-nav-header">
-      <span class="mobile-nav-logo">YOURS</span>
-      <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
-    </div>
-    <nav class="mobile-nav-links">
-      <a href="../index.html" class="mobile-nav-link"><span class="nav-icon">🏠</span><span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a>
-      <a href="haircare.html" class="mobile-nav-link"><span class="nav-icon">💆</span><span data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</span></a>
-      <a href="body.html" class="mobile-nav-link"><span class="nav-icon">🌿</span><span data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</span></a>
-      <a href="accessories.html" class="mobile-nav-link active-link"><span class="nav-icon">✨</span><span data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</span></a>
-      <a href="collections.html" class="mobile-nav-link"><span class="nav-icon">🎁</span><span data-ar="المجموعات" data-en="Collections">المجموعات</span></a>
-    </nav>
-  </div>
   <div class="main-nav">
     <a href="../index.html" class="main-nav-link">الرئيسية</a>
     <a href="haircare.html" class="main-nav-link">عناية الشعر</a>
@@ -65,10 +47,10 @@
 <div id="copy-toast" class="copy-toast">✓</div>
 <script>
 const ACCESSORIES = [
-  {id:'acc_bonnet',nameAr:'بونيه ساتان YOURS',nameEn:'YOURS Satin Bonnet',descAr:'حافظي على شعرك أثناء النوم بالبونيه الساتان الفاخر',descEn:'Protect your hair while sleeping with our luxury satin bonnet',size:'Free Size',price:149,oldPrice:199,image:'../images/accessories/bonnet.jpg',category:'accessories',soldAlone:true,tag:'جديد'},
-  {id:'acc_towel',nameAr:'فوطة مايكروفايبر YOURS',nameEn:'YOURS Microfiber Towel',descAr:'فوطة ماصة للمياه بتقنية المايكروفايبر لتجفيف سريع وأمان',descEn:'Water-absorbing microfiber towel for fast, gentle drying',size:'Large',price:199,oldPrice:249,image:'../images/accessories/towel.jpg',category:'accessories',soldAlone:true,tag:null},
-  {id:'acc_comb1',nameAr:'مشط YOURS الاحترافي',nameEn:'YOURS Professional Comb',descAr:'مشط واسع الأسنان للشعر الرطب بدون كسر أو تقطع',descEn:'Wide-tooth comb for wet hair, no breakage',size:'Standard',price:89,oldPrice:null,image:'../images/accessories/comb.jpg',category:'accessories',soldAlone:true,tag:null},
-  {id:'acc_comb2',nameAr:'برش فرد YOURS',nameEn:'YOURS Detangling Brush',descAr:'برش خاص بفرد الشعر بلطف وسهولة',descEn:'Gentle detangling brush for effortless styling',size:'Standard',price:99,oldPrice:null,image:'../images/accessories/brush.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_bonnet',nameAr:'بونيه ساتان YOURS',nameEn:'YOURS Satin Bonnet',descAr:'حافظي على شعرك أثناء النوم بالبونيه الساتان الفاخر',descEn:'Protect your hair while sleeping with our luxury satin bonnet',size:'Free Size',price:149,oldPrice:199,image:'../images/accessories/bonnet_black.jpg',category:'accessories',soldAlone:true,tag:'جديد'},
+  {id:'acc_towel',nameAr:'فوطة مايكروفايبر YOURS',nameEn:'YOURS Microfiber Towel',descAr:'فوطة ماصة للمياه بتقنية المايكروفايبر لتجفيف سريع وأمان',descEn:'Water-absorbing microfiber towel for fast, gentle drying',size:'Large',price:199,oldPrice:249,image:'../images/accessories/towel_white_product.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb1',nameAr:'مشط YOURS الاحترافي',nameEn:'YOURS Professional Comb',descAr:'مشط واسع الأسنان للشعر الرطب بدون كسر أو تقطع',descEn:'Wide-tooth comb for wet hair, no breakage',size:'Standard',price:89,oldPrice:null,image:'../images/accessories/comb1.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb2',nameAr:'برش فرد YOURS',nameEn:'YOURS Detangling Brush',descAr:'برش خاص بفرد الشعر بلطف وسهولة',descEn:'Gentle detangling brush for effortless styling',size:'Standard',price:99,oldPrice:null,image:'../images/accessories/comb2.jpg',category:'accessories',soldAlone:true,tag:null},
 ];
 </script>
 <script src="../products-data.js"></script>
@@ -84,7 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('acc-grid');
   grid.innerHTML = ACCESSORIES.map(p => {
     const name = lang==='ar'?p.nameAr:p.nameEn, desc=lang==='ar'?p.descAr:p.descEn, cur=lang==='ar'?'ج':'EGP';
-    return `<div class="product-card revealed" onclick="openFPP('${p.id}')"><div class="product-img-wrap">${p.tag?`<div class="product-tag">${p.tag}</div>`:''}<img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/><button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div><div class="product-info"><h4>${name}</h4><p class="product-desc">${desc}</p><p class="product-size">${p.size}</p><div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div><button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div></div>`;
+    return `<div class="product-card revealed" onclick="openFPP('${p.id}')">
+      ${p.tag?`<div class="product-tag">${p.tag}</div>`:''}
+      <div class="product-img-wrap">
+        <img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
+        <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+      </div>
+      <div class="product-info">
+        <h4>${name}</h4>
+        <p class="product-desc">${desc}</p>
+        <p class="product-size">${p.size}</p>
+        <div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div>
+        <button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
+      </div>
+    </div>`;
   }).join('');
 
   // Simple checkout for this page
