@@ -19,16 +19,7 @@
 </head>
 <body>
 <!-- ANNOUNCEMENT BAR -->
-<div class="announcement-bar">
-  <div class="announcement-track">
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-  </div>
-</div>
+<div class="announcement-bar"><div class="announcement-ticker"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span></div></div></div>
 <!-- HEADER -->
 <header class="header" id="header">
   <nav class="nav-container">
@@ -45,29 +36,8 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-badge" id="cart-badge">0</span>
       </button>
-      <button class="hamburger-btn" onclick="openMobileNav()" aria-label="القائمة">
-        <span class="hamburger-dot"></span>
-        <span class="hamburger-dot"></span>
-        <span class="hamburger-dot"></span>
-      </button>
     </div>
   </nav>
-  <!-- MOBILE NAV OVERLAY -->
-  <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
-  <!-- MOBILE NAV DROPDOWN -->
-  <div class="mobile-nav-dropdown" id="mobile-nav-dropdown">
-    <div class="mobile-nav-header">
-      <span class="mobile-nav-logo">YOURS</span>
-      <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
-    </div>
-    <nav class="mobile-nav-links">
-      <a href="../index.html" class="mobile-nav-link"><span class="nav-icon">🏠</span><span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a>
-      <a href="haircare.html" class="mobile-nav-link active-link"><span class="nav-icon">💆</span><span data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</span></a>
-      <a href="body.html" class="mobile-nav-link"><span class="nav-icon">🌿</span><span data-ar="العناية بالجسم" data-en="Body Care">العناية بالجسم</span></a>
-      <a href="accessories.html" class="mobile-nav-link"><span class="nav-icon">✨</span><span data-ar="إكسسوارات" data-en="Accessories">إكسسوارات</span></a>
-      <a href="collections.html" class="mobile-nav-link"><span class="nav-icon">🎁</span><span data-ar="المجموعات" data-en="Collections">المجموعات</span></a>
-    </nav>
-  </div>
   <div class="main-nav">
     <a href="../index.html" class="main-nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
     <a href="haircare.html" class="main-nav-link" style="color:var(--gold);font-weight:700" data-ar="عناية الشعر" data-en="Hair Care">عناية الشعر</a>
@@ -189,63 +159,47 @@
 <div id="copy-toast" class="copy-toast">✓</div>
 
 <script>
-  // Hair Care page – one representative soldAlone product per category
+  // Hair Care page – strictly hair-care categories only
   const PAGE_CATEGORIES = ['shampoo','conditioner','mask','serum'];
+
+  function resolveImg(img) {
+    if (!img) return '../images/placeholder.png';
+    if (img.startsWith('http') || img.startsWith('../') || img.startsWith('/')) return img;
+    return '../' + img;
+  }
 
   function filterCat(cat, btn) {
     document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderPageProducts(cat);
   }
-
   function renderPageProducts(cat) {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
     const override = localStorage.getItem('yours_products_override');
     let products = override ? JSON.parse(override) : (window.YOURS_PRODUCTS || []);
     const lang = localStorage.getItem('yours_lang') || 'ar';
-
-    let filtered;
-    if (cat === 'all') {
-      const seen = {};
-      filtered = products.filter(p => {
-        if (!PAGE_CATEGORIES.includes(p.category) || !p.soldAlone) return false;
-        if (seen[p.category]) return false;
-        seen[p.category] = true;
-        return true;
-      });
-    } else {
-      filtered = products.filter(p =>
-        p.category === cat && PAGE_CATEGORIES.includes(p.category) && p.soldAlone
-      ).slice(0, 1);
-    }
-
-    grid.innerHTML = filtered.map(p => {
+    // Strictly filter to hair-care categories only — never show body or accessories
+    const filtered = cat === 'all'
+      ? products.filter(p => PAGE_CATEGORIES.includes(p.category))
+      : products.filter(p => p.category === cat && PAGE_CATEGORIES.includes(p.category));
+    grid.innerHTML = filtered.map((p, i) => {
       const name = lang === 'ar' ? p.nameAr : p.nameEn;
       const desc = lang === 'ar' ? p.descAr : p.descEn;
-      const cur  = lang === 'ar' ? 'ج' : 'EGP';
+      const cur = lang === 'ar' ? 'ج' : 'EGP';
+      const imgSrc = resolveImg(p.image);
       return `<div class="product-card revealed" onclick="openFPP('${p.id}')">
         ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
         <div class="product-img-wrap">
-          <img class="product-full-img" src="../${p.image}" alt="${name}"
-               onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
-          <button class="product-hover-btn"
-                  onclick="event.stopPropagation();addToCart('${p.id}')">
-            ${lang==='ar'?'أضيفي للسلة':'Add to Cart'}
-          </button>
+          <img class="product-full-img" src="${imgSrc}" alt="${name}" onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
+          <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
         </div>
         <div class="product-info">
           <h4>${name}</h4>
           <p class="product-desc">${desc}</p>
           <p class="product-size">${p.size}</p>
-          <div class="product-price">
-            <span class="price-new">${p.price} ${cur}</span>
-            ${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}
-          </div>
-          <button class="btn-gold-sm"
-                  onclick="event.stopPropagation();addToCart('${p.id}')">
-            ${lang==='ar'?'أضيفي للسلة':'Add to Cart'}
-          </button>
+          <div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div>
+          <button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
         </div>
       </div>`;
     }).join('') || `<p style="text-align:center;color:var(--text-m);padding:40px 0">${lang==='ar'?'لا توجد منتجات':'No products found'}</p>`;
