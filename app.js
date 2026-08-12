@@ -13,6 +13,77 @@ let selectedPayment = 'cash';
 let currentOrderNum = '';
 let checkoutStep = 1;
 
+// ===== PRODUCTS DATA =====
+// Valid categories — used to sanitize any Firebase/localStorage overrides
+const VALID_HAIR_CATEGORIES  = ['shampoo','conditioner','mask','serum'];
+const VALID_BODY_CATEGORIES  = ['body'];
+const VALID_ACC_CATEGORIES   = ['accessories'];
+const VALID_ALL_CATEGORIES   = [...VALID_HAIR_CATEGORIES, ...VALID_BODY_CATEGORIES, ...VALID_ACC_CATEGORIES];
+
+// Valid collection IDs — only collections defined in products-data.js are allowed
+const VALID_COLLECTION_IDS = ['col1','col2','col3'];
+
+// Sanitize a product array coming from an override: re-assign category from the
+// canonical YOURS_PRODUCTS when a product with the same id exists, so bad Firebase
+// data can never move a conditioner into body care (or vice-versa).
+function sanitizeProducts(products) {
+  const canonical = window.YOURS_PRODUCTS || [];
+  return products.map(p => {
+    const source = canonical.find(c => c.id === p.id);
+    if (source) {
+      // Always trust the local source for category and image
+      return Object.assign({}, p, {
+        category: source.category,
+        image:    source.image
+      });
+    }
+    // Unknown product: only keep it if it has a valid category
+    if (VALID_ALL_CATEGORIES.includes(p.category)) return p;
+    return null; // drop unknown products with unknown categories
+  }).filter(Boolean);
+}
+
+function getProducts() {
+  const override = localStorage.getItem('yours_products_override');
+  if (override) {
+    try {
+      const parsed = JSON.parse(override);
+      return sanitizeProducts(parsed);
+    } catch(e) {}
+  }
+  return window.YOURS_PRODUCTS || [];
+}
+
+function getCollections() {
+  applyStoredOverrides();
+  const cols = window.YOURS_COLLECTIONS || {};
+  // Strip out any collection IDs that aren't in our canonical list
+  const clean = {};
+  Object.entries(cols).forEach(([id, col]) => {
+    if (VALID_COLLECTION_IDS.includes(id)) clean[id] = col;
+  });
+  return clean;
+}
+
+function applyStoredOverrides() {
+  // Only update price/oldPrice on existing canonical collections — never add new ones
+  const overrides = JSON.parse(localStorage.getItem('yours_col_overrides') || '{}');
+  Object.entries(overrides).forEach(([id, data]) => {
+    if (VALID_COLLECTION_IDS.includes(id) && window.YOURS_COLLECTIONS?.[id]) {
+      window.YOURS_COLLECTIONS[id].price    = data.price;
+      window.YOURS_COLLECTIONS[id].oldPrice = data.oldPrice;
+    }
+  });
+  // Sanitize product override — fix wrong categories from Firebase
+  const prodOverride = localStorage.getItem('yours_products_override');
+  if (prodOverride) {
+    try {
+      const parsed = JSON.parse(prodOverride);
+      window.YOURS_PRODUCTS = sanitizeProducts(parsed);
+    } catch(e) {}
+  }
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(currentTheme);
@@ -239,76 +310,7 @@ function searchProducts(q) {
     `<p style="color:var(--text-m);padding:16px 0">${t('لا توجد نتائج','No results found')}</p>`;
 }
 
-// ===== PRODUCTS DATA =====
-// Valid categories — used to sanitize any Firebase/localStorage overrides
-const VALID_HAIR_CATEGORIES  = ['shampoo','conditioner','mask','serum'];
-const VALID_BODY_CATEGORIES  = ['body'];
-const VALID_ACC_CATEGORIES   = ['accessories'];
-const VALID_ALL_CATEGORIES   = [...VALID_HAIR_CATEGORIES, ...VALID_BODY_CATEGORIES, ...VALID_ACC_CATEGORIES];
 
-// Valid collection IDs — only collections defined in products-data.js are allowed
-const VALID_COLLECTION_IDS = ['col1','col2','col3'];
-
-// Sanitize a product array coming from an override: re-assign category from the
-// canonical YOURS_PRODUCTS when a product with the same id exists, so bad Firebase
-// data can never move a conditioner into body care (or vice-versa).
-function sanitizeProducts(products) {
-  const canonical = window.YOURS_PRODUCTS || [];
-  return products.map(p => {
-    const source = canonical.find(c => c.id === p.id);
-    if (source) {
-      // Always trust the local source for category and image
-      return Object.assign({}, p, {
-        category: source.category,
-        image:    source.image
-      });
-    }
-    // Unknown product: only keep it if it has a valid category
-    if (VALID_ALL_CATEGORIES.includes(p.category)) return p;
-    return null; // drop unknown products with unknown categories
-  }).filter(Boolean);
-}
-
-function getProducts() {
-  const override = localStorage.getItem('yours_products_override');
-  if (override) {
-    try {
-      const parsed = JSON.parse(override);
-      return sanitizeProducts(parsed);
-    } catch(e) {}
-  }
-  return window.YOURS_PRODUCTS || [];
-}
-
-function getCollections() {
-  applyStoredOverrides();
-  const cols = window.YOURS_COLLECTIONS || {};
-  // Strip out any collection IDs that aren't in our canonical list
-  const clean = {};
-  Object.entries(cols).forEach(([id, col]) => {
-    if (VALID_COLLECTION_IDS.includes(id)) clean[id] = col;
-  });
-  return clean;
-}
-
-function applyStoredOverrides() {
-  // Only update price/oldPrice on existing canonical collections — never add new ones
-  const overrides = JSON.parse(localStorage.getItem('yours_col_overrides') || '{}');
-  Object.entries(overrides).forEach(([id, data]) => {
-    if (VALID_COLLECTION_IDS.includes(id) && window.YOURS_COLLECTIONS?.[id]) {
-      window.YOURS_COLLECTIONS[id].price    = data.price;
-      window.YOURS_COLLECTIONS[id].oldPrice = data.oldPrice;
-    }
-  });
-  // Sanitize product override — fix wrong categories from Firebase
-  const prodOverride = localStorage.getItem('yours_products_override');
-  if (prodOverride) {
-    try {
-      const parsed = JSON.parse(prodOverride);
-      window.YOURS_PRODUCTS = sanitizeProducts(parsed);
-    } catch(e) {}
-  }
-}
 
 // ===== RENDER COLLECTIONS =====
 function renderCollections() {
@@ -1018,3 +1020,6 @@ function closeMobileNav() {
   if (overlay) { overlay.classList.remove('open'); }
   document.body.style.overflow = '';
 }
+
+
+
