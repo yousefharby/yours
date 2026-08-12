@@ -37,15 +37,19 @@
 
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement-bar" id="ann-bar">
-  <div class="announcement-track" id="ann-track">
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+  <div class="announcement-ticker">
+    <div class="announcement-track" id="ann-track">
+      <!-- Set 1 (original) -->
+      <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+      <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+      <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+      <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+      <!-- Set 2 (duplicate — creates the seamless loop) -->
+      <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
+      <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
+      <span data-ar="✦ ضمان الجودة أو استرداد كامل" data-en="✦ Quality Guarantee or Full Refund">✦ ضمان الجودة أو استرداد كامل</span>
+      <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
+    </div>
   </div>
 </div>
 
@@ -184,25 +188,23 @@
   </div>
 </section>
 
-<!-- UGC VIDEO SECTION -->
+<!-- UGC SECTION 1 – Yusuf Joo / يوسف جوو -->
 <section class="ugc-section" id="ugc">
   <div class="ugc-inner">
     <div class="ugc-video-wrap reveal-left">
-      <!-- ✅ Google Drive video embed - رابط محدّث -->
-      <iframe
-        id="ugc-video-iframe"
-        src="https://drive.google.com/file/d/1k6P0BM9SLVgB35hbggYg9KInfUOKS6Qb/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none;border-radius:inherit;position:absolute;top:0;left:0;width:100%;height:100%;"
-      ></iframe>
+      <video
+        id="ugc-video-youssef"
+        src="images/WhatsApp Video 2026-08-03 at 3.56.00 AM.mp4"
+        controls
+        playsinline
+        preload="metadata"
+        style="width:100%;height:auto;display:block;border-radius:inherit;"
+      ></video>
       <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
     </div>
     <div class="ugc-text reveal-right">
       <div class="ugc-eyebrow" data-ar="كما قاله يوسف جو 🎙️" data-en="As told by Yousef Joo 🎙️">كما قاله يوسف جو 🎙️</div>
-      <h2 class="ugc-title" id="ugc-title">لما <span>المشاهير</span> بيتكلموا عنا</h2>
+      <h2 class="ugc-title" id="ugc-title">النتيجة تتكلم عن <span>نفسها</span></h2>
       <div class="ugc-stars">★★★★★</div>
       <div class="ugc-quote">"جربت YOURS وبصراحة مش توقعت النتيجة دي — المنتج ده بجد فرّق مع شعري بشكل واضح، خامة عالية وريحة تجنن. أنا مؤيّده وبرشحه لكل الناس!"</div>
       <div class="ugc-author">
@@ -215,7 +217,42 @@
           </div>
         </div>
       </div>
-      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content">اطلبي زيه الآن ←</a>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content" data-ar="اطلبي زيه الآن ←" data-en="Order Now →">اطلبي زيه الآن ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- UGC SECTION 2 – Safaa Galal / صفاء جلال -->
+<section class="ugc-section ugc-section-alt" id="ugc-safaa" style="background:var(--bg-soft)">
+  <div class="ugc-inner ugc-inner-reverse">
+    <div class="ugc-text reveal-left">
+      <div class="ugc-eyebrow" data-ar="كما قالتها صفاء جلال 🎙️" data-en="As told by Safaa Galal 🎙️">كما قالتها صفاء جلال 🎙️</div>
+      <h2 class="ugc-title" id="ugc-title-safaa">لما <span>النجوم</span> بيختاروا YOURS</h2>
+      <div class="ugc-stars">★★★★★</div>
+      <div class="ugc-quote">"منتجات YOURS بجد مختلفة — حاسة بالفرق من أول استخدام. الجودة عالية والريحة رائعة. أنا فخورة بإني أقدم منتج مصري بالمستوى ده لمتابعاتي!"</div>
+      <div class="ugc-author">
+        <div class="ugc-author-img" style="background:linear-gradient(135deg,#c9956e,var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:Cairo,sans-serif;flex-shrink:0;">SG</div>
+        <div>
+          <div class="ugc-author-name" data-ar="صفاء جلال" data-en="Safaa Galal">صفاء جلال</div>
+          <div class="ugc-author-sub" data-ar="ممثلة · مشهورة" data-en="Actress · Celebrity">ممثلة · مشهورة</div>
+          <div style="margin-top:5px">
+            <span style="background:rgba(181,119,122,0.12);border:1px solid var(--border);border-radius:20px;font-size:10px;color:var(--gold);padding:3px 10px;font-weight:700">✓ Brand Ambassador</span>
+          </div>
+        </div>
+      </div>
+      <a href="category/collections.html" class="btn-gold" style="margin-top:14px;width:fit-content" data-ar="اطلبي زيها الآن ←" data-en="Order Now →">اطلبي زيها الآن ←</a>
+    </div>
+    <div class="ugc-video-wrap reveal-right">
+      <!-- Safaa Galal video — uses the same local video asset. Replace src when her dedicated video file is available. -->
+      <video
+        id="ugc-video-safaa"
+        src="images/WhatsApp Video 2026-08-03 at 3.56.00 AM.mp4"
+        controls
+        playsinline
+        preload="metadata"
+        style="width:100%;height:auto;display:block;border-radius:inherit;"
+      ></video>
+      <div class="ugc-video-badge" data-ar="تجربة حقيقية 🎬" data-en="Real Experience 🎬">تجربة حقيقية 🎬</div>
     </div>
   </div>
 </section>
@@ -733,5 +770,3 @@
 <script src="app.js"></script>
 </body>
 </html>
-
-
