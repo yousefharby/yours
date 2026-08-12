@@ -77,11 +77,56 @@ ul{list-style:none}
 ::-webkit-scrollbar-thumb{background:var(--scroll-t);border-radius:3px}
 
 /* ========== ANNOUNCEMENT ========== */
-.announcement-bar{background:var(--ann-bg);color:var(--ann-text);overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
-.announcement-track{display:inline-flex;align-items:center;white-space:nowrap;animation:marquee-rtl 28s linear infinite;font-size:12px;font-weight:600;letter-spacing:0.05em;will-change:transform}
-.announcement-track span{padding:0 32px;border-right:1px solid rgba(255,255,255,0.15)}
-.announcement-track span:last-child{border-right:none}
-@keyframes marquee-rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.announcement-bar{
+  background:var(--ann-bg);
+  color:var(--ann-text);
+  overflow:hidden;
+  height:36px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  /* Ensure no extra space above/below */
+  flex-shrink:0;
+  line-height:36px;
+}
+/* The ticker wrapper — direction is always LTR so animation is predictable */
+.announcement-ticker{
+  display:flex;
+  align-items:center;
+  width:100%;
+  overflow:hidden;
+  height:100%;
+  direction:ltr; /* animation is always right→left regardless of page RTL */
+}
+/* The moving track — duplicated content for seamless loop */
+.announcement-track{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+  /* Animation always moves left so the ticker scrolls right→left visually */
+  animation:ticker-move 32s linear infinite;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.05em;
+  will-change:transform;
+  /* No translate offset at start — content fills from right edge */
+  transform:translateX(0);
+}
+/* Each message segment */
+.announcement-track span{
+  /* Arabic text direction restored inside the span */
+  unicode-bidi:embed;
+  padding:0 36px;
+  border-left:1px solid rgba(255,255,255,0.18);
+  display:inline-block;
+  flex-shrink:0;
+}
+.announcement-track span:first-child{border-left:none}
+/* Seamless: translate from 0 to -50% (half of doubled content) */
+@keyframes ticker-move{
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 /* ========== HEADER ========== */
 .header{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow 0.3s,background 0.5s}
@@ -212,7 +257,11 @@ ul{list-style:none}
 
 /* ========== UGC VIDEO SECTION ========== */
 .ugc-section{padding:80px 0;background:var(--bg)}
+.ugc-section-alt{background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .ugc-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;padding:0 40px}
+/* Reversed layout for second UGC section — swap column order visually */
+.ugc-inner-reverse > :first-child { order: 2; }
+.ugc-inner-reverse > :last-child  { order: 1; }
 .ugc-video-wrap{position:relative;border-radius:24px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-g);background:var(--bg-card)}
 .ugc-video-wrap video{width:100%;height:auto;display:block;border-radius:22px}
 .ugc-video-badge{position:absolute;top:16px;right:16px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.05em}
@@ -325,8 +374,8 @@ ul{list-style:none}
 .product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden;position:relative;opacity:0;transform:translateY(48px);transition:opacity 0.6s ease,transform 0.6s ease,border-color 0.35s ease,box-shadow 0.35s ease}
 .product-card.revealed{opacity:1;transform:translateY(0)}
 .product-card:hover{border-color:var(--gold);box-shadow:var(--shadow-g)}
-.product-img-wrap{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--bg-hover)}
-.product-full-img{width:100%;height:100%;object-fit:contain;object-position:center;padding:16px;transition:transform 0.55s ease;display:block}
+.product-img-wrap{width:100%;aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--bg-hover)}
+.product-full-img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 0.55s ease;display:block}
 .product-card:hover .product-full-img{transform:scale(1.07)}
 .product-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(181,119,122,0.12) 0%,transparent 60%);opacity:0;transition:opacity 0.35s ease;pointer-events:none}
 .product-card:hover .product-img-wrap::after{opacity:1}
@@ -935,7 +984,11 @@ ul{list-style:none}
     padding:0 16px;
   }
 
-  /* force reveal visible on mobile - لا نعتمد على الـ JS */
+  /* On mobile, reversed section: reset order so video comes first */
+  .ugc-inner-reverse > :first-child { order: unset; }
+  .ugc-inner-reverse > :last-child  { order: unset; }
+
+  /* force reveal visible on mobile */
   .ugc-inner .reveal-left,
   .ugc-inner .reveal-right{
     opacity:1 !important;
@@ -945,7 +998,7 @@ ul{list-style:none}
   .ugc-video-wrap{
     border-radius:16px;
     overflow:hidden;
-    max-width:340px;
+    max-width:360px;
     margin:0 auto;
   }
   .ugc-video-wrap video{
@@ -974,7 +1027,7 @@ ul{list-style:none}
     gap:12px;
   }
 
-  /* product-img-wrap uses aspect-ratio:3/4 — scales naturally on mobile */
+  /* product-img-wrap uses aspect-ratio:4/5 — scales naturally on mobile */
 
   .product-info{padding:12px 14px 14px}
   .product-info h4{font-size:13px}
