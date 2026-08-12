@@ -163,12 +163,19 @@ function applyLang(lang) {
     }
   });
 
-  // UGC title special case (contains HTML)
+  // UGC section 1 title (Yusuf Joo)
   const ugcTitle = document.getElementById('ugc-title');
   if (ugcTitle) {
     ugcTitle.innerHTML = isAr
       ? 'النتيجة تتكلم عن <span>نفسها</span>'
       : 'Results Speak <span>for Themselves</span>';
+  }
+  // UGC section 2 title (Safaa Galal)
+  const ugcTitle2 = document.getElementById('ugc-title-safaa');
+  if (ugcTitle2) {
+    ugcTitle2.innerHTML = isAr
+      ? 'لما <span>النجوم</span> بيختاروا YOURS'
+      : 'When <span>Stars</span> Choose YOURS';
   }
 
   // Active lang button
@@ -233,26 +240,74 @@ function searchProducts(q) {
 }
 
 // ===== PRODUCTS DATA =====
+// Valid categories — used to sanitize any Firebase/localStorage overrides
+const VALID_HAIR_CATEGORIES  = ['shampoo','conditioner','mask','serum'];
+const VALID_BODY_CATEGORIES  = ['body'];
+const VALID_ACC_CATEGORIES   = ['accessories'];
+const VALID_ALL_CATEGORIES   = [...VALID_HAIR_CATEGORIES, ...VALID_BODY_CATEGORIES, ...VALID_ACC_CATEGORIES];
+
+// Valid collection IDs — only collections defined in products-data.js are allowed
+const VALID_COLLECTION_IDS = ['col1','col2','col3'];
+
+// Sanitize a product array coming from an override: re-assign category from the
+// canonical YOURS_PRODUCTS when a product with the same id exists, so bad Firebase
+// data can never move a conditioner into body care (or vice-versa).
+function sanitizeProducts(products) {
+  const canonical = window.YOURS_PRODUCTS || [];
+  return products.map(p => {
+    const source = canonical.find(c => c.id === p.id);
+    if (source) {
+      // Always trust the local source for category and image
+      return Object.assign({}, p, {
+        category: source.category,
+        image:    source.image
+      });
+    }
+    // Unknown product: only keep it if it has a valid category
+    if (VALID_ALL_CATEGORIES.includes(p.category)) return p;
+    return null; // drop unknown products with unknown categories
+  }).filter(Boolean);
+}
+
 function getProducts() {
   const override = localStorage.getItem('yours_products_override');
-  if (override) { try { return JSON.parse(override); } catch(e) {} }
+  if (override) {
+    try {
+      const parsed = JSON.parse(override);
+      return sanitizeProducts(parsed);
+    } catch(e) {}
+  }
   return window.YOURS_PRODUCTS || [];
 }
+
 function getCollections() {
   applyStoredOverrides();
-  return window.YOURS_COLLECTIONS || {};
+  const cols = window.YOURS_COLLECTIONS || {};
+  // Strip out any collection IDs that aren't in our canonical list
+  const clean = {};
+  Object.entries(cols).forEach(([id, col]) => {
+    if (VALID_COLLECTION_IDS.includes(id)) clean[id] = col;
+  });
+  return clean;
 }
+
 function applyStoredOverrides() {
+  // Only update price/oldPrice on existing canonical collections — never add new ones
   const overrides = JSON.parse(localStorage.getItem('yours_col_overrides') || '{}');
   Object.entries(overrides).forEach(([id, data]) => {
-    if (window.YOURS_COLLECTIONS?.[id]) {
-      window.YOURS_COLLECTIONS[id].price = data.price;
+    if (VALID_COLLECTION_IDS.includes(id) && window.YOURS_COLLECTIONS?.[id]) {
+      window.YOURS_COLLECTIONS[id].price    = data.price;
       window.YOURS_COLLECTIONS[id].oldPrice = data.oldPrice;
     }
   });
+  // Sanitize product override — fix wrong categories from Firebase
   const prodOverride = localStorage.getItem('yours_products_override');
-  if (prodOverride) { try { window.YOURS_PRODUCTS = JSON.parse(prodOverride); } catch(e) {} }
-  // تم حذف localStorage theme override – الثيم بيجي من Firebase فقط
+  if (prodOverride) {
+    try {
+      const parsed = JSON.parse(prodOverride);
+      window.YOURS_PRODUCTS = sanitizeProducts(parsed);
+    } catch(e) {}
+  }
 }
 
 // ===== RENDER COLLECTIONS =====
@@ -362,14 +417,21 @@ function openCollectionModal(id) {
   const content = document.getElementById('collection-modal-content');
   if (!content) return;
   const itemsHtml = items.map(p => `
-    <div style="display:flex;align-items:center;gap:12px;background:var(--bg-hover);border:1px solid var(--border);border-radius:12px;padding:10px 12px">
-      <img src="${p.image}" style="width:52px;height:52px;object-fit:contain;border-radius:8px;background:var(--bg);padding:4px;flex-shrink:0"
-           onerror="this.onerror=null;this.src='images/placeholder.png'"/>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.3">${currentLang==='ar'?p.nameAr:p.nameEn}</div>
-        <div style="font-size:11px;color:var(--gold);margin-top:2px">${p.size}</div>
+    <div style="display:flex;align-items:center;gap:14px;background:var(--bg-hover);border:1px solid var(--border);border-radius:14px;padding:12px 14px;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="width:88px;height:88px;flex-shrink:0;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--border);cursor:zoom-in;position:relative"
+           onclick="event.stopPropagation();openBundleProductImage('${p.image}','${currentLang==='ar'?p.nameAr:p.nameEn}')">
+        <img src="${p.image}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 0.3s"
+             onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"
+             onerror="this.onerror=null;this.src='images/placeholder.png'"/>
+        <div style="position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,0.45);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;pointer-events:none">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 7v8M7 11h8"/></svg>
+        </div>
       </div>
-      <span style="font-size:10px;color:var(--text-m);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px;white-space:nowrap;flex-shrink:0">${t('مشمول','Included')}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.3">${currentLang==='ar'?p.nameAr:p.nameEn}</div>
+        <div style="font-size:12px;color:var(--gold);margin-top:3px">${p.size}</div>
+      </div>
+      <span style="font-size:10px;color:var(--text-m);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap;flex-shrink:0">${t('مشمول','Included')}</span>
     </div>`).join('');
   content.innerHTML = `
     <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px">${name}</h2>
@@ -387,6 +449,35 @@ function openCollectionModal(id) {
 }
 function closeCollectionModal() {
   document.getElementById('collection-modal').style.display = 'none';
+}
+
+// ===== BUNDLE PRODUCT IMAGE VIEWER =====
+function openBundleProductImage(src, name) {
+  // Remove existing viewer if present
+  const existing = document.getElementById('bundle-img-viewer');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'bundle-img-viewer';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:10000;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px';
+  overlay.onclick = () => overlay.remove();
+
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = name;
+  img.style.cssText = 'max-width:90vw;max-height:85vh;object-fit:contain;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,0.5);cursor:default';
+  img.onclick = (e) => e.stopPropagation();
+
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '✕';
+  closeBtn.style.cssText = 'position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;transition:background 0.2s';
+  closeBtn.onmouseover = () => { closeBtn.style.background = 'rgba(255,255,255,0.3)'; };
+  closeBtn.onmouseout = () => { closeBtn.style.background = 'rgba(255,255,255,0.15)'; };
+  closeBtn.onclick = (e) => { e.stopPropagation(); overlay.remove(); };
+
+  overlay.appendChild(img);
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
 }
 
 // ===== CART =====
