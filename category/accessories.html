@@ -47,10 +47,10 @@
 <div id="copy-toast" class="copy-toast">✓</div>
 <script>
 const ACCESSORIES = [
-  {id:'acc_bonnet',nameAr:'بونيه ساتان YOURS',nameEn:'YOURS Satin Bonnet',descAr:'حافظي على شعرك أثناء النوم بالبونيه الساتان الفاخر',descEn:'Protect your hair while sleeping with our luxury satin bonnet',size:'Free Size',price:149,oldPrice:199,image:'../images/accessories/bonnet.jpg',category:'accessories',soldAlone:true,tag:'جديد'},
-  {id:'acc_towel',nameAr:'فوطة مايكروفايبر YOURS',nameEn:'YOURS Microfiber Towel',descAr:'فوطة ماصة للمياه بتقنية المايكروفايبر لتجفيف سريع وأمان',descEn:'Water-absorbing microfiber towel for fast, gentle drying',size:'Large',price:199,oldPrice:249,image:'../images/accessories/towel.jpg',category:'accessories',soldAlone:true,tag:null},
-  {id:'acc_comb1',nameAr:'مشط YOURS الاحترافي',nameEn:'YOURS Professional Comb',descAr:'مشط واسع الأسنان للشعر الرطب بدون كسر أو تقطع',descEn:'Wide-tooth comb for wet hair, no breakage',size:'Standard',price:89,oldPrice:null,image:'../images/accessories/comb.jpg',category:'accessories',soldAlone:true,tag:null},
-  {id:'acc_comb2',nameAr:'برش فرد YOURS',nameEn:'YOURS Detangling Brush',descAr:'برش خاص بفرد الشعر بلطف وسهولة',descEn:'Gentle detangling brush for effortless styling',size:'Standard',price:99,oldPrice:null,image:'../images/accessories/brush.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_bonnet',nameAr:'بونيه ساتان YOURS',nameEn:'YOURS Satin Bonnet',descAr:'حافظي على شعرك أثناء النوم بالبونيه الساتان الفاخر',descEn:'Protect your hair while sleeping with our luxury satin bonnet',size:'Free Size',price:149,oldPrice:199,image:'../images/accessories/bonnet_black.jpg',category:'accessories',soldAlone:true,tag:'جديد'},
+  {id:'acc_towel',nameAr:'فوطة مايكروفايبر YOURS',nameEn:'YOURS Microfiber Towel',descAr:'فوطة ماصة للمياه بتقنية المايكروفايبر لتجفيف سريع وأمان',descEn:'Water-absorbing microfiber towel for fast, gentle drying',size:'Large',price:199,oldPrice:249,image:'../images/accessories/towel_white_product.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb1',nameAr:'مشط YOURS الاحترافي',nameEn:'YOURS Professional Comb',descAr:'مشط واسع الأسنان للشعر الرطب بدون كسر أو تقطع',descEn:'Wide-tooth comb for wet hair, no breakage',size:'Standard',price:89,oldPrice:null,image:'../images/accessories/comb1.jpg',category:'accessories',soldAlone:true,tag:null},
+  {id:'acc_comb2',nameAr:'برش فرد YOURS',nameEn:'YOURS Detangling Brush',descAr:'برش خاص بفرد الشعر بلطف وسهولة',descEn:'Gentle detangling brush for effortless styling',size:'Standard',price:99,oldPrice:null,image:'../images/accessories/comb2.jpg',category:'accessories',soldAlone:true,tag:null},
 ];
 </script>
 <script src="../products-data.js"></script>
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('acc-grid');
   grid.innerHTML = ACCESSORIES.map(p => {
     const name = lang==='ar'?p.nameAr:p.nameEn, desc=lang==='ar'?p.descAr:p.descEn, cur=lang==='ar'?'ج':'EGP';
-    return `<div class="product-card revealed" onclick="openFPP('${p.id}')"><div class="product-img-wrap">${p.tag?`<div class="product-tag">${p.tag}</div>`:''}<img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/><button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div><div class="product-info"><h4>${name}</h4><p class="product-desc">${desc}</p><p class="product-size">${p.size}</p><div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div><button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div></div>`;
+    return `<div class="product-card revealed" onclick="openFPP('${p.id}')"><div class="product-img-wrap">${p.tag?`<div class="product-tag">${p.tag}</div>`:''}<img class="product-full-img" src="${p.image}" alt="${name}" onerror="this.onerror=null;this.src='../images/placeholder.png'"/><button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div><div class="product-info"><h4>${name}</h4><p class="product-desc">${desc}</p><p class="product-size">${p.size}</p><div class="product-price"><span class="price-new">${p.price} ${cur}</span>${p.oldPrice?`<span class="price-old">${p.oldPrice} ${cur}</span>`:''}</div><button class="btn-gold-sm" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button></div></div>`;
   }).join('');
 
   // Simple checkout for this page
@@ -107,3 +107,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
