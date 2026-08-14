@@ -868,7 +868,7 @@ function animateLiveStats() {
 function initReveal() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => {
     el.classList.remove('visible');
     observer.observe(el);
@@ -1020,6 +1020,3 @@ function closeMobileNav() {
   if (overlay) { overlay.classList.remove('open'); }
   document.body.style.overflow = '';
 }
-
-
-
