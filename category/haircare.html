@@ -19,16 +19,7 @@
 </head>
 <body>
 <!-- ANNOUNCEMENT BAR -->
-<div class="announcement-bar">
-  <div class="announcement-track">
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-    <span data-ar="✦ شحن مجاني على الطلبات فوق 500 جنيه" data-en="✦ Free shipping on orders over 500 EGP">✦ شحن مجاني على الطلبات فوق 500 جنيه</span>
-    <span data-ar="✦ مكونات طبيعية 100%" data-en="✦ 100% Natural Ingredients">✦ مكونات طبيعية 100%</span>
-    <span data-ar="✦ YOURS – Because You Deserve The Best" data-en="✦ YOURS – Because You Deserve The Best">✦ YOURS – Because You Deserve The Best</span>
-  </div>
-</div>
+<div class="announcement-bar"><div class="announcement-ticker"><div class="announcement-track"><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span><span>✦ شحن مجاني على الطلبات فوق 500 جنيه</span><span>✦ مكونات طبيعية 100%</span><span>✦ ضمان الجودة أو استرداد كامل</span><span>✦ YOURS – Because You Deserve The Best</span></div></div></div>
 <!-- HEADER -->
 <header class="header" id="header">
   <nav class="nav-container">
@@ -72,7 +63,7 @@
     <div class="filter-tabs" id="filter-tabs">
       <button class="filter-tab active" onclick="filterCat('all',this)" data-ar="الكل" data-en="All">الكل</button>
       <button class="filter-tab" onclick="filterCat('shampoo',this)" data-ar="شامبو" data-en="Shampoo">شامبو</button>
-      <button class="filter-tab" onclick="filterCat('conditioner',this)" data-ar="بلسم" data-en="Conditioner">بلسم</button>
+      <button class="filter-tab" onclick="filterCat('conditioner',this)" data-ar="Conditioner" data-en="Conditioner">Conditioner</button>
       <button class="filter-tab" onclick="filterCat('mask',this)" data-ar="ماسك" data-en="Mask">ماسك</button>
       <button class="filter-tab" onclick="filterCat('serum',this)" data-ar="سيروم" data-en="Serum">سيروم</button>
     </div>
@@ -168,8 +159,15 @@
 <div id="copy-toast" class="copy-toast">✓</div>
 
 <script>
-  // Category filter
+  // Hair Care page – strictly hair-care categories only
   const PAGE_CATEGORIES = ['shampoo','conditioner','mask','serum'];
+
+  function resolveImg(img) {
+    if (!img) return '../images/placeholder.png';
+    if (img.startsWith('http') || img.startsWith('../') || img.startsWith('/')) return img;
+    return '../' + img;
+  }
+
   function filterCat(cat, btn) {
     document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -181,15 +179,19 @@
     const override = localStorage.getItem('yours_products_override');
     let products = override ? JSON.parse(override) : (window.YOURS_PRODUCTS || []);
     const lang = localStorage.getItem('yours_lang') || 'ar';
-    const filtered = cat === 'all' ? products.filter(p => PAGE_CATEGORIES.includes(p.category)) : products.filter(p => p.category === cat);
+    // Strictly filter to hair-care categories only — never show body or accessories
+    const filtered = cat === 'all'
+      ? products.filter(p => PAGE_CATEGORIES.includes(p.category))
+      : products.filter(p => p.category === cat && PAGE_CATEGORIES.includes(p.category));
     grid.innerHTML = filtered.map((p, i) => {
       const name = lang === 'ar' ? p.nameAr : p.nameEn;
       const desc = lang === 'ar' ? p.descAr : p.descEn;
       const cur = lang === 'ar' ? 'ج' : 'EGP';
+      const imgSrc = resolveImg(p.image);
       return `<div class="product-card revealed" onclick="openFPP('${p.id}')">
         ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
         <div class="product-img-wrap">
-          <img class="product-full-img" src="../${p.image}" alt="${name}" onerror="this.src='../images/logo.jpg'"/>
+          <img class="product-full-img" src="${imgSrc}" alt="${name}" onerror="this.onerror=null;this.src='../images/placeholder.png'"/>
           <button class="product-hover-btn" onclick="event.stopPropagation();addToCart('${p.id}')">${lang==='ar'?'أضيفي للسلة':'Add to Cart'}</button>
         </div>
         <div class="product-info">
