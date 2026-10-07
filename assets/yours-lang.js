@@ -13,7 +13,7 @@
     'الرئيسية': 'Home', 'الأصناف': 'Collections', 'معلومات تهمك': 'Useful info',
     'القائمة الرئيسية': 'Main menu', 'سلة الطلب': 'Cart', 'القائمة': 'Menu',
     'الشحن والتوصيل': 'Shipping & delivery', 'الاستبدال والاسترجاع': 'Returns & exchange',
-    'استفسر على واتساب': 'Ask us on WhatsApp', 'زورنا في المحل': 'Visit our store',
+    'استفسر على واتساب': 'Ask us on WhatsApp', 'زورنا في العيادة': 'Visit our store',
     'المصاريف حسب المحافظة ومدة التوصيل': 'Fees by governorate and delivery time',
     'عاين قبل ما تستلم': 'Inspect before you pay',
     // cart
