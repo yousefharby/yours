@@ -243,7 +243,7 @@ function renderProduct(cat) {
     document.title = 'المنتج غير متاح — YOURS';
     document.getElementById('crumbName').textContent = 'غير متاح';
     root.innerHTML = '<div class="not-found"><h1 style="font-size:24px;margin-bottom:8px">المنتج ده مش متاح حالياً</h1>' +
-      '<p style="color:var(--text-light);margin-bottom:24px">' + (pc && pc.visible ? 'شوف باقي منتجات <a href="category.html?c=' + encodeURIComponent(pc.id) + '" style="color:var(--gold-dark);font-weight:800">' + D.esc(pc.name) + '</a> أو اختار نوع تاني:' : 'اختار من الأصناف المتاحة:') + '</p>' +
+      '<p style="color:var(--text-light);margin-bottom:24px">' + (pc && pc.visible ? 'شوف باقي منتجات <a href="category.html?c=' + encodeURIComponent(pc.id) + '" style="color:var(--gold-dark);font-weight:800">' + D.esc(pc.name) + '</a> أو اختاري نوع تاني:' : 'اختار من الأصناف المتاحة:') + '</p>' +
       '<div class="cat-grid">' + cats.map(Sedra.categoryCardHTML).join('') + '</div></div>';
     D.hydrateMedia(root);
     G.product = null;
@@ -279,7 +279,7 @@ function renderProduct(cat) {
       '</div>' +
       (multi ? '<div class="g-thumbs" role="tablist" aria-label="زوايا التصوير">' + G.images.map(function (src, i) {
         return '<button type="button" class="g-thumb" data-thumb="' + i + '" aria-label="صورة ' + (i + 1) + '">' + D.imgTag(src, { alt: '', variant: 't' }) + '</button>';
-      }).join('') + '</div><div class="g-hint">📷 ' + G.images.length + ' صور من زوايا مختلفة — دوس على الصورة لتكبيرها</div>' : '<div class="g-hint">دوس على الصورة لتكبيرها</div>') +
+      }).join('') + '</div><div class="g-hint">📷 ' + G.images.length + ' صور من زوايا مختلفة — دوسي على الصورة لتكبيرها</div>' : '<div class="g-hint">دوسي على الصورة لتكبيرها</div>') +
     '</div>' +
 
     '<div class="pi">' +
@@ -299,12 +299,12 @@ function renderProduct(cat) {
       '<div class="buy-row"><div class="qty" role="group" aria-label="الكمية"><button type="button" id="qtyPlus" aria-label="زيادة">+</button><span id="qtyVal">' + G.qty + '</span><button type="button" id="qtyMinus" aria-label="تقليل">−</button></div>' +
         '<button class="btn btn-gold" type="button" id="buyNow">🛍️ اطلب الآن</button></div>' +
       '<div class="btn-stack">' +
-        '<button class="btn btn-dark btn-block" type="button" id="addOnly">➕ أضف للطلب وكمّل تسوق</button>' +
-        '<button class="add-more-btn" type="button" id="addOther" style="margin:0">+ أضف منتج تاني أو صنف تاني لنفس الطلب</button>' +
+        '<button class="btn btn-dark btn-block" type="button" id="addOnly">➕ أضف للطلب وكمّلي تسوق</button>' +
+        '<button class="add-more-btn" type="button" id="addOther" style="margin:0">+ أضيفي منتج تاني أو صنف تاني لنفس الطلب</button>' +
         '<div class="in-cart-note" id="inCartNote"><span>✓ في طلبك: <b id="inCartQty">0</b> من المنتج ده</span><button type="button" data-checkout>إتمام الطلب</button></div>' +
       '</div>' +
-      '<div class="return-policy"><strong>👀 عاين قبل ما تستلم</strong>من حقك تفتح الشحنة وتعاين المنتجات قدام المندوب قبل ما تدفع. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس، ولو فيها عيب إحنا بنتحمل الشحن كله. <a href="returns.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div>' +
-      '<a class="btn btn-wa btn-block" id="inquiryBtn" target="_blank" rel="noopener" href="#">' + Sedra.WA_SVG + ' استفسر عن المنتج ده</a>' +
+      '<div class="return-policy"><strong>👀 عاين قبل ما تستلم</strong>من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس، ولو فيها عيب إحنا بنتحمل الشحن كله. <a href="returns.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div>' +
+      '<a class="btn btn-wa btn-block" id="inquiryBtn" target="_blank" rel="noopener" href="#">' + Sedra.WA_SVG + ' استفسري عن المنتج ده</a>' +
     '</div>' +
   '</div>';
 

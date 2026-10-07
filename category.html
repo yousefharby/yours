@@ -201,7 +201,7 @@ function renderCategory(cat) {
       (c.bestFor ? '<div class="for"><b>مناسبة لـ:</b> ' + D.esc(D.pick(c, 'bestFor')) + '</div>' : '') +
       (c.bundle ? '<div class="offer-box">🎁 <b>عرض:</b> ' + c.bundle.minQty + ' قطع بـ <b>' + D.money(c.bundle.total) + '</b> بدل ' + D.money(c.price * c.bundle.minQty) + (c.bundle.extraUnit ? '<br>وكل قطعة زيادة بـ <b>' + D.money(c.bundle.extraUnit) + '</b>' : '') + '</div>' : '') +
       '<div class="ship">🚚 الشحن حسب المحافظة (<span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span>) — <a href="shipping.html">التفاصيل</a><br>👀 عاين قبل ما تستلم والدفع عند الاستلام — <a href="returns.html">الاسترجاع</a></div>' +
-      '<a class="btn btn-gold btn-block" href="#catProducts" style="margin-top:12px">شوف الـ ' + list.length + ' منتجات</a>' +
+      '<a class="btn btn-gold btn-block" href="#catProducts" style="margin-top:12px">شوفي الـ ' + list.length + ' منتجات</a>' +
     '</aside></section>' +
 
     '<nav class="type-switch light" aria-label="خطوط YOURS"><div class="type-switch-inner">' + cats.map(function (x) {
@@ -211,7 +211,7 @@ function renderCategory(cat) {
     '<section class="cat-products" id="catProducts" style="scroll-margin-top:80px"><div class="toolbar"><h2>كل المنتجات</h2><span class="count">' + list.length + ' منتج متاح</span></div>' +
       (list.length
         ? '<div class="' + g.cls + '" style="' + g.style + '">' + list.map(function (p, i) { return Sedra.productCardHTML(p, { eager: i < 4 }); }).join('') + '</div>'
-        : '<div class="empty-note">مفيش منتجات في الصنف ده دلوقتي. تابعنا، أو <a data-wa-link target="_blank" rel="noopener" href="#">اسألنا على واتساب</a>.</div>') +
+        : '<div class="empty-note">مفيش منتجات في الصنف ده دلوقتي. تابعينا، أو <a data-wa-link target="_blank" rel="noopener" href="#">اسألينا على واتساب</a>.</div>') +
     '</section>' +
     '<div id="catCompare">' + Sedra.compareHTML({ current: c.id }) + '</div>';
 

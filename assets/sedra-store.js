@@ -47,7 +47,7 @@
         '<div class="menu-head"><span class="menu-head-title">✦ YOURS</span>' +
         '<button class="menu-close" type="button" data-close-menu aria-label="إغلاق القائمة">✕</button></div>' +
         '<div class="menu-body" id="menuBody"></div>' +
-        '<div class="menu-foot"><a class="menu-wa" data-wa-link target="_blank" rel="noopener">' + WA_SVG + ' استفسر على واتساب</a></div>' +
+        '<div class="menu-foot"><a class="menu-wa" data-wa-link target="_blank" rel="noopener">' + WA_SVG + ' استفسري على واتساب</a></div>' +
       '</nav>' +
       '<div class="overlay" id="cartOverlay"></div>' +
       '<aside class="cart-drawer" id="cartDrawer" aria-label="سلة الطلب" aria-hidden="true">' +
@@ -208,12 +208,12 @@
     if (!body) return;
     if (!cart.length) {
       body.innerHTML = '<div class="drawer-empty"><div>🛒</div><p>طلبك فاضي لسه</p>' +
-        '<button class="add-more-btn" type="button" data-open-picker>+ اختار منتج</button></div>';
+        '<button class="add-more-btn" type="button" data-open-picker>+ اختاري منتج</button></div>';
       foot.innerHTML = '';
       return;
     }
     body.innerHTML = cart.map(lineItemHTML).join('') +
-      '<button class="add-more-btn" type="button" data-open-picker>+ أضف منتج تاني من أي صنف</button>';
+      '<button class="add-more-btn" type="button" data-open-picker>+ أضيفي منتج تاني من أي صنف</button>';
     var pr = cartPricing();
     var sub = pr.net;
     foot.innerHTML =
@@ -222,7 +222,7 @@
       '<div class="totals-row"><span>الشحن</span><span>حسب المحافظة (من ' + money(minShip()) + ')</span></div>' +
       '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(sub) + ' + الشحن</span></div>' +
       '<div class="drawer-actions"><button class="btn btn-gold btn-block" type="button" data-checkout>✅ إتمام الطلب</button>' +
-      '<button class="btn btn-outline btn-block btn-sm" type="button" data-close-cart>كمّل تسوق</button></div>';
+      '<button class="btn btn-outline btn-block btn-sm" type="button" data-close-cart>كمّلي تسوق</button></div>';
     D.hydrateMedia(body);
   }
 
@@ -305,7 +305,7 @@
         '<div class="modal-header"><h2 id="checkoutTitle">تفاصيل طلبك</h2><button class="round-close" type="button" data-close-checkout aria-label="إغلاق">✕</button></div>' +
         '<div class="order-summary-box" id="checkoutSummary"></div>' +
         '<div class="payment-choice"><h4>💳 طريقة الدفع</h4><div class="payment-options">' +
-          '<button type="button" class="payment-opt selected" data-pay="عند الاستلام"><div class="payment-opt-icon">💵</div><div class="payment-opt-label">الدفع عند الاستلام</div><div class="payment-opt-sub">كاش مع المندوب</div><div class="recommended-badge">عاين قبل ما تدفع</div></button>' +
+          '<button type="button" class="payment-opt selected" data-pay="عند الاستلام"><div class="payment-opt-icon">💵</div><div class="payment-opt-label">الدفع عند الاستلام</div><div class="payment-opt-sub">كاش مع المندوب</div><div class="recommended-badge">عاين قبل ما تدفعي</div></button>' +
           '<button type="button" class="payment-opt" data-pay="تحويل إلكتروني" id="payTransfer" hidden><div class="payment-opt-icon">📱</div><div class="payment-opt-label">تحويل إلكتروني</div><div class="payment-opt-sub">إنستاباي / فودافون كاش</div><div class="recommended-badge">شحن بدون تحصيل</div></button>' +
         '</div>' +
         '<div class="pay-panel" id="payPanel" hidden>' +
@@ -328,28 +328,28 @@
             '<img id="receiptPreview" alt="" hidden>' +
           '</label>' +
           '<div class="pay-note">بعد ما تحوّل، ارفع صورة التحويل. هنراجعها ونتواصل معاك لتأكيد الطلب، وهيتشحن <b>بدون تحصيل</b>.</div>' +
-          '<a class="pay-wa" id="payWaBtn" target="_blank" rel="noopener" href="#">' + WA_SVG + ' قابلتك مشكلة في التحويل؟ كلمنا واتساب</a>' +
+          '<a class="pay-wa" id="payWaBtn" target="_blank" rel="noopener" href="#">' + WA_SVG + ' قابلتك مشكلة في التحويل؟ كلمينا واتساب</a>' +
         '</div>' +
         '</div>' +
-        '<div class="form-group" data-field="fName"><label class="form-label" for="fName">الاسم الكامل <span class="req">*</span></label><input type="text" class="form-input" id="fName" autocomplete="name" placeholder="اكتب اسمك بالكامل"><div class="field-error">اكتب اسمك</div></div>' +
-        '<div class="form-group" data-field="fPhone"><label class="form-label" for="fPhone">رقم الموبايل <span class="req">*</span></label><input type="tel" class="form-input" id="fPhone" autocomplete="tel" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right"><div class="field-error">اكتب رقم موبايل مصري صحيح من 11 رقم يبدأ بـ 01</div></div>' +
+        '<div class="form-group" data-field="fName"><label class="form-label" for="fName">الاسم الكامل <span class="req">*</span></label><input type="text" class="form-input" id="fName" autocomplete="name" placeholder="اكتبي اسمك بالكامل"><div class="field-error">اكتبي اسمك</div></div>' +
+        '<div class="form-group" data-field="fPhone"><label class="form-label" for="fPhone">رقم الموبايل <span class="req">*</span></label><input type="tel" class="form-input" id="fPhone" autocomplete="tel" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right"><div class="field-error">اكتبي رقم موبايل مصري صحيح من 11 رقم يبدأ بـ 01</div></div>' +
         '<div class="form-group"><label class="form-label" for="fPhone2">رقم موبايل تاني <span class="opt">(اختياري)</span></label><input type="tel" class="form-input" id="fPhone2" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right"></div>' +
-        '<div class="form-group" data-field="fGov"><label class="form-label" for="fGov">المحافظة <span class="req">*</span></label><select class="form-select" id="fGov"><option value="">— اختر المحافظة —</option></select><div class="field-error">اختار المحافظة</div></div>' +
-        '<div class="form-group" data-field="fCity"><label class="form-label" for="fCity">المدينة / المركز <span class="req">*</span></label><select class="form-select" id="fCity" disabled><option value="">— اختر المحافظة الأول —</option></select><div class="field-error">اختار المدينة</div></div>' +
-        '<div class="form-group" data-field="fAddress"><label class="form-label" for="fAddress">العنوان بالتفصيل <span class="req">*</span></label><input type="text" class="form-input" id="fAddress" autocomplete="street-address" placeholder="الشارع، علامة مميزة، رقم العمارة والدور"><div class="field-error">اكتب العنوان بالتفصيل</div></div>' +
+        '<div class="form-group" data-field="fGov"><label class="form-label" for="fGov">المحافظة <span class="req">*</span></label><select class="form-select" id="fGov"><option value="">— اختر المحافظة —</option></select><div class="field-error">اختاري المحافظة</div></div>' +
+        '<div class="form-group" data-field="fCity"><label class="form-label" for="fCity">المدينة / المركز <span class="req">*</span></label><select class="form-select" id="fCity" disabled><option value="">— اختر المحافظة الأول —</option></select><div class="field-error">اختاري المدينة</div></div>' +
+        '<div class="form-group" data-field="fAddress"><label class="form-label" for="fAddress">العنوان بالتفصيل <span class="req">*</span></label><input type="text" class="form-input" id="fAddress" autocomplete="street-address" placeholder="الشارع، علامة مميزة، رقم العمارة والدور"><div class="field-error">اكتبي العنوان بالتفصيل</div></div>' +
         '<div class="form-group"><label class="form-label" for="fNotes">ملاحظات <span class="opt">(اختياري)</span></label><input type="text" class="form-input" id="fNotes" placeholder="مثلاً: ميعاد مناسب للتوصيل"></div>' +
         '<div class="form-group"><label class="form-label">موقعك على الخريطة <span class="opt">(اختياري)</span></label>' +
-          '<button class="gps-btn" type="button" id="gpsBtn">📍 حدد موقعي تلقائياً</button><input type="hidden" id="fGPS">' +
+          '<button class="gps-btn" type="button" id="gpsBtn">📍 حددي موقعي تلقائياً</button><input type="hidden" id="fGPS">' +
         '</div>' +
-        '<div class="policy-box"><strong>👀 معاينة قبل الاستلام:</strong> من حقك تفتح الشحنة وتعاين المنتجات قدام المندوب قبل ما تدفع. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس. <a href="returns.html" target="_blank" rel="noopener">التفاصيل</a></div>' +
+        '<div class="policy-box"><strong>👀 معاينة قبل الاستلام:</strong> من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس. <a href="returns.html" target="_blank" rel="noopener">التفاصيل</a></div>' +
         '<div class="form-alert" id="checkoutAlert"></div>' +
         '<button class="btn btn-gold btn-block" type="button" id="submitOrderBtn">✅ تأكيد الطلب</button>' +
       '</div>' +
       '<div class="success-msg" id="checkoutSuccess">' +
         '<div class="success-icon">🎉</div><h3 id="successTitle">تم استلام طلبك!</h3>' +
         '<p>فريقنا هيتواصل معاك خلال 24 ساعة لتأكيد الطلب وميعاد التوصيل.</p>' +
-        '<div class="order-code-box"><small>كود طلبك</small><strong id="orderCodeDisplay">—</strong><small>احتفظ بالكود ده لمتابعة طلبك</small></div>' +
-        '<a class="success-wa" id="successWaBtn" href="#" target="_blank" rel="noopener">' + WA_SVG + ' أكد طلبك على واتساب</a>' +
+        '<div class="order-code-box"><small>كود طلبك</small><strong id="orderCodeDisplay">—</strong><small>احتفظي بالكود ده لمتابعة طلبك</small></div>' +
+        '<a class="success-wa" id="successWaBtn" href="#" target="_blank" rel="noopener">' + WA_SVG + ' أكدي طلبك على واتساب</a>' +
         '<button class="btn btn-outline btn-block" type="button" data-close-checkout>العودة للمتجر</button>' +
       '</div>' +
     '</div></div>';
@@ -403,7 +403,7 @@
     if (!on) return;
     var info = payInfo(), gov = currentGov();
     var total = cartSubtotal() + (gov ? zoneFor(gov).price : 0);
-    $('#payAmount').textContent = gov ? money(total) : money(cartSubtotal()) + ' + الشحن (اختار المحافظة)';
+    $('#payAmount').textContent = gov ? money(total) : money(cartSubtotal()) + ' + الشحن (اختاري المحافظة)';
     $('#instapayLink').href = info.instapayLink || '#';
     $('#instapayLink').style.display = info.instapayLink ? '' : 'none';
     $('#instapayHandle').textContent = info.instapayHandle || '—';
@@ -461,12 +461,12 @@
     (currentGov()
       ? '<div class="totals-row"><span>الشحن (' + esc(currentGov()) + ')</span><span>' + money(zoneFor(currentGov()).price) + '</span></div>' +
         '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(sub + zoneFor(currentGov()).price) + '</span></div>'
-      : '<div class="totals-row"><span>الشحن</span><span>اختار المحافظة تحت (من ' + money(minShip()) + ')</span></div>' +
+      : '<div class="totals-row"><span>الشحن</span><span>اختاري المحافظة تحت (من ' + money(minShip()) + ')</span></div>' +
         '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(sub) + ' + الشحن</span></div>');
     D.hydrateMedia($('#checkoutSummary'));
   }
   function openCheckout() {
-    if (!cart.length) { openPicker(); toast('اختار منتج الأول'); return; }
+    if (!cart.length) { openPicker(); toast('اختاري منتج الأول'); return; }
     setCart(false); setMenu(false);
     $('#checkoutForm').style.display = '';
     $('#checkoutSuccess').classList.remove('show');
@@ -522,7 +522,7 @@
         }).catch(function () {});
     }, function (err) {
       btn.disabled = false;
-      btn.textContent = err.code === 1 ? '❌ رفضت إذن الموقع — تقدر تكمل من غيره' : '❌ تعذر تحديد الموقع — تقدر تكمل من غيره';
+      btn.textContent = err.code === 1 ? '❌ رفضتي إذن الموقع — تقدري تكمل من غيره' : '❌ تعذر تحديد الموقع — تقدري تكمل من غيره';
     }, { timeout: 10000, enableHighAccuracy: true });
   }
 
@@ -677,7 +677,7 @@
     var alertBox = $('#checkoutAlert');
     if (!cart.length) { alertBox.textContent = 'طلبك فاضي — أضف منتج الأول.'; alertBox.classList.add('show'); return; }
     if (!ok) {
-      alertBox.textContent = 'راجع الخانات المعلّمة باللون الأحمر.'; alertBox.classList.add('show');
+      alertBox.textContent = 'راجعي الخانات المعلّمة باللون الأحمر.'; alertBox.classList.add('show');
       var el = $('#' + firstBad); if (el) { el.focus(); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
       return;
     }
@@ -711,7 +711,7 @@
         alertBox.classList.add('show');
         if (!cart.length) closeCheckout();
       } else {
-        alertBox.textContent = 'حصلت مشكلة غير متوقعة. جرّب تاني.';
+        alertBox.textContent = 'حصلت مشكلة غير متوقعة. جرّبي تاني.';
         alertBox.classList.add('show');
       }
     });
@@ -760,7 +760,7 @@
         o.items.map(function (i) { return '• ' + i.categoryName + ' — ' + i.name + ' × ' + i.qty; }).join('\n') +
         '\nالإجمالي: ' + o.total + ' ج\nالعنوان: ' + o.governorate + ' — ' + o.city + ' — ' + o.address + '\nالموبايل: ' + o.phone;
       if (!r.saved && !r.notified) {
-        alertBox.innerHTML = 'مقدرناش نبعت الطلب بسبب مشكلة في الاتصال. جرّب تاني، أو <a href="' + esc(waLink(summary)) + '" target="_blank" rel="noopener" style="color:#128C7E;font-weight:800">ابعت الطلب على واتساب مباشرة</a>.';
+        alertBox.innerHTML = 'مقدرناش نبعت الطلب بسبب مشكلة في الاتصال. جرّبي تاني، أو <a href="' + esc(waLink(summary)) + '" target="_blank" rel="noopener" style="color:#128C7E;font-weight:800">ابعتي الطلب على واتساب مباشرة</a>.';
         alertBox.classList.add('show');
         return;
       }
@@ -780,7 +780,7 @@
         sub.innerHTML = o.paidOnline
           ? (o.hasReceipt
               ? 'استلمنا صورة التحويل، وهنراجعها ونتواصل معاك لتأكيد الطلب. الشحن هيبقى <b>بدون تحصيل</b>.'
-              : 'لسه محتاجين صورة التحويل. ابعتها لنا على واتساب من الزرار تحت عشان نأكد طلبك.')
+              : 'لسه محتاجين صورة التحويل. ابعتيها لنا على واتساب من الزرار تحت عشان نأكدي طلبك.')
           : 'فريقنا هيتواصل معاك خلال 24 ساعة لتأكيد الطلب وميعاد التوصيل.';
       }
       $('#orderCodeDisplay').textContent = o.orderCode;
@@ -790,7 +790,7 @@
       $('#checkoutModal .modal').scrollTop = 0;
     }).catch(function (e) {
       console.error(e);
-      alertBox.textContent = 'حصلت مشكلة غير متوقعة. جرّب تاني.'; alertBox.classList.add('show');
+      alertBox.textContent = 'حصلت مشكلة غير متوقعة. جرّبي تاني.'; alertBox.classList.add('show');
     }).then(function () {
       submitting = false; btn.disabled = false; btn.textContent = '✅ تأكيد الطلب';
     });
@@ -898,7 +898,7 @@
         (c.bundle ? '<div class="cat-card-offer">🎁 ' + c.bundle.minQty + ' قطع بـ ' + money(c.bundle.total) + (c.bundle.extraUnit ? ' · الزيادة بـ ' + money(c.bundle.extraUnit) : '') + '</div>' : '') +
         '<div class="cat-card-foot"><div class="price-line"><span class="price-now">' + money(c.price) + '</span>' +
           (c.oldPrice && c.oldPrice > c.price ? '<span class="price-was">' + money(c.oldPrice) + '</span>' : '') + '</div>' +
-          '<span class="btn btn-dark">شوف المنتجات</span></div>' +
+          '<span class="btn btn-dark">شوفي المنتجات</span></div>' +
       '</div></a>';
   }
 
@@ -931,12 +931,12 @@
           labels.map(function (lb) { var sp0 = x.specs.filter(function (y) { return y.label === lb; })[0] || {};
           return '<div><dt>' + esc(D.pick(sp0, 'label') || lb) + '</dt><dd>' + esc(D.pick(sp0, 'value')) + '</dd></div>'; }).join('') +
         '</dl>' +
-        (here ? '<a class="btn btn-outline btn-block btn-sm" href="#catProducts">شوف الـ ' + n + ' منتجات تحت</a>'
-              : '<a class="btn btn-gold btn-block btn-sm" href="category.html?c=' + encodeURIComponent(x.id) + '">شوف الـ ' + n + ' منتجات</a>') +
+        (here ? '<a class="btn btn-outline btn-block btn-sm" href="#catProducts">شوفي الـ ' + n + ' منتجات تحت</a>'
+              : '<a class="btn btn-gold btn-block btn-sm" href="category.html?c=' + encodeURIComponent(x.id) + '">شوفي الـ ' + n + ' منتجات</a>') +
       '</article>';
     }).join('');
     return '<section class="compare-block" id="compare"><div class="section-head"><h2>مش متأكد أي نوع يناسبك؟</h2>' +
-      '<p>' + (chips ? 'دوس على اللي بتحسه، وهنقولك النوع المناسب ليك' : 'قارن بين الأنواع واختار اللي يريحك') + '</p><div class="section-line"></div></div>' +
+      '<p>' + (chips ? 'دوسي على اللي بتحسه، وهنقولك النوع المناسب ليك' : 'قارن بين الأنواع واختار اللي يريحك') + '</p><div class="section-line"></div></div>' +
       chips + '<div class="cmp-grid">' + cards + '</div></section>';
   }
   function bindCompare(root) {

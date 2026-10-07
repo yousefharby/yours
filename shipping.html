@@ -48,7 +48,7 @@
       <div class="zone-list" id="zoneList"></div>
       <div class="ship-calc">
         <label for="calcGov" style="font-weight:800;font-size:14px">احسب شحن محافظتك:</label>
-        <select id="calcGov"><option value="">— اختار المحافظة —</option></select>
+        <select id="calcGov"><option value="">— اختاري المحافظة —</option></select>
         <output id="calcOut" aria-live="polite"></output>
       </div>
     </section>
@@ -60,7 +60,7 @@
 
     <section class="info-card highlight">
       <h2>👀 معاينة قبل الاستلام</h2>
-      <p>من حقك تفتح الشحنة وتعاين المنتجات قدام مندوب الشحن قبل ما تستلم وتدفع. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس. تفاصيل أكتر في <a href="returns.html">صفحة الاستبدال والاسترجاع</a>.</p>
+      <p>من حقك تفتحي الشحنة وتعايني المنتجات قدام مندوب الشحن قبل ما تستلمي وتدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس. تفاصيل أكتر في <a href="returns.html">صفحة الاستبدال والاسترجاع</a>.</p>
     </section>
 
     <section class="info-card">
@@ -70,7 +70,7 @@
 
     <section class="info-card">
       <h2>📍 تتبع الطلب</h2>
-      <p>هتوصلك رسالة فيها تفاصيل الطلب بعد التأكيد، ولأي استفسار كلمنا على <a data-wa-link target="_blank" rel="noopener" href="https://wa.me/201033035681"><span data-wa-display dir="ltr">01033035681</span></a>.</p>
+      <p>هتوصلك رسالة فيها تفاصيل الطلب بعد التأكيد، ولأي استفسار كلمينا على <a data-wa-link target="_blank" rel="noopener" href="https://wa.me/201033035681"><span data-wa-display dir="ltr">01033035681</span></a>.</p>
     </section>
 
   </article>
@@ -129,7 +129,7 @@ function renderShipping(cat) {
     .map(function (l) { return '<li>' + D.esc(l) + '</li>'; }).join('');
   document.getElementById('payList').innerHTML = '<li>الدفع عند الاستلام بعد المعاينة</li>' + (cat.settings.allowTransfer ? '<li>تحويل إلكتروني (فودافون كاش / إنستاباي)</li>' : '');
   var sel = document.getElementById('calcGov'), keep = sel.value;
-  sel.innerHTML = '<option value="">— اختار المحافظة —</option>' + D.GOVERNORATES.map(function (g) { return '<option>' + D.esc(g) + '</option>'; }).join('');
+  sel.innerHTML = '<option value="">— اختاري المحافظة —</option>' + D.GOVERNORATES.map(function (g) { return '<option>' + D.esc(g) + '</option>'; }).join('');
   sel.value = keep; calc();
 }
 function calc() {

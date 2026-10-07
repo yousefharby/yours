@@ -101,3 +101,36 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
 .cat-card-media.banner { aspect-ratio: 4/3; background: #fff; }
 .cat-card-media.banner img { object-fit: contain; padding: 14px; }
 .cat-hero-media, .cat-banner img { background: #fff; }
+
+/* hair problems */
+.problems { background: #fff; padding: 56px 20px; }
+.problems-inner { max-width: 1100px; margin: 0 auto; }
+.problems-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.problem-card { text-decoration: none; color: inherit; text-align: center; display: block; }
+.problem-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 14px; transition: transform .3s, box-shadow .3s; }
+.problem-card:hover img { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0,0,0,.18); }
+.problem-card span { display: block; margin-top: 10px; font-size: 14px; font-weight: 800; color: var(--dark); }
+.problem-card small { display: block; font-size: 12px; color: var(--gold-dark); font-weight: 700; margin-top: 2px; }
+.problems-note { text-align: center; margin-top: 22px; font-size: 14px; color: var(--text-light); }
+
+/* travel set */
+.travelset { background: var(--cream-dark); padding: 60px 20px; }
+.travelset-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+.travelset-body h2 { font-size: clamp(24px, 4vw, 34px); font-weight: 800; margin: 6px 0 12px; color: var(--dark); }
+.travelset-body p { font-size: 15px; line-height: 1.9; color: var(--text-light); margin-bottom: 14px; }
+.travelset-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.travelset-list li { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: 13px; font-weight: 700; }
+.travelset-list li::before { content: '✓ '; color: var(--gold-dark); font-weight: 900; }
+.travelset-media { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.travelset-media img { width: 100%; border-radius: 14px; background: #fff; }
+.travelset .hero-eyebrow { color: var(--gold-dark); }
+
+/* about */
+.about { background: #fff; padding: 56px 20px; }
+.about-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+.about-inner h2 { font-size: clamp(24px, 4vw, 32px); font-weight: 800; margin: 6px 0 14px; color: var(--dark); }
+.about-inner p { font-size: 15.5px; line-height: 2; color: var(--text-light); }
+.about .hero-eyebrow { color: var(--gold-dark); }
+
+@media (max-width: 900px) { .problems-grid { grid-template-columns: repeat(3, 1fr); } .travelset-inner { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .problems-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
