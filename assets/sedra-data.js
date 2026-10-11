@@ -57,9 +57,11 @@
       chooserEn: 'I want a complete, premium routine at home',
       usage: 'اغسلي بالشامبو مرتين، وبعدين البلسم من نص الطول للأطراف دقيقتين. الماسك مرة أو مرتين في الأسبوع من 5 لـ 10 دقايق. السيروم في الآخر على الشعر النص نشفان.',
       usageEn: 'Shampoo twice, then apply conditioner from mid-length to ends for 2 minutes. Use the mask once or twice a week for 5–10 minutes. Finish with the serum on towel-dried hair.',
-      price: 650, oldPrice: null, badge: 'Luxury',
+      price: 850, oldPrice: 1700, badge: 'Luxury',
+      setName: 'مجموعة YOURS Luxury كاملة',
+      setNameEn: 'YOURS Luxury — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
-      coverImg: 'images/products/luxury-shampoo-500.jpg',
+      coverImg: 'images/collections/luxury.jpg',
       specs: [
         { label: 'الحجم', labelEn: 'Size', value: '500 مل', valueEn: '500 ml' },
         { label: 'التركيبة', labelEn: 'Formula', value: 'زيت زيتون — ترميم', valueEn: 'Olive oil — repair' },
@@ -81,9 +83,11 @@
       chooserEn: 'My hair is dry and needs deep hydration',
       usage: 'للشعر الجاف جداً: شامبو مرتين، وبلسم من نص الطول للأطراف، والماسك مرتين في الأسبوع. السيروم يومياً على الأطراف.',
       usageEn: 'For very dry hair: shampoo twice, condition from mid-length to ends, and use the mask twice a week. Apply the serum daily on the ends.',
-      price: 900, oldPrice: null, badge: 'Hydration',
+      price: 2500, oldPrice: null, badge: 'Hydration',
+      setName: 'مجموعة YOURS Hydration كاملة',
+      setNameEn: 'YOURS Hydration — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
-      coverImg: 'images/products/hydration-shampoo-1000.jpg',
+      coverImg: 'images/collections/hydration.jpg',
       specs: [
         { label: 'الحجم', labelEn: 'Size', value: '1000 مل', valueEn: '1000 ml' },
         { label: 'التركيبة', labelEn: 'Formula', value: 'ترطيب عميق', valueEn: 'Deep hydration' },
@@ -105,9 +109,11 @@
       chooserEn: 'I want to try it first, or take it travelling',
       usage: 'نفس الروتين بالظبط بأحجام أصغر: شامبو ← بلسم ← ماسك ← سيروم.',
       usageEn: 'Exactly the same routine in smaller sizes: shampoo → conditioner → mask → serum.',
-      price: 300, oldPrice: null, badge: 'Go',
+      price: 400, oldPrice: 800, badge: 'Go',
+      setName: 'مجموعة YOURS Go كاملة',
+      setNameEn: 'YOURS Go — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
-      coverImg: 'images/products/go-shampoo-250.jpg',
+      coverImg: 'images/collections/go.jpg',
       specs: [
         { label: 'الحجم', labelEn: 'Size', value: '250 مل', valueEn: '250 ml' },
         { label: 'الاستخدام', labelEn: 'Use', value: 'سفر · جيم · سباحة', valueEn: 'Travel · gym · swimming' },
@@ -116,27 +122,30 @@
     }
   ];
 
+  // [id, categoryId, name, nameEn, blurb, blurbEn, order, soloPrice, soloOldPrice]
+  // soloPrice is set only for the products that may also be bought on their own.
+  // Everything else is sold as part of its collection and carries no price.
   var YOURS_PRODUCTS = [
-    ['luxury-shampoo-500', 'luxury', 'شامبو Luxury — 500 مل', 'Luxury Shampoo — 500 ml', 'تنظيف وترميم ولمعان', 'Cleanse · repair · shine', 650, 0],
-    ['luxury-conditioner-500', 'luxury', 'بلسم Luxury — 500 مل', 'Luxury Conditioner — 500 ml', 'تغذية ونعومة وترميم', 'Nourish · smooth · repair', 650, 1],
-    ['luxury-mask-500', 'luxury', 'ماسك شعر Luxury — 500 مل', 'Luxury Hair Mask — 500 ml', 'تغذية وترميم واستعادة', 'Nourish · repair · restore', 700, 2],
-    ['luxury-serum-75', 'luxury', 'سيروم Luxury — 75 مل', 'Luxury Serum — 75 ml', 'نعومة ولمعان وحماية', 'Smooth · shine · protect', 450, 3],
+    ['luxury-shampoo-500', 'luxury', 'شامبو Luxury — 500 مل', 'Luxury Shampoo — 500 ml', 'تنظيف وترميم ولمعان', 'Cleanse · repair · shine', 0],
+    ['luxury-conditioner-500', 'luxury', 'بلسم Luxury — 500 مل', 'Luxury Conditioner — 500 ml', 'تغذية ونعومة وترميم', 'Nourish · smooth · repair', 1],
+    ['luxury-mask-500', 'luxury', 'ماسك شعر Luxury — 500 مل', 'Luxury Hair Mask — 500 ml', 'تغذية وترميم واستعادة', 'Nourish · repair · restore', 2],
+    ['luxury-serum-75', 'luxury', 'سيروم Luxury — 75 مل', 'Luxury Serum — 75 ml', 'نعومة ولمعان وحماية', 'Smooth · shine · protect', 3],
 
-    ['hydration-shampoo-1000', 'hydration', 'شامبو Hydration — 1 لتر', 'Hydration Shampoo — 1 L', 'شامبو أرچان للشعر الجاف والتالف', 'Argan shampoo for dry and damaged hair', 900, 0],
-    ['hydration-conditioner-1000', 'hydration', 'بلسم Hydration — 1 لتر', 'Hydration Conditioner — 1 L', 'بلسم ترميم بالأرچان', 'Argan repair conditioner', 900, 1],
-    ['hydration-mask-500', 'hydration', 'ماسك Hydration — 500 مل', 'Hydration Hair Mask — 500 ml', 'تغذية مركزة للشعر الجاف', 'Intensive nutrition for dry hair', 750, 2],
-    ['hydration-serum-100', 'hydration', 'سيروم Hydration — 100 مل', 'Hydration Serum — 100 ml', 'تغذية وحماية للشعر التالف', 'Nutrition and protection for damaged hair', 550, 3],
+    ['hydration-shampoo-1000', 'hydration', 'شامبو Hydration — 1 لتر', 'Hydration Shampoo — 1 L', 'شامبو أرچان للشعر الجاف والتالف', 'Argan shampoo for dry and damaged hair', 0],
+    ['hydration-conditioner-1000', 'hydration', 'بلسم Hydration — 1 لتر', 'Hydration Conditioner — 1 L', 'بلسم ترميم بالأرچان', 'Argan repair conditioner', 1],
+    ['hydration-mask-500', 'hydration', 'ماسك Hydration — 500 مل', 'Hydration Hair Mask — 500 ml', 'تغذية مركزة للشعر الجاف', 'Intensive nutrition for dry hair', 2, 450, 750],
+    ['hydration-serum-100', 'hydration', 'سيروم Hydration — 100 مل', 'Hydration Serum — 100 ml', 'تغذية وحماية للشعر التالف', 'Nutrition and protection for damaged hair', 3, 450, 750],
 
-    ['go-shampoo-250', 'go', 'شامبو Go — 250 مل', 'Go Shampoo — 250 ml', 'تنظيف وانتعاش وترميم', 'Cleanse · refresh · repair', 300, 0],
-    ['go-conditioner-250', 'go', 'بلسم Go — 250 مل', 'Go Conditioner — 250 ml', 'تغذية ونعومة وفك التشابك', 'Nourish · soften · detangle', 300, 1],
-    ['go-mask-250', 'go', 'ماسك شعر Go — 250 مل', 'Go Hair Mask — 250 ml', 'تغذية وترميم وتقوية', 'Nourish · repair · strengthen', 320, 2],
-    ['go-serum-50', 'go', 'سيروم Go — 50 مل', 'Go Serum — 50 ml', 'نعومة ولمعان وحماية', 'Smooth · shine · protect', 260, 3]
+    ['go-shampoo-250', 'go', 'شامبو Go — 250 مل', 'Go Shampoo — 250 ml', 'تنظيف وانتعاش وترميم', 'Cleanse · refresh · repair', 0],
+    ['go-conditioner-250', 'go', 'بلسم Go — 250 مل', 'Go Conditioner — 250 ml', 'تغذية ونعومة وفك التشابك', 'Nourish · soften · detangle', 1],
+    ['go-mask-250', 'go', 'ماسك شعر Go — 250 مل', 'Go Hair Mask — 250 ml', 'تغذية وترميم وتقوية', 'Nourish · repair · strengthen', 2],
+    ['go-serum-50', 'go', 'سيروم Go — 50 مل', 'Go Serum — 50 ml', 'نعومة ولمعان وحماية', 'Smooth · shine · protect', 3]
   ];
 
   var SEED_PRODUCTS = YOURS_PRODUCTS.map(function (p) {
     return {
       id: p[0], categoryId: p[1], name: p[2], nameEn: p[3], color: p[4], colorEn: p[5],
-      price: p[6], oldPrice: null, order: p[7], visible: true,
+      order: p[6], price: p[7] || null, oldPrice: p[8] || null, solo: !!p[7], visible: true,
       mainImg: 'images/products/' + p[0] + '.jpg', gallery: []
     };
   });
@@ -165,28 +174,44 @@
     deliveryText: 'القاهرة والجيزة: من 1 إلى 3 أيام عمل\nباقي المحافظات: من 3 إلى 5 أيام عمل\nيوم الجمعة إجازة، وأوردرات المحافظات بتطلع يومي السبت والتلات.'
   };
   var DEFAULT_COVER_RE = /^images\/(product\d+_thumb|masnad\/\d+\/main|memory\/\d+)\.jpg$/;
-  // v3 details for the 3 main categories. Never touches name, price, order or visibility.
-  // The launch offer (price + bundle) for the built-in categories.
-  // Applied until the owner saves that category in the admin (which stamps offerV1).
-  function applyOfferDefaults(rawCats) {
+  // ---- Collection pricing (v2) ----------------------------------------
+  // YOURS now sells each line as one complete set, at the set price below.
+  // These values are applied over whatever the database holds until the owner
+  // saves that category or product in the admin, which stamps priceV2.
+  function applyPriceDefaults(rawCats) {
     return rawCats.map(function (c) {
       var sc = SEED_CATEGORIES.filter(function (x) { return x.id === c.id; })[0];
-      if (!sc || !sc.bundleQty) return c;
+      if (!sc) return c;
       var d = c.data || {};
-      if (d.offerV1 === true) return c;                 // the owner set it themselves
+      if (d.priceV2 === true) return c;                 // the owner set it themselves
       var merged = {};
       Object.keys(d).forEach(function (k) { merged[k] = d[k]; });
       merged.price = sc.price;
-      merged.bundleQty = sc.bundleQty;
-      merged.bundleTotal = sc.bundleTotal;
-      merged.bundleExtra = sc.bundleExtra;
+      merged.oldPrice = sc.oldPrice || null;
+      merged.setOnly = true;
+      merged.setName = sc.setName; merged.setNameEn = sc.setNameEn;
+      if (!d.coverImg || /^images\/products\//.test(d.coverImg)) merged.coverImg = sc.coverImg;
       return { id: c.id, data: merged };
     });
   }
-  // Names I generated earlier that the owner corrected. Applied only when the stored
-  // name is still exactly the old one, so renames made in the admin are never touched.
+  // Same idea for products: only the ones marked solo in the seed carry a price
+  // of their own; the rest are sold inside their set and must not show one.
+  function applyProductPriceDefaults(rawProds) {
+    return rawProds.map(function (p) {
+      var sp = SEED_PRODUCTS.filter(function (x) { return x.id === p.id; })[0];
+      if (!sp) return p;
+      var d = p.data || {};
+      if (d.priceV2 === true) return p;
+      var merged = {};
+      Object.keys(d).forEach(function (k) { merged[k] = d[k]; });
+      merged.price = sp.price || null;
+      merged.oldPrice = sp.oldPrice || null;
+      merged.solo = sp.solo === true;
+      return { id: p.id, data: merged };
+    });
+  }
   var PRODUCT_RENAMES = {};
-  function applyNameFixes(rawProds) { return rawProds; }
+  function applyNameFixes(rawProds) { return applyProductPriceDefaults(rawProds); }
 
   function seedCategoryPatch(id, cur) {
     var sc = SEED_CATEGORIES.filter(function (c) { return c.id === id; })[0];
@@ -278,6 +303,10 @@
       cardRatio: validRatio(d.cardRatio),
       imageFit: d.imageFit === 'cover' ? 'cover' : 'contain',
       coverImg: d.coverImg || '',
+      // YOURS sells each line as one complete set: the price above is the set price.
+      // setOnly false would turn the line back into separately-sold products.
+      setOnly: d.setOnly !== false,
+      setName: d.setName || '', setNameEn: d.setNameEn || '',
       specs: (Array.isArray(d.specs) ? d.specs.filter(function (s) { return s && (s.label || s.value); }) : []).map(function (sp) {
         return { label: sp.label || '', value: sp.value || '', labelEn: sp.labelEn || '', valueEn: sp.valueEn || '' };
       }),
@@ -298,6 +327,9 @@
       nameEn: d.nameEn || '', colorEn: d.colorEn || '', descriptionEn: d.descriptionEn || '',
       price: num(d.price, 0) || null,
       oldPrice: num(d.oldPrice, 0) || null,
+      // solo: this product may also be bought on its own, at its own price.
+      // Everything else in a set-only line is sold as part of the set.
+      solo: d.solo === true && num(d.price, 0) > 0,
       mainImg: main,
       gallery: gallery,
       order: num(d.order, 999),
@@ -497,7 +529,7 @@
   }
 
   /* ---------------- Catalog ---------------- */
-  var CACHE_KEY = 'sedra_catalog_v2';
+  var CACHE_KEY = 'yours_catalog_v3';   // bumped with the collection pricing: no visitor keeps an old cached price
 
   function buildCatalog(rawCats, rawProds, settings, source) {
     var categories = rawCats.map(function (c) { return normalizeCategory(c.id, c.data); }).sort(byOrder);
@@ -572,7 +604,7 @@
       store.__theme = snap.theme || {};
       store.__shipping = snap.shipping || null;
       return buildCatalog(
-        applyOfferDefaults(snap.categories.map(function (c) { return { id: c.id, data: c }; })),
+        applyPriceDefaults(snap.categories.map(function (c) { return { id: c.id, data: c }; })),
         applyNameFixes(snap.products.map(function (p) { return { id: p.id, data: p }; })),
         store, 'live');
     });
@@ -632,7 +664,7 @@
           return (p.id === 'memory-2' && p.data.name === 'ميموري فوم — أسود فحمي') ? { id: p.id, data: Object.assign({}, p.data, { name: 'ميموري فوم — رمادي', color: 'رمادي' }) } : p;
         });
       }
-      return buildCatalog(applyOfferDefaults(cats), applyNameFixes(prods), store, 'live');
+      return buildCatalog(applyPriceDefaults(cats), applyNameFixes(prods), store, 'live');
     });
   }
   function fetchLiveCatalog() {
@@ -705,19 +737,76 @@
   function productsOf(cat, categoryId, includeHidden) {
     return cat.products.filter(function (p) { return p.categoryId === categoryId && (includeHidden || p.visible); });
   }
+  /* ---------------- Collections sold as one set ----------------
+     A line like "YOURS Luxury" is bought as a whole, so the thing that goes in
+     the cart is the collection itself. It behaves like a product everywhere
+     (cart, order, Telegram, pixel) and carries the id "set:<categoryId>".
+     Individual products are only buyable when they are marked solo.          */
+  var SET_PREFIX = 'set:';
+  function isSetId(id) { return String(id || '').indexOf(SET_PREFIX) === 0; }
+  function setIdOf(categoryId) { return SET_PREFIX + categoryId; }
+  function categoryOfSetId(id) { return String(id || '').slice(SET_PREFIX.length); }
+  function isSetCategory(c) { return !!(c && c.setOnly); }
+  // The collection as a cart-ready product.
+  function setProductOf(cat, c) {
+    if (!c) return null;
+    var items = productsOf(cat, c.id);
+    return {
+      id: setIdOf(c.id), categoryId: c.id, isSet: true,
+      name: c.setName || (c.name + ' — المجموعة كاملة'),
+      nameEn: c.setNameEn || ((c.nameEn || c.name) + ' — Complete Set'),
+      color: items.map(function (p) { return p.name; }).join(' + '),
+      colorEn: items.map(function (p) { return p.nameEn || p.name; }).join(' + '),
+      description: c.description, descriptionEn: c.descriptionEn,
+      price: c.price, oldPrice: c.oldPrice, solo: true,
+      mainImg: c.coverImg, gallery: [],
+      items: items, order: -1, visible: c.visible
+    };
+  }
+  // Anything the cart may hold: a collection set, or a solo product.
+  function buyableById(cat, id) {
+    if (isSetId(id)) {
+      var c = categoryById(cat, categoryOfSetId(id));
+      return c ? setProductOf(cat, c) : null;
+    }
+    return productById(cat, id);
+  }
+  // Every buyable thing in the shop, in display order.
+  function buyables(cat) {
+    var out = [];
+    visibleCategories(cat).forEach(function (c) {
+      if (isSetCategory(c)) out.push(setProductOf(cat, c));
+      productsOf(cat, c.id).forEach(function (p) { if (!isSetCategory(c) || p.solo) out.push(p); });
+    });
+    return out;
+  }
+  // still on sale at all: its page opens and its card shows
   function isProductAvailable(cat, p) {
     if (!p || !p.visible) return false;
     var c = categoryById(cat, p.categoryId);
-    return !!(c && c.visible);
+    if (!c || !c.visible) return false;
+    if (p.isSet) return productsOf(cat, c.id).length > 0;
+    return true;
+  }
+  // may go into the cart on its own: a collection set, or a product marked solo
+  function isBuyable(cat, p) {
+    if (!isProductAvailable(cat, p)) return false;
+    if (p.isSet) return true;
+    var c = categoryById(cat, p.categoryId);
+    return !isSetCategory(c) || p.solo === true;
   }
   function effectivePrice(cat, p) {
     if (p && p.price) return p.price;
     var c = p ? categoryById(cat, p.categoryId) : null;
+    // a product sold only inside its set has no price of its own
+    if (c && isSetCategory(c) && p && !p.isSet) return 0;
     return c ? c.price : 0;
   }
   function effectiveOldPrice(cat, p) {
     var price = effectivePrice(cat, p);
-    var old = (p && p.oldPrice) || (p && !p.price ? (categoryById(cat, p.categoryId) || {}).oldPrice : null);
+    if (!price) return null;
+    var c = p ? categoryById(cat, p.categoryId) : null;
+    var old = (p && p.oldPrice) || (p && !p.price && c ? c.oldPrice : null);
     return old && old > price ? old : null;
   }
   function shippingZoneFor(cat, gov) {
@@ -764,13 +853,16 @@
     GOVERNORATES: GOVERNORATES, SEED_SHIPPING: SEED_SHIPPING, normalizeShipping: normalizeShipping, shippingZoneFor: shippingZoneFor, minShipping: minShipping,
     lang: lang, setLang: setLang, isEn: isEn, pick: pick,
     esc: esc, num: num, money: money, toLatinDigits: toLatinDigits, randomId: randomId, validRatio: validRatio,
+    applyPriceDefaults: applyPriceDefaults, applyProductPriceDefaults: applyProductPriceDefaults,
     normalizeCategory: normalizeCategory, normalizeProduct: normalizeProduct, normalizeWhatsapp: normalizeWhatsapp, byOrder: byOrder,
     fs: { list: fsList, get: fsGet, commit: fsCommit, writeCreate: writeCreate, writeIncrement: writeIncrement, writeMerge: writeMerge, encodeFields: encodeFields, decodeFields: decodeFields },
     isMedia: isMedia, imgTag: imgTag, hydrateMedia: hydrateMedia,
     primeMedia: function (key, dataUrl) { mediaCache[key] = dataUrl; }, mediaDocId: mediaDocId, absoluteUrl: absoluteUrl, BLANK: BLANK,
     loadCatalog: loadCatalog, refreshCatalog: refreshCatalog, seedCatalog: seedCatalog,
     visibleCategories: visibleCategories, categoryById: categoryById, productById: productById, productsOf: productsOf,
-    isProductAvailable: isProductAvailable, effectivePrice: effectivePrice, effectiveOldPrice: effectiveOldPrice, productImages: productImages,
+    isProductAvailable: isProductAvailable, isBuyable: isBuyable, effectivePrice: effectivePrice, effectiveOldPrice: effectiveOldPrice, productImages: productImages,
+    isSetId: isSetId, setIdOf: setIdOf, categoryOfSetId: categoryOfSetId, isSetCategory: isSetCategory,
+    setProductOf: setProductOf, buyableById: buyableById, buyables: buyables,
     bundleFor: bundleFor, priceForQty: priceForQty, bundleSaving: bundleSaving
   };
 })(window);

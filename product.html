@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sedra.css?v=5">
+<link rel="stylesheet" href="assets/sedra.css?v=6">
+<link rel="stylesheet" href="assets/yours.css?v=6">
 <title>تفاصيل المنتج — YOURS</title>
 <meta name="description" content="تفاصيل منتج المصلى من YOURS.">
 <style>
@@ -161,9 +162,9 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
 
-<script src="assets/sedra-data.js?v=5"></script>
-<script src="assets/sedra-store.js?v=5"></script>
-<script src="assets/yours-lang.js?v=1"></script>
+<script src="assets/sedra-data.js?v=6"></script>
+<script src="assets/sedra-store.js?v=6"></script>
+<script src="assets/yours-lang.js?v=2"></script>
 <script>
 function renderFooterCats(cat) {
   var el = document.getElementById('footerCats'); if (!el) return;
@@ -225,7 +226,7 @@ function addSwipe(el, onPrev, onNext) {
 
 function updateInCart() {
   if (!G.product) return;
-  var q = Sedra.inCartQty(G.product.id);
+  var q = Sedra.inCartQty(G.buyId || G.product.id);
   var note = document.getElementById('inCartNote');
   if (!note) return;
   note.classList.toggle('show', q > 0);
@@ -252,7 +253,11 @@ function renderProduct(cat) {
   }
   var c = D.categoryById(cat, p.categoryId);
   var price = D.effectivePrice(cat, p), old = D.effectiveOldPrice(cat, p);
-  var sameKey = JSON.stringify([p, c, price, old, cat.settings]);
+  // inside a set-only collection this product is not sold on its own
+  var inSet = D.isSetCategory(c) && !p.solo;
+  var setSave = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
+  var setList = D.productsOf(cat, c.id);
+  var sameKey = JSON.stringify([p, c, price, old, inSet, cat.settings]);
   G.product = p;
   if (G.renderedFor === sameKey) { updateInCart(); return; }
   G.renderedFor = sameKey;
@@ -287,21 +292,30 @@ function renderProduct(cat) {
       '<h1>' + D.esc(D.pick(p, 'name')) + '</h1>' +
       (p.color ? '<div class="pi-color">' + D.esc(D.pick(p, 'color')) + '</div>' : '') +
       '<div class="viewers"><i></i><b id="viewerCount">14</b> بيتفرجوا على المنتج ده دلوقتي</div>' +
-      '<div class="price-block"><span class="price-now">' + D.money(price) + '</span>' +
-        (old ? '<span class="price-was">' + D.money(old) + '</span><span class="save">وفّر ' + D.money(old - price) + '</span>' : '') +
-        '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>' +
-      (D.bundleFor(cat, p) ? '<div class="offer-box">🎁 <b>عرض:</b> أي ' + D.bundleFor(cat, p).minQty + ' قطع من ' + D.esc(D.pick(c, 'name')) + ' بـ <b>' + D.money(D.bundleFor(cat, p).total) + '</b> بدل ' + D.money(c.price * D.bundleFor(cat, p).minQty) + (D.bundleFor(cat, p).extraUnit ? '<br>وكل قطعة زيادة بـ <b>' + D.money(D.bundleFor(cat, p).extraUnit) + '</b> بس' : '') + '<br><small>العرض بيتحسب على كل قطع الصنف مع بعض، حتى لو منتجات مختلفة.</small><div class="offer-live" id="offerLive"></div></div>' : '') +
+      (inSet
+        ? '<div class="set-box">' +
+            '<div class="set-box-kicker">📦 المنتج ده جزء من <b>' + D.esc(D.pick(c, 'name')) + '</b></div>' +
+            '<p class="set-box-note">المجموعة بتتباع كاملة: ' + setList.length + ' منتجات مع بعض.</p>' +
+            '<ul class="set-contents big">' + setList.map(function (x) {
+              return '<li' + (x.id === p.id ? ' class="here"' : '') + '><span>' + D.esc(D.pick(x, 'name')) + '</span></li>'; }).join('') + '</ul>' +
+            '<div class="price-block"><span class="price-now">' + D.money(c.price) + '</span>' +
+              (setSave ? '<span class="price-was">' + D.money(c.oldPrice) + '</span><span class="save">وفّري ' + D.money(setSave) + '</span>' : '') +
+              '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>' +
+          '</div>'
+        : '<div class="price-block"><span class="price-now">' + D.money(price) + '</span>' +
+          (old ? '<span class="price-was">' + D.money(old) + '</span><span class="save">وفّري ' + D.money(old - price) + '</span>' : '') +
+          '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>') +
       (specs.length ? '<div class="box"><h3>المواصفات</h3><div class="specs-grid">' + specs.map(function (sp) {
         return '<div><span class="spec-label">' + D.esc(D.pick(sp, 'label')) + '</span><span class="spec-val">' + D.esc(D.pick(sp, 'value')) + '</span></div>';
       }).join('') + '</div></div>' : '') +
       ((p.description || c.description) ? '<div class="box"><h3>عن المنتج</h3><p class="pi-desc">' + D.esc(D.pick(p, 'description') || D.pick(c, 'description')) + '</p></div>' : '') +
 
       '<div class="buy-row"><div class="qty" role="group" aria-label="الكمية"><button type="button" id="qtyPlus" aria-label="زيادة">+</button><span id="qtyVal">' + G.qty + '</span><button type="button" id="qtyMinus" aria-label="تقليل">−</button></div>' +
-        '<button class="btn btn-gold" type="button" id="buyNow">🛍️ اطلب الآن</button></div>' +
+        '<button class="btn btn-gold" type="button" id="buyNow">🛍️ ' + (inSet ? 'اطلبي المجموعة' : 'اطلبي الآن') + '</button></div>' +
       '<div class="btn-stack">' +
-        '<button class="btn btn-dark btn-block" type="button" id="addOnly">➕ أضف للطلب وكمّلي تسوق</button>' +
+        '<button class="btn btn-dark btn-block" type="button" id="addOnly">➕ ' + (inSet ? 'أضف المجموعة وكمّلي تسوق' : 'أضف للطلب وكمّلي تسوق') + '</button>' +
         '<button class="add-more-btn" type="button" id="addOther" style="margin:0">+ أضيفي منتج تاني أو صنف تاني لنفس الطلب</button>' +
-        '<div class="in-cart-note" id="inCartNote"><span>✓ في طلبك: <b id="inCartQty">0</b> من المنتج ده</span><button type="button" data-checkout>إتمام الطلب</button></div>' +
+        '<div class="in-cart-note" id="inCartNote"><span>✓ في طلبك: <b id="inCartQty">0</b> ' + (inSet ? 'من المجموعة دي' : 'من المنتج ده') + '</span><button type="button" data-checkout>إتمام الطلب</button></div>' +
       '</div>' +
       '<div class="return-policy"><strong>👀 عاين قبل ما تستلم</strong>من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس، ولو فيها عيب إحنا بنتحمل الشحن كله. <a href="returns.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div>' +
       '<a class="btn btn-wa btn-block" id="inquiryBtn" target="_blank" rel="noopener" href="#">' + Sedra.WA_SVG + ' استفسري عن المنتج ده</a>' +
@@ -357,13 +371,16 @@ function renderProduct(cat) {
   document.getElementById('qtyPlus').addEventListener('click', function () { G.qty = Math.min(99, G.qty + 1); qv.textContent = G.qty; showQtyPrice(); });
   document.getElementById('qtyMinus').addEventListener('click', function () { G.qty = Math.max(1, G.qty - 1); qv.textContent = G.qty; showQtyPrice(); });
   showQtyPrice();
-  function buyNow() { if (Sedra.addToCart(p.id, G.qty, true)) { G.qty = 1; qv.textContent = 1; Sedra.openCheckout(); } }
+  var buyId = inSet ? D.setIdOf(c.id) : p.id;
+  G.buyId = buyId;
+  function buyNow() { if (Sedra.addToCart(buyId, G.qty, true)) { G.qty = 1; qv.textContent = 1; Sedra.openCheckout(); } }
   document.getElementById('buyNow').addEventListener('click', buyNow);
   document.getElementById('sbBuy').onclick = buyNow;
-  document.getElementById('addOnly').addEventListener('click', function () { if (Sedra.addToCart(p.id, G.qty)) { G.qty = 1; qv.textContent = 1; updateInCart(); } });
+  document.getElementById('addOnly').addEventListener('click', function () { if (Sedra.addToCart(buyId, G.qty)) { G.qty = 1; qv.textContent = 1; updateInCart(); } });
   document.getElementById('addOther').addEventListener('click', function () { Sedra.openPicker(c.id); });
   document.getElementById('inquiryBtn').href = Sedra.waLink('السلام عليكم، عندي استفسار عن: ' + c.name + ' — ' + p.name);
-  document.getElementById('sbPrice').textContent = D.money(price);
+  document.getElementById('sbPrice').textContent = D.money(inSet ? c.price : price);
+  document.getElementById('sbBuy').textContent = inSet ? '🛍️ اطلبي المجموعة' : '🛍️ اطلبي الآن';
   updateInCart();
   if (window.SedraPixel && G.pixelFor !== p.id) { G.pixelFor = p.id; SedraPixel.viewContent(D, cat, p); }
 }

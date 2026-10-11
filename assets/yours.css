@@ -134,3 +134,114 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
 
 @media (max-width: 900px) { .problems-grid { grid-template-columns: repeat(3, 1fr); } .travelset-inner { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .problems-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+
+/* =====================================================================
+   Collections sold as one set
+   ===================================================================== */
+
+/* product photos sit on white and keep their own shape — never a black frame */
+.cat-card-media,
+.cat-card-media.banner { aspect-ratio: auto; background: #fff; display: block; }
+.cat-card-media img,
+.cat-card-media.banner img { width: 100%; height: auto; display: block; object-fit: contain; padding: 0; }
+.p-img { background: #fff; }
+.p-img img { object-fit: contain; }
+.g-main, .g-main img, .line-img, .s-img { background: #fff; }
+
+.cat-grid.sets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: start; }
+.cat-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 10px 34px rgba(0,0,0,.07); transition: transform .3s, box-shadow .3s; }
+.cat-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.14); }
+.cat-card-media { position: relative; }
+.cat-card-save { position: absolute; top: 12px; inset-inline-start: 12px; background: var(--black); color: var(--gold-light);
+  font-size: 12px; font-weight: 900; padding: 6px 12px; border-radius: 20px; }
+.cat-card-count { position: absolute; top: auto; right: auto; left: auto; bottom: 12px; inset-inline-end: 12px;
+  background: rgba(255,255,255,.92); color: var(--dark); box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  font-size: 11.5px; font-weight: 800; padding: 5px 11px; border-radius: 20px; }
+.cat-card-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.cat-card-name { font-size: 19px; font-weight: 900; color: var(--dark); text-decoration: none; display: block; }
+.cat-card-tag { font-size: 13.5px; color: var(--text-light); line-height: 1.7; }
+.set-contents { list-style: none; display: grid; gap: 5px; margin: 4px 0 2px; }
+.set-contents li { font-size: 12.5px; font-weight: 700; color: var(--dark); padding-inline-start: 18px; position: relative; line-height: 1.7; }
+.set-contents li::before { content: '✓'; position: absolute; inset-inline-start: 0; color: var(--gold-dark); font-weight: 900; }
+.set-contents.big li { font-size: 13.5px; }
+.set-contents li.here { color: var(--gold-dark); }
+.set-contents li.here::before { content: '➤'; }
+.cat-card-foot { margin-top: auto; padding-top: 6px; }
+.cat-card-foot .price-now { font-size: 26px; font-weight: 900; color: var(--gold-dark); }
+.cat-card-foot .price-was { font-size: 15px; }
+.cat-card-actions { display: grid; gap: 8px; }
+.cat-card-link { text-align: center; font-size: 13px; font-weight: 800; color: var(--gold-dark); text-decoration: none; padding: 4px; }
+.cat-card-link:hover { text-decoration: underline; }
+
+/* a product that is only sold inside its collection */
+.p-card.in-set .p-foot.set-note { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.in-set-tag { font-size: 11.5px; font-weight: 800; color: var(--gold-dark); background: rgba(201,164,90,.12);
+  border-radius: 8px; padding: 5px 9px; text-align: center; }
+.p-badge.solo { background: var(--black); color: var(--gold-light); }
+
+/* products that may also be bought on their own */
+.solo-wrap { max-width: 1200px; margin: 42px auto 0; padding-top: 30px; border-top: 1px solid var(--border); }
+.solo-head { text-align: center; margin-bottom: 18px; }
+.solo-head h3 { font-size: 20px; font-weight: 900; color: var(--dark); }
+.solo-head p { font-size: 13.5px; color: var(--text-light); margin-top: 4px; }
+.solo-note { margin-top: 18px; background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; font-size: 13.5px; line-height: 1.8; color: var(--text); }
+.solo-note b { color: var(--gold-dark); }
+
+/* collection buy box on the category page */
+.cat-buy.set-buy { border-color: var(--gold); box-shadow: 0 14px 40px rgba(201,164,90,.18); }
+.set-kicker { font-size: 12px; font-weight: 900; letter-spacing: .5px; color: var(--gold-dark);
+  background: rgba(201,164,90,.12); border-radius: 8px; padding: 7px 10px; margin-bottom: 10px; text-align: center; }
+.set-save { font-size: 13px; font-weight: 800; color: #1f7a4d; margin-top: 4px; }
+.cat-buy .set-contents { margin: 12px 0; }
+
+/* collection box on a product page */
+.set-box { border: 1px solid var(--gold); background: rgba(201,164,90,.06); border-radius: 16px; padding: 16px; margin: 14px 0; }
+.set-box-kicker { font-size: 14px; font-weight: 800; color: var(--dark); }
+.set-box-kicker b { color: var(--gold-dark); }
+.set-box-note { font-size: 13px; color: var(--text-light); margin: 6px 0 10px; }
+.set-box .price-block { margin-top: 10px; }
+
+/* set lines in the cart and the order summary */
+.line-contents { font-size: 11.5px; color: var(--text-light); line-height: 1.6; margin: 3px 0 2px; }
+.summary-contents { display: block; font-style: normal; font-size: 11px; color: var(--text-light); line-height: 1.6; margin-top: 2px; }
+.pick-item.pick-set .pick-name { color: var(--gold-dark); }
+
+@media (max-width: 980px) { .cat-grid.sets { grid-template-columns: 1fr 1fr; gap: 16px; } }
+@media (max-width: 640px) {
+  .cat-grid.sets { grid-template-columns: 1fr; gap: 18px; }
+  .cat-card-body { padding: 15px; }
+  .cat-card-name { font-size: 17px; }
+  .solo-wrap { margin-top: 32px; padding-top: 24px; }
+}
+
+/* ---------- a shorter page, especially on the phone ---------- */
+.hero { min-height: 62vh; }
+.hero-content { padding: 52px 20px; }
+/* the collection photo sits in a fixed frame on white, so cards stay compact
+   and the padding around the photo is invisible */
+.cat-card-media, .cat-card-media.banner { aspect-ratio: 4/3; }
+.cat-card-media img, .cat-card-media.banner img { height: 100%; object-fit: contain; }
+
+@media (max-width: 860px) {
+  .hero { min-height: 54vh; }
+  .hero-content { padding: 40px 18px; }
+  .routine { padding: 40px 16px; }
+  .routine-steps { grid-template-columns: 1fr 1fr !important; gap: 12px; }
+  .routine-steps li { padding: 20px 14px 16px; }
+  .routine-steps p { font-size: 12.5px; }
+  .routine-steps small { display: none; }
+  .problems { padding: 40px 14px; }
+  .problems-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 9px; }
+  .problem-card span { font-size: 12px; margin-top: 7px; }
+  .problem-card small { font-size: 10.5px; }
+  .problems-note { margin-top: 16px; font-size: 13px; }
+  .about { padding: 38px 18px; }
+  .faq { padding: 40px 16px; }
+  .visit { padding: 44px 16px; }
+  .section-head { margin-bottom: 18px; }
+}
+@media (max-width: 420px) {
+  .cat-card-media, .cat-card-media.banner { aspect-ratio: 3/2; }
+}

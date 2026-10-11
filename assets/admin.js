@@ -357,12 +357,15 @@
   /* ================= LISTENERS ================= */
   function listenCatalog() {
     db.collection('categories').onSnapshot(function (snap) {
-      S.categories = snap.docs.map(function (d) { return D.normalizeCategory(d.id, d.data()); }).sort(D.byOrder);
+      // same corrections the storefront applies, so the admin never shows a different price
+      S.categories = D.applyPriceDefaults(snap.docs.map(function (d) { return { id: d.id, data: d.data() }; }))
+        .map(function (c) { return D.normalizeCategory(c.id, c.data); }).sort(D.byOrder);
       S.catsLoaded = true; banner('');
       renderCatalogViews();
     }, function (e) { banner('تعذر تحميل الأصناف: ' + errMsg(e)); });
     db.collection('products').onSnapshot(function (snap) {
-      S.products = snap.docs.map(function (d) { return D.normalizeProduct(d.id, d.data()); }).sort(D.byOrder);
+      S.products = D.applyProductPriceDefaults(snap.docs.map(function (d) { return { id: d.id, data: d.data() }; }))
+        .map(function (p) { return D.normalizeProduct(p.id, p.data); }).sort(D.byOrder);
       S.prodsLoaded = true;
       renderCatalogViews();
     }, function (e) { banner('تعذر تحميل المنتجات: ' + errMsg(e)); });
@@ -1003,6 +1006,8 @@
         : '';
     }
     $('#cOldPrice').value = c && c.oldPrice ? c.oldPrice : '';
+    $('#cSetOnly').checked = c ? c.setOnly !== false : true;
+    $('#cSetName').value = c && c.setName ? c.setName : '';
     $('#cBadge').value = c ? c.badge : '';
     $('#cFit').value = c ? c.imageFit : 'contain';
     $('#cVisible').checked = c ? c.visible : true;
@@ -1043,10 +1048,10 @@
       tagline: $('#cTagline').value.trim(), description: $('#cDesc').value.trim(),
       bestFor: $('#cBestFor').value.trim(), chooser: $('#cChooser').value.trim(),
       price: Math.round(price), oldPrice: old ? Math.round(old) : null, badge: $('#cBadge').value.trim(),
-      offerV1: true,
-      bundleQty: num($('#cBundleQty').value, 0) >= 2 ? Math.round(num($('#cBundleQty').value, 0)) : null,
-      bundleTotal: num($('#cBundleTotal').value, 0) > 0 ? Math.round(num($('#cBundleTotal').value, 0)) : null,
-      bundleExtra: num($('#cBundleExtra').value, 0) > 0 ? Math.round(num($('#cBundleExtra').value, 0)) : null,
+      priceV2: true,
+      setOnly: $('#cSetOnly').checked,
+      setName: $('#cSetName').value.trim(),
+      bundleQty: null, bundleTotal: null, bundleExtra: null,
       cardRatio: selectedRatio(), imageFit: $('#cFit').value === 'cover' ? 'cover' : 'contain',
       coverImg: CM.cover || '', specs: readSpecs(), visible: $('#cVisible').checked, updatedAt: serverTs()
     };
@@ -1212,8 +1217,15 @@
   }
   function updatePriceLabel() {
     var c = catById($('#pCategory').value);
+    var setOnly = !c || c.setOnly !== false;
+    var solo = $('#pSolo').checked;
     $('#pUseCatPriceLabel').textContent = 'استخدم سعر الصنف' + (c ? ' (' + money(c.price) + ')' : '');
-    $('#pPriceFields').style.display = $('#pUseCatPrice').checked ? 'none' : '';
+    // inside a set-only collection a price only matters when the product is also sold alone
+    $('#pUseCatPriceRow').hidden = setOnly;
+    $('#pPriceFields').style.display = (setOnly ? !solo : $('#pUseCatPrice').checked) ? 'none' : '';
+    $('#pSoloHint').textContent = setOnly
+      ? ('المنتجات من غير العلامة دي بتتباع ضمن مجموعة ' + (c ? c.name : '') + ' بس، ومش بيظهرلها سعر منفصل.')
+      : 'المجموعة دي بتتباع منتج منتج، فكل منتج لازم يكون ليه سعر.';
     updateRatioHint();
   }
   function renderProdImages() {
@@ -1264,6 +1276,7 @@
     $('#pDesc').value = p ? p.description : '';
     $('#pVisible').checked = p ? p.visible : true;
     $('#pUseCatPrice').checked = !(p && p.price);
+    $('#pSolo').checked = !!(p && p.solo);
     $('#pPrice').value = p && p.price ? p.price : '';
     $('#pOldPrice').value = p && p.oldPrice ? p.oldPrice : '';
     $('#pUrl').value = ''; $('#pFiles').value = '';
@@ -1325,12 +1338,17 @@
     if (PM.uploading > 0) return setFormError('prodFormError', 'استنى لحد ما الصور تخلص رفع');
     $$('#prodForm .invalid').forEach(function (x) { x.classList.remove('invalid'); });
     var catId = $('#pCategory').value, name = $('#pName').value.trim();
-    var useCat = $('#pUseCatPrice').checked;
+    var catOfProd = catById(catId);
+    var setOnly = !catOfProd || catOfProd.setOnly !== false;
+    var solo = $('#pSolo').checked;
+    // in a set-only collection only a solo product carries a price of its own
+    var useCat = setOnly ? !solo : $('#pUseCatPrice').checked;
     var price = num($('#pPrice').value, 0), old = num($('#pOldPrice').value, 0);
     var errs = [];
-    if (!catById(catId)) { errs.push('اختار صنف موجود'); $('#pCategory').classList.add('invalid'); }
-    if (name.length < 2) { errs.push('اكتب اسم التصميم'); $('#pName').classList.add('invalid'); }
-    if (!useCat && !(price > 0)) { errs.push('اكتب السعر الخاص أو علّم "استخدم سعر الصنف"'); $('#pPrice').classList.add('invalid'); }
+    if (!catOfProd) { errs.push('اختار صنف موجود'); $('#pCategory').classList.add('invalid'); }
+    if (name.length < 2) { errs.push('اكتب اسم المنتج'); $('#pName').classList.add('invalid'); }
+    if (setOnly && solo && !(price > 0)) { errs.push('اكتب سعر المنتج لوحده'); $('#pPrice').classList.add('invalid'); }
+    if (!setOnly && !useCat && !(price > 0)) { errs.push('اكتب السعر الخاص أو علّم "استخدم سعر الصنف"'); $('#pPrice').classList.add('invalid'); }
     if (!useCat && old && old <= price) { errs.push('السعر قبل الخصم لازم يكون أكبر من السعر'); $('#pOldPrice').classList.add('invalid'); }
     if (!PM.images.length) errs.push('أضف صورة واحدة على الأقل');
     if (errs.length) return setFormError('prodFormError', errs.join(' — '));
@@ -1340,6 +1358,7 @@
     var data = {
       categoryId: catId, name: name, color: $('#pColor').value.trim(), description: $('#pDesc').value.trim(),
       price: useCat ? null : Math.round(price), oldPrice: useCat ? null : (old ? Math.round(old) : null),
+      solo: setOnly ? solo : true, priceV2: true,
       mainImg: PM.images[0], gallery: PM.images.slice(1), visible: $('#pVisible').checked, updatedAt: serverTs()
     };
     if (!existing || existing.categoryId !== catId) {
@@ -1691,7 +1710,7 @@
     });
   }
   function resetOrders() {
-    askConfirm({ title: 'مسح كل الأوردرات', text: 'هيتمسح ' + S.orders.length + ' أوردر نهائياً والكود هيرجع يبدأ من SED-0001.\nيُفضل تعمل "تصدير Excel" الأول.', okText: '🗑️ امسح الكل', danger: true, typeText: 'امسح' }).then(function (ok) {
+    askConfirm({ title: 'مسح كل الأوردرات', text: 'هيتمسح ' + S.orders.length + ' أوردر نهائياً والكود هيرجع يبدأ من YRS-0001.\nيُفضل تعمل "تصدير Excel" الأول.', okText: '🗑️ امسح الكل', danger: true, typeText: 'امسح' }).then(function (ok) {
       if (!ok) return;
       var ops = S.orders.map(function (o) { return { type: 'delete', col: 'orders', id: o.id }; });
       ops.push({ type: 'set', col: 'meta', id: 'orderCounter', data: { count: 0 } });
@@ -1813,6 +1832,8 @@
     $('#prodForm').addEventListener('submit', saveProduct);
     $('#pCategory').addEventListener('change', updatePriceLabel);
     $('#pUseCatPrice').addEventListener('change', updatePriceLabel);
+    $('#pSolo').addEventListener('change', updatePriceLabel);
+    $('#cSetOnly').addEventListener('change', function () { $('#cSetName').closest('.add-modal-field').hidden = !this.checked; });
     $('#pFiles').addEventListener('change', function () { addProdFiles(this.files); });
     $('#pUrlBtn').addEventListener('click', function () { addUrl('pUrl', function (v) { if (PM.images.indexOf(v) === -1) PM.images.push(v); renderProdImages(); }); });
     $('#pUrl').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('#pUrlBtn').click(); } });

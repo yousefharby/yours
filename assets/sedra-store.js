@@ -147,12 +147,15 @@
   function snapshotItem(p, qty) {
     var cat = state.catalog, c = D.categoryById(cat, p.categoryId) || {};
     return { productId: p.id, categoryId: p.categoryId, categoryName: c.name || '', name: p.name, color: p.color || '',
-      img: p.mainImg, price: D.effectivePrice(cat, p), qty: qty };
+      img: p.mainImg, price: D.effectivePrice(cat, p), qty: qty,
+      isSet: p.isSet === true,
+      // what is actually inside the box, so the order and the packing list are explicit
+      contents: p.isSet ? (p.items || []).map(function (x) { return x.name; }) : null };
   }
   function addToCart(productId, qty, silent) {
     var cat = state.catalog; if (!cat) return false;
-    var p = D.productById(cat, productId);
-    if (!D.isProductAvailable(cat, p)) { toast('المنتج ده مش متاح حالياً'); return false; }
+    var p = D.buyableById(cat, productId);
+    if (!D.isBuyable(cat, p)) { toast('المنتج ده مش متاح حالياً'); return false; }
     qty = Math.max(1, Math.min(99, parseInt(qty, 10) || 1));
     var existing = cart.filter(function (i) { return i.productId === p.id; })[0];
     if (existing) existing.qty = Math.min(99, existing.qty + qty);
@@ -161,7 +164,7 @@
     if (global.SedraPixel) SedraPixel.addToCart(D, cat, p, qty);
     var badge = $('#cartCount');
     if (badge) { badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump'); }
-    if (!silent) toast('اتضاف "' + p.name + '" للطلب', { label: 'عرض الطلب', fn: openCart });
+    if (!silent) toast('اتضاف "' + D.pick(p, 'name') + '" للطلب', { label: 'عرض الطلب', fn: openCart });
     return true;
   }
   function setQty(productId, qty) {
@@ -175,9 +178,9 @@
     var cat = state.catalog; if (!cat) return;
     var removed = [];
     cart = cart.filter(function (item) {
-      var p = D.productById(cat, item.productId);
+      var p = D.buyableById(cat, item.productId);
       if (!p) { if (cat.source === 'live') { removed.push(item.name); return false; } return true; }
-      if (!D.isProductAvailable(cat, p)) { removed.push(item.name); return false; }
+      if (!D.isBuyable(cat, p)) { removed.push(item.name); return false; }
       var fresh = snapshotItem(p, item.qty);
       Object.keys(fresh).forEach(function (k) { item[k] = fresh[k]; });
       return true;
@@ -190,7 +193,9 @@
     return '<div class="line-item">' +
       '<div class="line-img">' + D.imgTag(i.img, { alt: i.name, variant: 't' }) + '</div>' +
       '<div><div class="line-cat">' + esc(i.categoryName) + '</div><div class="line-name">' + esc(i.name) + '</div>' +
-      '<div class="line-price">' + money(i.price) + ' للقطعة</div>' +
+      (i.isSet && i.contents && i.contents.length
+        ? '<div class="line-contents">' + i.contents.map(function (t) { return esc(t); }).join(' · ') + '</div>' : '') +
+      '<div class="line-price">' + money(i.price) + (i.isSet ? ' للمجموعة' : ' للقطعة') + '</div>' +
       '<button class="line-remove" type="button" data-remove="' + esc(i.productId) + '">إزالة</button></div>' +
       '<div class="line-side"><div class="qty" role="group" aria-label="الكمية">' +
         '<button type="button" data-qty="' + esc(i.productId) + '" data-delta="1" aria-label="زيادة">+</button>' +
@@ -255,10 +260,15 @@
         esc(c.icon) + ' ' + esc(c.shortName || D.pick(c, 'name')) + '<small>' + money(c.price) + '</small></button>';
     }).join('');
     var c = D.categoryById(cat, pickerCat);
-    var list = c ? D.productsOf(cat, c.id) : [];
+    // only what can actually be ordered: the collection itself, plus any solo product
+    var list = [];
+    if (c) {
+      if (D.isSetCategory(c)) list.push(D.setProductOf(cat, c));
+      D.productsOf(cat, c.id).forEach(function (p) { if (!D.isSetCategory(c) || p.solo) list.push(p); });
+    }
     $('#pickerGrid').innerHTML = list.length ? list.map(function (p) {
       var q = inCartQty(p.id);
-      return '<button type="button" class="pick-item' + (q ? ' in-cart' : '') + '" data-pick="' + esc(p.id) + '">' +
+      return '<button type="button" class="pick-item' + (q ? ' in-cart' : '') + (p.isSet ? ' pick-set' : '') + '" data-pick="' + esc(p.id) + '">' +
         '<div class="p-img' + (c.imageFit === 'contain' ? ' fit-contain' : '') + '" style="--ratio:' + c.cardRatio + ';--fit:' + c.imageFit + '">' +
         D.imgTag(p.mainImg, { alt: D.pick(p, 'name'), variant: 't' }) + '</div>' +
         '<div class="pick-info"><div class="pick-name">' + esc(D.pick(p, 'name')) + '</div>' +
@@ -452,7 +462,8 @@
     var pr = cartPricing(), sub = pr.net, n = cartCount();
     $('#checkoutSummary').innerHTML = cart.map(function (i) {
       return '<div class="summary-item"><div class="s-img">' + D.imgTag(i.img, { alt: i.name, variant: 't' }) + '</div>' +
-        '<span class="summary-item-name"><small>' + esc(i.categoryName) + '</small>' + esc(i.name) + '</span>' +
+        '<span class="summary-item-name"><small>' + esc(i.categoryName) + '</small>' + esc(i.name) +
+          (i.isSet && i.contents && i.contents.length ? '<em class="summary-contents">' + i.contents.map(function (t) { return esc(t); }).join(' · ') + '</em>' : '') + '</span>' +
         '<span class="summary-item-qty">×' + i.qty + '</span><span class="summary-item-price">' + money(lineTotal(i)) + '</span></div>';
     }).join('') +
     '<button class="summary-edit" type="button" data-edit-cart>تعديل الطلب أو إضافة منتج</button>' +
@@ -543,9 +554,9 @@
       var tr = r.writeResults && r.writeResults[0] && r.writeResults[0].transformResults;
       var n = tr && tr[0] ? Number(tr[0].integerValue || tr[0].doubleValue) : NaN;
       if (!isFinite(n) || n <= 0) throw new Error('bad counter');
-      return 'SED-' + String(n).padStart(4, '0');
+      return 'YRS-' + String(n).padStart(4, '0');
     });
-    return timeout(p, 6000).catch(function () { return 'SED-' + String(Math.floor(100000 + Math.random() * 900000)); });
+    return timeout(p, 6000).catch(function () { return 'YRS-' + String(Math.floor(100000 + Math.random() * 900000)); });
   }
   function timeout(p, ms) {
     return new Promise(function (res, rej) {
@@ -568,7 +579,10 @@
     ];
     order.items.forEach(function (i) {
       var noPhoto = !D.absoluteUrl(i.img) ? ' ⚠️ (من غير صورة)' : '';
-      lines.push('• [' + htmlEsc(i.categoryName) + '] ' + htmlEsc(i.name) + ' × ' + i.qty + ' = ' + (i.price * i.qty) + ' ج' + noPhoto);
+      lines.push('• ' + (i.isSet ? '📦 ' : '') + '[' + htmlEsc(i.categoryName) + '] ' + htmlEsc(i.name) + ' × ' + i.qty + ' = ' + (i.price * i.qty) + ' ج' + noPhoto);
+      if (i.isSet && i.contents && i.contents.length) {
+        i.contents.forEach(function (t) { lines.push('      ↳ ' + htmlEsc(t) + ' × ' + i.qty); });
+      }
     });
     if (order.offerDiscount > 0) lines.push('🎁 خصم العرض: −' + order.offerDiscount + ' ج' + (order.offerNote ? ' (' + htmlEsc(order.offerNote) + ')' : ''));
     lines.push('', '📦 عدد القطع: ' + order.itemsCount,
@@ -691,8 +705,8 @@
     timeout(D.refreshCatalog(), 8000).then(function (fresh) {
       state.catalog = fresh;
       var gone = cart.filter(function (i) {
-        var p = D.productById(fresh, i.productId);
-        return !D.isProductAvailable(fresh, p);
+        var p = D.buyableById(fresh, i.productId);
+        return !D.isBuyable(fresh, p);
       });
       if (gone.length) {
         gone.forEach(function (g) { cart = cart.filter(function (i) { return i.productId !== g.productId; }); });
@@ -728,7 +742,8 @@
     var items = cart.map(function (i) {
       return { productId: i.productId, categoryId: i.categoryId, categoryName: i.categoryName, name: i.name, color: i.color || '',
         img: D.isMedia(i.img) ? i.img : (D.absoluteUrl(i.img) || i.img), qty: i.qty, price: i.price,
-        lineTotal: i.price * i.qty };
+        lineTotal: i.price * i.qty,
+        isSet: i.isSet === true, contents: i.contents || null };
     });
     var pricing = cartPricing();
     var subtotal = pricing.net, zone = zoneFor(gov), ship = zone.price;
@@ -866,40 +881,53 @@
   function productCardHTML(p, opts) {
     opts = opts || {};
     var cat = state.catalog, c = D.categoryById(cat, p.categoryId) || D.normalizeCategory('', {});
+    var inSet = D.isSetCategory(c) && !p.solo;        // sold only as part of the collection
     var price = D.effectivePrice(cat, p), old = D.effectiveOldPrice(cat, p);
-    var n = D.productImages(p).length;
     var href = 'product.html?id=' + encodeURIComponent(p.id);
     var q = inCartQty(p.id);
-    return '<article class="p-card" style="--ratio:' + c.cardRatio + ';--fit:' + c.imageFit + '">' +
+    return '<article class="p-card' + (inSet ? ' in-set' : '') + '" style="--ratio:' + c.cardRatio + ';--fit:' + c.imageFit + '">' +
       '<a href="' + href + '" class="p-img' + (c.imageFit === 'contain' ? ' fit-contain' : '') + '" aria-label="' + esc(D.pick(p, 'name')) + '">' +
         D.imgTag(p.mainImg, { alt: D.pick(p, 'name'), variant: 't', loading: opts.eager ? 'eager' : 'lazy' }) +
-        (c.badge ? '<span class="p-badge">✦ ' + esc(c.badge) + '</span>' : '') +
-        (n > 1 ? '<span class="p-angles">📷 ' + n + ' صور</span>' : '') +
+        (p.solo ? '<span class="p-badge solo">✦ يتباع لوحده</span>' : '') +
       '</a>' +
       '<div class="p-info">' +
         '<a href="' + href + '" style="text-decoration:none;color:inherit"><h3 class="p-name">' + esc(D.pick(p, 'name')) + '</h3></a>' +
         '<div class="p-meta">' + esc(D.pick(p, 'color') || D.pick(c, 'tagline') || '') + '</div>' +
-        (D.bundleFor(cat, p) ? '<div class="p-offer">🎁 ' + D.bundleFor(cat, p).minQty + ' بـ ' + money(D.bundleFor(cat, p).total) + '</div>' : '') +
-        '<div class="p-foot"><div class="price-line"><span class="price-now">' + money(price) + '</span>' + (old ? '<span class="price-was">' + money(old) + '</span>' : '') + '</div>' +
-        '<button type="button" class="p-add' + (q ? ' added' : '') + '" data-add="' + esc(p.id) + '">' + (q ? '✓ في الطلب' : '+ أضف للطلب') + '</button></div>' +
+        (inSet
+          ? '<div class="p-foot set-note"><span class="in-set-tag">ضمن مجموعة ' + esc(D.pick(c, 'name')) + '</span>' +
+              '<button type="button" class="p-add" data-add="' + esc(D.setIdOf(c.id)) + '">+ أضف المجموعة</button></div>'
+          : '<div class="p-foot"><div class="price-line"><span class="price-now">' + money(price) + '</span>' + (old ? '<span class="price-was">' + money(old) + '</span>' : '') + '</div>' +
+            '<button type="button" class="p-add' + (q ? ' added' : '') + '" data-add="' + esc(p.id) + '">' + (q ? '✓ في الطلب' : '+ أضف للطلب') + '</button></div>') +
       '</div></article>';
   }
   function categoryCardHTML(c) {
     var cat = state.catalog;
     var list = D.productsOf(cat, c.id);
-    var banner = !!c.coverImg;
+    var isSet = D.isSetCategory(c);
     var cover = c.coverImg || (list[0] && list[0].mainImg) || '';
-    return '<a class="cat-card" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
-      '<div class="cat-card-media' + (banner ? ' banner' : '') + '">' + D.imgTag(cover, { alt: D.pick(c, 'name'), variant: 't' }) +
-        '<span class="cat-card-count">' + list.length + ' منتج</span></div>' +
-      '<div class="cat-card-body"><div class="cat-card-name">' + esc(c.icon) + ' ' + esc(D.pick(c, 'name')) + '</div>' +
+    var inCart = isSet ? inCartQty(D.setIdOf(c.id)) : 0;
+    var save = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
+    return '<article class="cat-card' + (isSet ? ' set-card' : '') + '">' +
+      '<a class="cat-card-media banner" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
+        D.imgTag(cover, { alt: D.pick(c, 'name'), variant: 't' }) +
+        (save ? '<span class="cat-card-save">وفّري ' + money(save) + '</span>' : '') +
+        '<span class="cat-card-count">' + list.length + ' منتجات</span></a>' +
+      '<div class="cat-card-body">' +
+        '<a class="cat-card-name" href="category.html?c=' + encodeURIComponent(c.id) + '">' + esc(c.icon) + ' ' + esc(D.pick(c, 'name')) + '</a>' +
         '<div class="cat-card-tag">' + esc(D.pick(c, 'tagline') || D.pick(c, 'description')) + '</div>' +
-        (c.bestFor ? '<div class="cat-card-for"><b>مناسبة لـ</b> ' + esc(D.pick(c, 'bestFor')) + '</div>' : '') +
-        (c.bundle ? '<div class="cat-card-offer">🎁 ' + c.bundle.minQty + ' قطع بـ ' + money(c.bundle.total) + (c.bundle.extraUnit ? ' · الزيادة بـ ' + money(c.bundle.extraUnit) : '') + '</div>' : '') +
+        (isSet && list.length ? '<ul class="set-contents">' + list.map(function (p) {
+          return '<li>' + esc(D.pick(p, 'name')) + '</li>';
+        }).join('') + '</ul>' : '') +
         '<div class="cat-card-foot"><div class="price-line"><span class="price-now">' + money(c.price) + '</span>' +
-          (c.oldPrice && c.oldPrice > c.price ? '<span class="price-was">' + money(c.oldPrice) + '</span>' : '') + '</div>' +
-          '<span class="btn btn-dark">شوفي المنتجات</span></div>' +
-      '</div></a>';
+          (save ? '<span class="price-was">' + money(c.oldPrice) + '</span>' : '') + '</div></div>' +
+        (isSet
+          ? '<div class="cat-card-actions">' +
+              '<button type="button" class="btn btn-gold btn-block p-add' + (inCart ? ' added' : '') + '" data-add="' + esc(D.setIdOf(c.id)) + '">' +
+                (inCart ? '✓ المجموعة في الطلب' : '+ أضف المجموعة للطلب') + '</button>' +
+              '<a class="cat-card-link" href="category.html?c=' + encodeURIComponent(c.id) + '">شوفي تفاصيل المجموعة</a>' +
+            '</div>'
+          : '<div class="cat-card-actions"><a class="btn btn-dark btn-block" href="category.html?c=' + encodeURIComponent(c.id) + '">شوفي المنتجات</a></div>') +
+      '</div></article>';
   }
 
   /* ================= COMPARE / CHOOSER ================= */
@@ -1006,9 +1034,11 @@
   }
   function refreshAddButtons() {
     Array.prototype.forEach.call(document.querySelectorAll('.p-add[data-add]'), function (b) {
-      var q = inCartQty(b.getAttribute('data-add'));
+      var id = b.getAttribute('data-add'), q = inCartQty(id);
       b.classList.toggle('added', q > 0);
-      b.textContent = q ? '✓ في الطلب' : '+ أضف للطلب';
+      if (b.dataset.keepLabel === '1') return;
+      if (D.isSetId(id)) b.textContent = q ? '✓ المجموعة في الطلب' : '+ أضف المجموعة للطلب';
+      else b.textContent = q ? '✓ في الطلب' : '+ أضف للطلب';
     });
     emit('cart');
   }

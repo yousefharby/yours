@@ -9,6 +9,20 @@
   var D = global.SedraData;
 
   var DICT = {
+    // collections sold as one set
+    'مجموعات YOURS': 'YOURS collections',
+    'كل مجموعة روتين كامل — شامبو وبلسم وماسك وسيروم — بسعر المجموعة': 'Each collection is a complete routine — shampoo, conditioner, mask and serum — at one set price',
+    '+ أضف المجموعة للطلب': '+ Add the set to cart', '✓ المجموعة في الطلب': '✓ Set in cart',
+    '+ أضف المجموعة': '+ Add the set', 'شوفي تفاصيل المجموعة': 'See the full set',
+    'اللي جوه المجموعة': 'What is in the set', 'المجموعة كاملة': 'Complete set',
+    'ينفع كمان تاخديهم لوحدهم': 'Also available on their own',
+    'المنتجات دي بس هي اللي بتتباع من غير المجموعة': 'These are the only products sold outside a set',
+    'يتباع لوحده': 'Sold on its own', 'للمجموعة': 'per set',
+    'اطلبي المجموعة': 'Order the set', 'اطلبي الآن': 'Order now',
+    'أضف المجموعة وكمّلي تسوق': 'Add the set and keep shopping',
+    'من المجموعة دي': 'of this set', 'شوفي المجموعات': 'Shop the collections',
+    'مفيش مجموعات متاحة حالياً': 'No collections available right now',
+    'منتجات المجموعة دي بتتباع مع بعض كمجموعة كاملة.': 'The products in this collection are sold together as one complete set.',
     // header & menu
     'الرئيسية': 'Home', 'الأصناف': 'Collections', 'معلومات تهمك': 'Useful info',
     'القائمة الرئيسية': 'Main menu', 'سلة الطلب': 'Cart', 'القائمة': 'Menu',

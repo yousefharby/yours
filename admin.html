@@ -1523,17 +1523,16 @@
       <div class="add-modal-field span2"><label for="cDesc">وصف الصنف</label><textarea id="cDesc" rows="3" maxlength="600"></textarea></div>
       <div class="add-modal-field"><label for="cBestFor">مناسبة لمين؟ (بتظهر في المقارنة)</label><input type="text" id="cBestFor" maxlength="80" placeholder="مثال: اللي ظهره بيتعب في الجلوس الطويل"></div>
       <div class="add-modal-field"><label for="cChooser">إحساس العميل (زرار في "مش متأكد أي نوع يناسبك؟")</label><input type="text" id="cChooser" maxlength="60" placeholder="مثال: ظهري بيتعب وأنا قاعد"></div>
-      <div class="add-modal-field"><label for="cPrice">السعر (جنيه) *</label><input type="number" id="cPrice" min="1" step="1"><small class="hint" id="cPriceWarn" hidden></small></div>
+      <div class="add-modal-field"><label for="cPrice">سعر المجموعة كاملة (جنيه) *</label><input type="number" id="cPrice" min="1" step="1"><small class="hint" id="cPriceWarn" hidden></small></div>
       <div class="add-modal-field"><label for="cOldPrice">السعر قبل الخصم (اختياري)</label><input type="number" id="cOldPrice" min="0" step="1"></div>
       <div class="add-modal-field"><label for="cBadge">شارة على الكارت</label><input type="text" id="cBadge" maxlength="20" placeholder="مثال: ميموري فوم"></div>
       <div class="add-modal-field span2">
-        <label>🎁 عرض الكمية (اختياري)</label>
-        <div class="bundle-row">
-          <span>اشترِ</span><input type="number" id="cBundleQty" min="2" step="1" placeholder="2"><span>قطعة بـ</span>
-          <input type="number" id="cBundleTotal" min="1" step="1" placeholder="1799"><span>ج، والقطعة الزيادة بـ</span>
-          <input type="number" id="cBundleExtra" min="0" step="1" placeholder="900"><span>ج</span>
-        </div>
-        <small class="hint" id="cBundleHint">سيبهم فاضيين لو مفيش عرض. مثال: 2 قطعة بـ 1799، والزيادة بـ 900 للقطعة.</small>
+        <label>📦 طريقة البيع</label>
+        <label class="switch-row"><input type="checkbox" id="cSetOnly" checked> <span>تتباع كمجموعة كاملة (العميلة بتاخد كل منتجاتها مع بعض بالسعر اللي فوق)</span></label>
+        <small class="hint">لو شلتي العلامة دي، كل منتج في المجموعة هيتباع لوحده بسعره الخاص.<br>
+          وعشان تخلي منتج معيّن يتباع لوحده كمان من غير المجموعة، افتحي المنتج نفسه وعلّمي "يتباع لوحده كمان".</small>
+        <div class="add-modal-field span2" style="margin-top:10px"><label for="cSetName">اسم المجموعة في السلة والطلب (اختياري)</label>
+          <input type="text" id="cSetName" maxlength="80" placeholder="مثال: مجموعة YOURS Luxury كاملة"></div>
       </div>
       <div class="add-modal-field" id="cIdField"><label for="cId">رابط الصنف (إنجليزي، اختياري)</label><input type="text" id="cId" dir="ltr" maxlength="40" placeholder="kids"><small class="hint" id="cIdHint"></small></div>
     </div>
@@ -1595,10 +1594,12 @@
     </div>
 
     <fieldset class="fs">
-      <legend>السعر</legend>
-      <label class="switch-row"><input type="checkbox" id="pUseCatPrice"> <span id="pUseCatPriceLabel">استخدم سعر الصنف</span></label>
+      <legend>السعر والبيع</legend>
+      <label class="switch-row"><input type="checkbox" id="pSolo"> <span>يتباع لوحده كمان (من غير المجموعة)</span></label>
+      <small class="hint" id="pSoloHint">المنتجات اللي من غير العلامة دي بتتباع ضمن المجموعة بس، ومش بيظهرلها سعر منفصل.</small>
+      <label class="switch-row" id="pUseCatPriceRow" hidden><input type="checkbox" id="pUseCatPrice"> <span id="pUseCatPriceLabel">استخدم سعر الصنف</span></label>
       <div class="form-grid" id="pPriceFields">
-        <div class="add-modal-field"><label for="pPrice">سعر خاص للمنتج ده (جنيه) *</label><input type="number" id="pPrice" min="1" step="1"></div>
+        <div class="add-modal-field"><label for="pPrice">سعر المنتج لوحده (جنيه) *</label><input type="number" id="pPrice" min="1" step="1"></div>
         <div class="add-modal-field"><label for="pOldPrice">السعر قبل الخصم (اختياري)</label><input type="number" id="pOldPrice" min="0" step="1"></div>
       </div>
     </fieldset>
@@ -1675,7 +1676,7 @@
 </div>
 <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 
-<script src="assets/sedra-data.js?v=5"></script>
-<script src="assets/admin.js?v=5"></script>
+<script src="assets/sedra-data.js?v=6"></script>
+<script src="assets/admin.js?v=6"></script>
 </body>
 </html>

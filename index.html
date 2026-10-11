@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sedra.css?v=5">
-<link rel="stylesheet" href="assets/yours.css?v=1">
+<link rel="stylesheet" href="assets/sedra.css?v=6">
+<link rel="stylesheet" href="assets/yours.css?v=6">
 <title>YOURS — منتجات العناية بالشعر</title>
 <meta name="description" content="YOURS — شامبو وبلسم وماسك وسيروم للعناية بالشعر. خطوط Luxury و Hydration و Go. شحن لكل محافظات مصر والدفع عند الاستلام.">
 </head>
@@ -43,9 +43,9 @@
   <div class="hero-content">
     <span class="hero-eyebrow">Mona Galal · Beauty Treatment</span>
     <h1 id="heroTitle">روتين صالون<br><em>في بيتك</em></h1>
-    <p class="hero-sub">شامبو · بلسم · ماسك · سيروم — أربع خطوات بتركيبات زيت الزيتون والأرچان، نفس اللي بنستخدمه مع عميلاتنا في العيادة.</p>
+    <p class="hero-sub">شامبو · بلسم · ماسك · سيروم — المجموعة كاملة بتركيبات زيت الزيتون والأرچان، نفس اللي بنستخدمه مع عميلاتنا في العيادة.</p>
     <div class="hero-actions">
-      <a href="#collections" class="btn btn-gold">تسوّقي المنتجات</a>
+      <a href="#collections" class="btn btn-gold">شوفي المجموعات</a>
       <a class="btn btn-wa" data-wa-link data-wa-text="السلام عليكم، عايزة أستفسر عن منتجات YOURS" href="https://wa.me/201069000231" target="_blank" rel="noopener">استشيرينا</a>
     </div>
   </div>
@@ -57,6 +57,21 @@
     <div class="trust-item"><span class="trust-ico">💳</span><span><b>الدفع عند الاستلام</b><small>أو تحويل إلكتروني</small></span></div>
     <a class="trust-item" href="shipping.html"><span class="trust-ico">🚚</span><span><b>شحن لكل المحافظات</b><small data-shipping>من 75 ج</small></span></a>
     <a class="trust-item" href="#visit"><span class="trust-ico">🏠</span><span><b>زورينا في العيادة</b><small>أرض الجولف — مصر الجديدة</small></span></a>
+  </div>
+</section>
+
+<section class="home-cats" id="collections">
+  <div class="section-head">
+    <h2>مجموعات YOURS</h2>
+    <p>كل مجموعة روتين كامل — شامبو وبلسم وماسك وسيروم — بسعر المجموعة</p>
+    <div class="section-line"></div>
+  </div>
+  <div class="cat-grid sets" id="catGrid">
+    <div class="skeleton" style="height:520px"></div><div class="skeleton" style="height:520px"></div><div class="skeleton" style="height:520px"></div>
+  </div>
+  <div class="solo-wrap" id="soloWrap" hidden>
+    <div class="solo-head"><h3>ينفع كمان تاخديهم لوحدهم</h3><p>المنتجات دي بس هي اللي بتتباع من غير المجموعة</p></div>
+    <div id="soloGrid"></div>
   </div>
 </section>
 
@@ -79,22 +94,11 @@
   </div>
 </section>
 
-<section class="home-cats" id="collections">
-  <div class="section-head">
-    <h2>خطوط YOURS</h2>
-    <p>كل خط ليه تركيبة وحجم يناسب استخديام مختلف</p>
-    <div class="section-line"></div>
-  </div>
-  <div class="cat-grid" id="catGrid">
-    <div class="skeleton" style="height:380px"></div><div class="skeleton" style="height:380px"></div><div class="skeleton" style="height:380px"></div>
-  </div>
-</section>
-
 <section class="routine">
   <div class="routine-inner">
     <div class="section-head">
       <h2>روتين الأربع خطوات</h2>
-      <p>الترتيب ده هو اللي بيفرق في النتيجة</p>
+      <p>الترتيب ده هو اللي بيفرق في النتيجة — وكل مجموعة فيها الأربع خطوات</p>
       <div class="section-line"></div>
     </div>
     <ol class="routine-steps">
@@ -103,48 +107,6 @@
       <li><span class="step-no">3</span><h3>ماسك</h3><p>مرة أو مرتين في الأسبوع من 5 لـ 10 دقايق للشعر الجاف والتالف.</p><small>تغذية · ترميم · استعادة</small></li>
       <li><span class="step-no">4</span><h3>سيروم</h3><p>على الشعر النص نشفان، وركّزي على الأطراف من غير الجذور.</p><small>نعومة · لمعان · حماية</small></li>
     </ol>
-  </div>
-</section>
-
-<section class="pillars">
-  <div class="pillars-inner">
-    <div class="pillar"><span>🫒</span><h3>تركيبات بزيت الزيتون والأرچان</h3><p>مكتوبة على العبوة نفسها، ومخصصة للشعر الجاف والتالف.</p></div>
-    <div class="pillar"><span>💇‍♀️</span><h3>مجرّبة في الصالون</h3><p>نفس المنتجات اللي بنشتغل بيها في Mona Galal Beauty Treatment.</p></div>
-    <div class="pillar"><span>📦</span><h3>ثلاث أحجام</h3><p>250 مل للسفر، 500 مل للبيت، ولتر كامل للاستخديام الكتير.</p></div>
-    <div class="pillar"><span>👀</span><h3>تعايني قبل ما تدفعيي</h3><p>افتحي الشحنة قدام المندوب، ولو مش عاجباكي رجّعيها.</p></div>
-  </div>
-</section>
-
-<div class="home-compare-wrap" id="compareWrap"></div>
-
-<section class="home-designs" id="products">
-  <div class="section-head">
-    <h2>منتجاتنا</h2>
-    <p>اختار الخط وشوف منتجاته</p>
-    <div class="section-line"></div>
-  </div>
-  <div class="designs-tabs" id="designsTabs" role="tablist"></div>
-  <div id="designsGrid"></div>
-  <div class="designs-more" id="designsMore"></div>
-</section>
-
-<section class="travelset" id="travel">
-  <div class="travelset-inner">
-    <div class="travelset-body">
-      <span class="hero-eyebrow">YOURS Go</span>
-      <h2>روتينك كامل في شنطتك</h2>
-      <p>أربع منتجات بحجم 250 مل — شامبو وبلسم وماسك وسيروم — للسفر والچيم والسباحة. ومثالية كمان لو بتجربي YOURS لأول مرة.</p>
-      <ul class="travelset-list">
-        <li>شامبو 250 مل</li><li>بلسم 250 مل</li><li>ماسك 250 مل</li><li>سيروم 50 مل</li>
-      </ul>
-      <a class="btn btn-gold" href="category.html?c=go">شوفي منتجات Go</a>
-    </div>
-    <div class="travelset-media">
-      <img src="images/products/go-shampoo-250.jpg" alt="" loading="lazy">
-      <img src="images/products/go-conditioner-250.jpg" alt="" loading="lazy">
-      <img src="images/products/go-mask-250.jpg" alt="" loading="lazy">
-      <img src="images/products/go-serum-50.jpg" alt="" loading="lazy">
-    </div>
   </div>
 </section>
 
@@ -164,11 +126,9 @@
     </div>
     <details class="faq-item"><summary>المنتجات دي مناسبة لأنهي نوع شعر؟</summary><p>كل أنواع الشعر، والتركيبات مخصصة بالذات للشعر الجاف والتالف زي ما هو مكتوب على العبوات. لو شعرك مصبوغ أو معالج، الماسك والسيروم هيفرقوا معاكي أكتر.</p></details>
     <details class="faq-item"><summary>أبدأ بأنهي خط؟</summary><p>لو بتجربي لأول مرة ابدئي بـ <b>Go</b> (250 مل). لو عايزة روتين كامل في البيت اختاري <b>Luxury</b> (500 مل). لو شعرك جاف جداً أو البيت فيه أكتر من شخص، <b>Hydration</b> (لتر) هيوفر عليكِ.</p></details>
-    <details class="faq-item"><summary>أستخديم الماسك كام مرة في الأسبوع؟</summary><p>مرة أو مرتين في الأسبوع، من 5 لـ 10 دقايق، بعد الشامبو وبدل البلسم أو بعده على الأطراف.</p></details>
-    <details class="faq-item"><summary>الشحن بيوصل في قد إيه وبكام؟</summary><p>بنشحن لكل محافظات مصر. القاهرة والجيزة من 1 لـ 3 أيام عمل، وباقي المحافظات من 3 لـ 5 أيام. المصاريف بتتحسب حسب المحافظة وتبدأ من <span data-shipping>75 ج</span> — <a href="shipping.html">تفاصيل الشحن</a>.</p></details>
+        <details class="faq-item"><summary>الشحن بيوصل في قد إيه وبكام؟</summary><p>بنشحن لكل محافظات مصر. القاهرة والجيزة من 1 لـ 3 أيام عمل، وباقي المحافظات من 3 لـ 5 أيام. المصاريف بتتحسب حسب المحافظة وتبدأ من <span data-shipping>75 ج</span> — <a href="shipping.html">تفاصيل الشحن</a>.</p></details>
     <details class="faq-item"><summary>أقدر أدفع إزاي؟</summary><p>الدفع عند الاستلام بعد المعاينة، أو تحويل إلكتروني على إنستاباي أو محفظة، وساعتها الشحنة بتوصلك مدفوعة من غير تحصيل.</p></details>
-    <details class="faq-item"><summary>لو المنتج مش عاجبني؟</summary><p>من حقك تعايني الشحنة قدام المندوب قبل ما تدفعيي، ولو مش عاجباكي ترجّعيها وتدفعي مصاريف الشحن بس — <a href="returns.html">سياسة الاسترجاع</a>.</p></details>
-  </div>
+      </div>
 </section>
 
 <section class="visit" id="visit">
@@ -218,9 +178,9 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
 
-<script src="assets/sedra-data.js?v=5"></script>
-<script src="assets/sedra-store.js?v=5"></script>
-<script src="assets/yours-lang.js?v=1"></script>
+<script src="assets/sedra-data.js?v=6"></script>
+<script src="assets/sedra-store.js?v=6"></script>
+<script src="assets/yours-lang.js?v=2"></script>
 <script>
 function renderFooterCats(cat) {
   var el = document.getElementById('footerCats'); if (!el) return;
@@ -230,34 +190,26 @@ function renderFooterCats(cat) {
   var y = document.getElementById('yearNow'); if (y) y.textContent = new Date().getFullYear();
 }
 var D = SedraData;
-var designsTab = null;
-function renderDesigns(cat) {
-  var cats = D.visibleCategories(cat).filter(function (c) { return D.productsOf(cat, c.id).length; });
-  if (!cats.length) { document.getElementById('products').hidden = true; return; }
-  document.getElementById('products').hidden = false;
-  if (!cats.some(function (c) { return c.id === designsTab; })) designsTab = cats[0].id;
-  document.getElementById('designsTabs').innerHTML = cats.map(function (c) {
-    return '<button type="button" role="tab" class="designs-tab' + (c.id === designsTab ? ' active' : '') + '" data-dtab="' + D.esc(c.id) + '">' + D.esc(c.icon) + ' ' + D.esc(c.shortName || D.pick(c, 'name')) + '<small>' + D.money(c.price) + '</small></button>';
-  }).join('');
-  var c = D.categoryById(cat, designsTab), list = D.productsOf(cat, c.id), g = Sedra.gridAttrs(c);
-  document.getElementById('designsGrid').innerHTML = '<div class="' + g.cls + '" style="' + g.style + '">' + list.slice(0, 4).map(function (p) { return Sedra.productCardHTML(p); }).join('') + '</div>';
-  document.getElementById('designsMore').innerHTML = list.length > 4
-    ? '<a class="btn btn-dark" href="category.html?c=' + encodeURIComponent(c.id) + '">شوفي كل منتجات ' + D.esc(D.pick(c, 'name')) + ' (' + list.length + ')</a>' : '';
-  D.hydrateMedia(document.getElementById('products'));
-}
-document.getElementById('designsTabs').addEventListener('click', function (e) {
-  var b = e.target.closest('[data-dtab]'); if (!b) return;
-  designsTab = b.getAttribute('data-dtab'); renderDesigns(Sedra.state.catalog);
-});
+
+// the collections, then the few products that may also be bought on their own
 function renderHome(cat) {
   var cats = D.visibleCategories(cat);
   document.getElementById('catGrid').innerHTML = cats.length
     ? cats.map(Sedra.categoryCardHTML).join('')
-    : '<div class="empty-note" style="grid-column:1/-1">مفيش أصناف متاحة حالياً</div>';
-  var cw = document.getElementById('compareWrap');
-  cw.innerHTML = Sedra.compareHTML();
-  if (!cw.dataset.bound) { Sedra.bindCompare(cw); cw.dataset.bound = '1'; }
-  renderDesigns(cat);
+    : '<div class="empty-note" style="grid-column:1/-1">مفيش مجموعات متاحة حالياً</div>';
+
+  var solo = [];
+  cats.forEach(function (c) {
+    D.productsOf(cat, c.id).forEach(function (p) { if (p.solo) solo.push(p); });
+  });
+  var wrap = document.getElementById('soloWrap');
+  wrap.hidden = !solo.length;
+  if (solo.length) {
+    var c0 = D.categoryById(cat, solo[0].categoryId), g = Sedra.gridAttrs(c0);
+    document.getElementById('soloGrid').innerHTML =
+      '<div class="' + g.cls + '" style="' + g.style + '">' + solo.map(function (p) { return Sedra.productCardHTML(p); }).join('') + '</div>';
+  }
+
   var ht = cat.theme && cat.theme.heroText;
   if (ht) {
     var parts = String(ht).split('|');
