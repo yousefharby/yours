@@ -245,3 +245,18 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
 @media (max-width: 420px) {
   .cat-card-media, .cat-card-media.banner { aspect-ratio: 3/2; }
 }
+
+/* ---------- one gold palette, no stray colours ---------- */
+/* Secondary actions are the same gold, outlined, so every button on the site reads
+   as one family with a clear primary. A green WhatsApp button broke the palette. */
+.btn-gold-outline {
+  background: transparent; color: var(--gold-dark);
+  border: 1.5px solid var(--gold);
+}
+.btn-gold-outline:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+/* on the dark hero the lighter gold keeps enough contrast */
+.hero .btn-gold-outline { color: var(--gold-light); }
+
+.hero h1 { letter-spacing: .5px; }
+.hero h1 em { font-style: italic; }
+.hero-actions { margin-top: 26px; }
