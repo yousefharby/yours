@@ -17,11 +17,11 @@
 /* ===== hero: cream, product-led ===== */
 .hero {
   position: relative; text-align: center; overflow: hidden;
-  background: linear-gradient(180deg, #FEFCF9 0%, var(--cream) 55%, var(--cream-dark) 100%);
+  background: #1A140B;
   padding: 58px 20px 46px;
 }
 .hero-content { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
-.hero-rule { display: block; width: 54px; height: 1px; margin: 0 auto 26px; background: var(--gold); }
+.hero-rule { display: block; width: 54px; height: 1px; margin: 0 auto 26px; background: var(--gold-light); opacity: .8; }
 .hero-eyebrow { display: inline-block; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 14px; }
 .hero h1 {
   font-size: clamp(40px, 8vw, 78px); line-height: 1.1; font-weight: 800; color: var(--black);
@@ -30,9 +30,11 @@
 .hero h1 em { font-style: italic; font-family: 'Playfair Display', serif; font-weight: 500; color: var(--gold-dark); }
 .hero-lead {
   margin: 18px auto 0; font-size: clamp(13px, 2.4vw, 15px); font-weight: 600;
-  letter-spacing: 2.6px; text-transform: uppercase; color: var(--gold-dark);
+  letter-spacing: 2.6px; text-transform: uppercase; color: var(--gold-light);
+  text-shadow: 0 1px 10px rgba(0,0,0,.5);
 }
-.hero-sub { margin: 12px auto 0; max-width: 520px; font-size: 16px; line-height: 1.9; color: var(--text-light); }
+.hero-sub { margin: 12px auto 0; max-width: 520px; font-size: 16px; line-height: 1.9;
+  color: rgba(255,252,246,.86); text-shadow: 0 1px 10px rgba(0,0,0,.55); }
 .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
 
 /* the three lines, as real product photography on its own plate */
@@ -42,11 +44,11 @@
 }
 .hero-lineup figure {
   margin: 0; border-radius: 16px; overflow: hidden; background: #fff;
-  box-shadow: 0 12px 34px rgba(123, 99, 54, .13);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .45);
 }
 .hero-lineup img { display: block; width: 100%; height: auto; }
 /* the middle plate sits a little taller, so the row reads as a composition */
-.hero-lineup figure:nth-child(2) { transform: translateY(-20px); box-shadow: 0 20px 50px rgba(123, 99, 54, .2); }
+.hero-lineup figure:nth-child(2) { transform: translateY(-20px); box-shadow: 0 24px 60px rgba(0, 0, 0, .55); }
 
 /* visit the store */
 .visit { background: var(--black); color: #fff; padding: 60px 20px; }
@@ -273,7 +275,9 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
   border: 1.5px solid var(--gold);
 }
 .btn-gold-outline:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
-/* the hero is cream now, so the outlined button keeps the darker gold */
+/* the hero sits on the dark video, so its outlined button takes the light gold */
+.hero .btn-gold-outline { color: var(--gold-light); border-color: var(--gold); }
+.hero .btn-gold-outline:hover { background: var(--gold); color: var(--black); }
 
 
 
@@ -328,8 +332,9 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
 .hero-video::after {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 50% 32%, rgba(255,253,249,.80) 0%, rgba(252,248,241,.58) 42%, rgba(247,244,239,.42) 100%),
-    linear-gradient(180deg, rgba(254,252,249,.30) 0%, rgba(249,245,239,.55) 58%, var(--cream-dark) 100%);
+    /* a warm espresso wash — dark enough for gold to shine, never a flat black */
+    radial-gradient(ellipse at 50% 30%, rgba(26,20,11,.42) 0%, rgba(22,17,9,.62) 45%, rgba(16,12,6,.80) 100%),
+    linear-gradient(180deg, rgba(20,15,8,.55) 0%, rgba(18,14,7,.50) 45%, rgba(26,20,11,.72) 82%, var(--cream-dark) 100%);
 }
 /* a viewer who asked for less motion gets the still frame instead */
 @media (prefers-reduced-motion: reduce) {
@@ -343,14 +348,14 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
   /* mostly deep bronze with one narrow bright band, so the sweep reads as a
      highlight travelling over gold metal and the words never wash out */
   background: linear-gradient(115deg,
-    #5E4312 0%, #6B4E16 26%, #8A6A28 41%, #BC9550 47%,
-    #E3C684 50%, #BC9550 53%, #8A6A28 59%, #6B4E16 74%, #5E4312 100%);
+    #C9A45A 0%, #E7CE94 18%, #F6E7BC 32%, #FFF8DC 42%,
+    #FFFDF2 50%, #FFF8DC 58%, #F6E7BC 68%, #E7CE94 82%, #C9A45A 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
   animation: heroGoldShimmer 4.5s linear infinite;
-  filter: drop-shadow(0 1px 1px rgba(94,67,18,.18)) drop-shadow(0 2px 14px rgba(255,255,255,.6));
+  filter: drop-shadow(0 2px 18px rgba(201,164,90,.55)) drop-shadow(0 1px 2px rgba(0,0,0,.45));
 }
 @keyframes heroGoldShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 .hero h1 em { color: inherit; -webkit-text-fill-color: transparent; }
-@media (prefers-reduced-motion: reduce) { .hero h1 { animation: none; background-position: 45% center; } }
+@media (prefers-reduced-motion: reduce) { .hero h1 { animation: none; background-position: 25% center; } }
