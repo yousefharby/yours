@@ -14,17 +14,39 @@
 .logo-sub { font-size: 9px; letter-spacing: 3px; color: rgba(231,206,148,0.75); font-weight: 600; text-transform: uppercase; }
 .lang-btn { font-weight: 800; font-size: 13px; letter-spacing: 1px; }
 
-/* hero */
-.hero { position: relative; min-height: 76vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: var(--black); }
-.hero-media { position: absolute; inset: 0; }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; opacity: .45; }
-.hero-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,.75), rgba(10,10,10,.55) 45%, rgba(10,10,10,.92)); }
-.hero-content { position: relative; z-index: 2; padding: 70px 20px; max-width: 760px; }
-.hero-eyebrow { display: inline-block; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 14px; }
-.hero h1 { font-size: clamp(34px, 7vw, 62px); line-height: 1.25; font-weight: 800; color: #fff; }
-.hero h1 em { font-style: normal; font-family: 'Playfair Display', serif; color: var(--gold-light); }
-.hero-sub { margin: 16px auto 26px; max-width: 540px; font-size: 16px; line-height: 1.9; color: rgba(255,255,255,.72); }
-.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+/* ===== hero: cream, product-led ===== */
+.hero {
+  position: relative; text-align: center; overflow: hidden;
+  background: linear-gradient(180deg, #FEFCF9 0%, var(--cream) 55%, var(--cream-dark) 100%);
+  padding: 58px 20px 46px;
+}
+.hero-content { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
+.hero-rule { display: block; width: 54px; height: 1px; margin: 0 auto 26px; background: var(--gold); }
+.hero-eyebrow { display: inline-block; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 14px; }
+.hero h1 {
+  font-size: clamp(40px, 8vw, 78px); line-height: 1.1; font-weight: 800; color: var(--black);
+  letter-spacing: -.5px;
+}
+.hero h1 em { font-style: italic; font-family: 'Playfair Display', serif; font-weight: 500; color: var(--gold-dark); }
+.hero-lead {
+  margin: 18px auto 0; font-size: clamp(13px, 2.4vw, 15px); font-weight: 600;
+  letter-spacing: 2.6px; text-transform: uppercase; color: var(--gold-dark);
+}
+.hero-sub { margin: 12px auto 0; max-width: 520px; font-size: 16px; line-height: 1.9; color: var(--text-light); }
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+
+/* the three lines, as real product photography on its own plate */
+.hero-lineup {
+  position: relative; z-index: 2; margin: 38px auto 0; max-width: 840px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: end;
+}
+.hero-lineup figure {
+  margin: 0; border-radius: 16px; overflow: hidden; background: #fff;
+  box-shadow: 0 12px 34px rgba(123, 99, 54, .13);
+}
+.hero-lineup img { display: block; width: 100%; height: auto; }
+/* the middle plate sits a little taller, so the row reads as a composition */
+.hero-lineup figure:nth-child(2) { transform: translateY(-20px); box-shadow: 0 20px 50px rgba(123, 99, 54, .2); }
 
 /* visit the store */
 .visit { background: var(--black); color: #fff; padding: 60px 20px; }
@@ -36,7 +58,7 @@
 .visit-actions .btn-outline { background: transparent; color: var(--gold-light); border-color: rgba(231,206,148,.5); }
 .visit-actions .btn-outline:hover { background: var(--gold); color: #000; }
 
-@media (max-width: 860px) { .visit-inner { grid-template-columns: 1fr; } .visit-media { order: -1; } .hero { min-height: 68vh; } }
+@media (max-width: 860px) { .visit-inner { grid-template-columns: 1fr; } .visit-media { order: -1; } }
 
 /* English layout */
 html[dir="ltr"] body { text-align: left; }
@@ -217,16 +239,13 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
 }
 
 /* ---------- a shorter page, especially on the phone ---------- */
-.hero { min-height: 62vh; }
-.hero-content { padding: 52px 20px; }
+
 /* the collection photo sits in a fixed frame on white, so cards stay compact
    and the padding around the photo is invisible */
 .cat-card-media, .cat-card-media.banner { aspect-ratio: 4/3; }
 .cat-card-media img, .cat-card-media.banner img { height: 100%; object-fit: contain; }
 
 @media (max-width: 860px) {
-  .hero { min-height: 54vh; }
-  .hero-content { padding: 40px 18px; }
   .routine { padding: 40px 16px; }
   .routine-steps { grid-template-columns: 1fr 1fr !important; gap: 12px; }
   .routine-steps li { padding: 20px 14px 16px; }
@@ -254,9 +273,49 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
   border: 1.5px solid var(--gold);
 }
 .btn-gold-outline:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
-/* on the dark hero the lighter gold keeps enough contrast */
-.hero .btn-gold-outline { color: var(--gold-light); }
+/* the hero is cream now, so the outlined button keeps the darker gold */
 
-.hero h1 { letter-spacing: .5px; }
-.hero h1 em { font-style: italic; }
-.hero-actions { margin-top: 26px; }
+
+
+
+/* ---------- hero on small screens ---------- */
+@media (max-width: 760px) {
+  .hero { padding: 40px 16px 0; }
+  .hero-rule { margin-bottom: 18px; }
+  .hero-sub { font-size: 15px; }
+  .hero-actions { margin-top: 22px; gap: 10px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .hero { padding-bottom: 34px; }
+  .hero-lineup { margin-top: 26px; gap: 8px; }
+  .hero-lineup figure { border-radius: 11px; }
+  .hero-lineup figure:nth-child(2) { transform: translateY(-11px); }
+}
+
+/* ---------- shipping · payment · delivery ---------- */
+.ship-pay { background: var(--cream); padding: 56px 20px; }
+.ship-pay-inner { max-width: 1100px; margin: 0 auto; }
+.ship-pay-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.sp-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; }
+.sp-ico { font-size: 26px; display: block; margin-bottom: 10px; }
+.sp-card h3 { font-size: 16px; font-weight: 900; color: var(--dark); margin-bottom: 7px; }
+.sp-card p { font-size: 13.5px; line-height: 1.85; color: var(--text-light); }
+.sp-card p b { color: var(--gold-dark); font-weight: 800; }
+.sp-card a { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 800; color: var(--gold-dark); }
+.sp-card a:hover { text-decoration: underline; }
+@media (max-width: 900px) { .ship-pay-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 860px) {
+  .ship-pay { padding: 40px 14px; }
+  .ship-pay-grid { gap: 10px; }
+  .sp-card { padding: 16px 13px; }
+  .sp-ico { font-size: 22px; margin-bottom: 7px; }
+  .sp-card h3 { font-size: 14.5px; }
+  .sp-card p { font-size: 12.5px; line-height: 1.75; }
+  .sp-card a { font-size: 12px; margin-top: 8px; }
+}
+
+/* the English lead should break into balanced lines, never one orphan word */
+.hero-lead { text-wrap: balance; }
+@media (max-width: 760px) { .hero-lead { letter-spacing: 1.8px; font-size: 12.5px; } }
+
+/* the eyebrow sits on black in the visit block, so it keeps the lighter gold */
+.visit .hero-eyebrow { color: var(--gold-light); }

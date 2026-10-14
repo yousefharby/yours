@@ -9,6 +9,18 @@
   var D = global.SedraData;
 
   var DICT = {
+    // homepage redesign
+    'لاقي روتين شعرك': 'Find your hair routine',
+    'اختاري اللي بيضايقك في شعرك وهنوصّلك للمجموعة المناسبة': 'Tell us what bothers you most and we will point you to the right collection',
+    'منتجات تتباع لوحدها': 'Sold on their own',
+    'دول بس اللي ينفع تاخديهم من غير المجموعة كاملة': 'These are the only products available outside a full set',
+    'الشحن والدفع والتوصيل': 'Shipping, payment and delivery',
+    'كل اللي محتاجة تعرفيه قبل ما تطلبي': 'Everything you need to know before you order',
+    'مدة التوصيل': 'Delivery time', 'الدفع': 'Payment', 'المعاينة والاسترجاع': 'Inspection and returns',
+    'مصاريف كل محافظة': 'Fees by governorate', 'تفاصيل التوصيل': 'Delivery details',
+    'سياسة الاسترجاع': 'Returns policy',
+    'اكتشفي مجموعات YOURS': 'Discover the YOURS collections', 'تسوقي الآن': 'Shop now',
+    'عناية احترافية بشعرك، من خبرة الصالون لبيتك.': 'Professional hair care, from our salon to your home.',
     // collections sold as one set
     'مجموعات YOURS': 'YOURS collections',
     'كل مجموعة روتين كامل — شامبو وبلسم وماسك وسيروم — بسعر المجموعة': 'Each collection is a complete routine — shampoo, conditioner, mask and serum — at one set price',

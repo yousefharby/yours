@@ -47,8 +47,8 @@
       name: 'YOURS Luxury',
       nameEn: 'YOURS Luxury',
       shortName: 'Luxury',
-      tagline: 'الروتين الكامل: تنظيف · ترميم · لمعان',
-      taglineEn: 'The complete routine: cleanse · repair · shine',
+      tagline: 'تنظيف · ترميم · لمعان',
+      taglineEn: 'Cleanse · Restore · Shine',
       description: 'خط Luxury هو روتين YOURS الكامل في البيت. أربع خطوات متكاملة — شامبو وبلسم وماسك وسيروم — بعبوات 500 مل وتركيبة غنية بزيت الزيتون، تنضّف الشعر وتغذيه وترجّع له نعومته ولمعانه مع الاستخدام المنتظم.',
       descriptionEn: 'Luxury is the complete YOURS routine at home: four steps — shampoo, conditioner, mask and serum — in 500 ml sizes with an olive-oil rich formula that cleanses, nourishes and brings back softness and shine with regular use.',
       bestFor: 'اللي عايز روتين كامل ونتيجة تدوم',
@@ -73,8 +73,8 @@
       name: 'YOURS Hydration',
       nameEn: 'YOURS Hydration',
       shortName: 'Hydration',
-      tagline: 'أرچان وترطيب عميق — حجم المحترفين',
-      taglineEn: 'Argan and deep hydration — professional size',
+      tagline: 'أرچان وترطيب عميق',
+      taglineEn: 'Argan & Deep Hydration',
       description: 'خط Hydration بتركيبة الأرچان المخصصة للشعر الجاف والتالف، بعبوات 1 لتر توفر عليكِ وتكفي شهور. نفس اللي بنستخدمه في الصالون، لعائلة كاملة أو لشعر طويل وكثيف.',
       descriptionEn: 'The Hydration line uses an argan formula made for dry and damaged hair, in 1-litre bottles that last for months. The same products we use in the salon — ideal for a whole family or long, thick hair.',
       bestFor: 'الشعر الجاف والتالف والعائلة والصالونات',
@@ -99,8 +99,8 @@
       name: 'YOURS Go',
       nameEn: 'YOURS Go',
       shortName: 'Go',
-      tagline: 'سفر · چيم · سباحة — في شنطتك',
-      taglineEn: 'Travel · gym · swimming — fits your bag',
+      tagline: 'سفر · چيم · سباحة',
+      taglineEn: 'Travel · Gym · Swimming',
       description: 'خط Go بأحجام 250 مل تدخل أي شنطة، لعناية كاملة وانتي بره البيت. مثالي كمان لو بتجربي YOURS لأول مرة وعايزة تشوفي النتيجة قبل العبوات الكبيرة.',
       descriptionEn: 'The Go line comes in 250 ml sizes that fit any bag, so your routine travels with you. It is also the easiest way to try YOURS before moving to the bigger bottles.',
       bestFor: 'السفر والچيم وتجربة المنتج لأول مرة',
@@ -190,6 +190,7 @@
       merged.oldPrice = sc.oldPrice || null;
       merged.setOnly = true;
       merged.setName = sc.setName; merged.setNameEn = sc.setNameEn;
+      merged.tagline = sc.tagline; merged.taglineEn = sc.taglineEn;
       if (!d.coverImg || /^images\/products\//.test(d.coverImg)) merged.coverImg = sc.coverImg;
       return { id: c.id, data: merged };
     });

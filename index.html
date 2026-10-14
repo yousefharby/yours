@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sedra.css?v=8">
-<link rel="stylesheet" href="assets/yours.css?v=8">
+<link rel="stylesheet" href="assets/sedra.css?v=9">
+<link rel="stylesheet" href="assets/yours.css?v=9">
 <title>YOURS — منتجات العناية بالشعر</title>
 <meta name="description" content="YOURS — شامبو وبلسم وماسك وسيروم للعناية بالشعر. خطوط Luxury و Hydration و Go. شحن لكل محافظات مصر والدفع عند الاستلام.">
 </head>
@@ -39,13 +39,20 @@
 <main id="main">
 
 <section class="hero">
-  <div class="hero-media"><img src="images/brand/salon.jpg" alt="" loading="eager"></div>
   <div class="hero-content">
-    <h1 id="heroTitle" dir="ltr">Make it <em>yours</em></h1>
+    <span class="hero-rule" aria-hidden="true"></span>
+    <h1 id="heroTitle" dir="ltr">Make it <em>yours</em>.</h1>
+    <p class="hero-lead" dir="ltr">Professional Hair Care. Exceptional Results.</p>
+    <p class="hero-sub">عناية احترافية بشعرك، من خبرة الصالون لبيتك.</p>
     <div class="hero-actions">
-      <a href="#collections" class="btn btn-gold">شوفي المجموعات</a>
-      <a class="btn btn-gold-outline" data-wa-link data-wa-text="السلام عليكم، عايزة أستفسر عن منتجات YOURS" href="https://wa.me/201069000231" target="_blank" rel="noopener">استشيرينا</a>
+      <a href="#collections" class="btn btn-gold">اكتشفي مجموعات YOURS</a>
+      <button type="button" class="btn btn-gold-outline" data-open-picker>تسوقي الآن</button>
     </div>
+  </div>
+  <div class="hero-lineup" aria-hidden="true">
+    <figure><img src="images/products/luxury-shampoo-500.jpg" alt="" loading="eager" decoding="async"></figure>
+    <figure><img src="images/products/hydration-shampoo-1000.jpg" alt="" loading="eager" decoding="async"></figure>
+    <figure><img src="images/products/go-shampoo-250.jpg" alt="" loading="eager" decoding="async"></figure>
   </div>
 </section>
 
@@ -68,7 +75,7 @@
     <div class="skeleton" style="height:520px"></div><div class="skeleton" style="height:520px"></div><div class="skeleton" style="height:520px"></div>
   </div>
   <div class="solo-wrap" id="soloWrap" hidden>
-    <div class="solo-head"><h3>ينفع كمان تاخديهم لوحدهم</h3><p>المنتجات دي بس هي اللي بتتباع من غير المجموعة</p></div>
+    <div class="solo-head"><h3>منتجات تتباع لوحدها</h3><p>دول بس اللي ينفع تاخديهم من غير المجموعة كاملة</p></div>
     <div id="soloGrid"></div>
   </div>
 </section>
@@ -76,8 +83,8 @@
 <section class="problems" id="problems">
   <div class="problems-inner">
     <div class="section-head">
-      <h2>شعرك بيعاني من إيه؟</h2>
-      <p>اختاري المشكلة وهنرشّحلك الروتين المناسب</p>
+      <h2>لاقي روتين شعرك</h2>
+      <p>اختاري اللي بيضايقك في شعرك وهنوصّلك للمجموعة المناسبة</p>
       <div class="section-line"></div>
     </div>
     <div class="problems-grid">
@@ -113,6 +120,41 @@
     <span class="hero-eyebrow">عن YOURS</span>
     <h2>من خبرة الصالون لبيتك</h2>
     <p>YOURS اتولدت جوه Mona Galal Beauty Treatment، من شغل يومي مع شعر عميلات بيعاني من الجفاف والتلف. اخترنا تركيبات بزيت الزيتون والأرچان وجربناها في الصالون الأول، وبعدين نزلناها بثلاث أحجام عشان تكمّلي نفس العناية في بيتك.</p>
+  </div>
+</section>
+
+<section class="ship-pay" id="shipping-info">
+  <div class="ship-pay-inner">
+    <div class="section-head">
+      <h2>الشحن والدفع والتوصيل</h2>
+      <p>كل اللي محتاجة تعرفيه قبل ما تطلبي</p>
+      <div class="section-line"></div>
+    </div>
+    <div class="ship-pay-grid">
+      <article class="sp-card">
+        <span class="sp-ico" aria-hidden="true">🚚</span>
+        <h3>الشحن</h3>
+        <p>بنشحن لكل محافظات مصر. المصاريف بتتحسب حسب المحافظة وتبدأ من <b data-shipping>75 ج</b>.</p>
+        <a href="shipping.html">مصاريف كل محافظة</a>
+      </article>
+      <article class="sp-card">
+        <span class="sp-ico" aria-hidden="true">⏱️</span>
+        <h3>مدة التوصيل</h3>
+        <p>القاهرة والجيزة من 1 لـ 3 أيام عمل، وباقي المحافظات من 3 لـ 5 أيام عمل.</p>
+        <a href="shipping.html">تفاصيل التوصيل</a>
+      </article>
+      <article class="sp-card">
+        <span class="sp-ico" aria-hidden="true">💳</span>
+        <h3>الدفع</h3>
+        <p>الدفع عند الاستلام بعد المعاينة، أو تحويل إلكتروني على إنستاباي أو محفظة وساعتها الشحنة توصلك مدفوعة.</p>
+      </article>
+      <article class="sp-card">
+        <span class="sp-ico" aria-hidden="true">👀</span>
+        <h3>المعاينة والاسترجاع</h3>
+        <p>من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي.</p>
+        <a href="returns.html">سياسة الاسترجاع</a>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -176,9 +218,9 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
 
-<script src="assets/sedra-data.js?v=8"></script>
-<script src="assets/sedra-store.js?v=8"></script>
-<script src="assets/yours-lang.js?v=4"></script>
+<script src="assets/sedra-data.js?v=9"></script>
+<script src="assets/sedra-store.js?v=9"></script>
+<script src="assets/yours-lang.js?v=5"></script>
 <script>
 function renderFooterCats(cat) {
   var el = document.getElementById('footerCats'); if (!el) return;
