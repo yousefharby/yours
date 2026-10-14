@@ -19,7 +19,8 @@
     'مدة التوصيل': 'Delivery time', 'الدفع': 'Payment', 'المعاينة والاسترجاع': 'Inspection and returns',
     'مصاريف كل محافظة': 'Fees by governorate', 'تفاصيل التوصيل': 'Delivery details',
     'سياسة الاسترجاع': 'Returns policy',
-    'اكتشفي مجموعات YOURS': 'Discover the YOURS collections', 'تسوقي الآن': 'Shop now',
+    'اكتشفي مجموعات YOURS': 'Discover the YOURS collections',
+    'استشيري خبراء العناية بشعرك': 'Ask our hair care experts',
     'عناية احترافية بشعرك، من خبرة الصالون لبيتك.': 'Professional hair care, from our salon to your home.',
     // collections sold as one set
     'مجموعات YOURS': 'YOURS collections',
