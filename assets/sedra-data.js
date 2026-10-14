@@ -25,7 +25,7 @@
     defaults: {
       storeName: 'YOURS',
       storeNameEn: 'YOURS',
-      whatsapp: '201069000231',
+      whatsapp: '201026212478',
       instapayLink: 'https://ipn.eg/S/monagalal8811/instapay/7m13Kd',
       instapayHandle: 'monagalal8811@instapay',
       walletNumber: '01069000231',
@@ -222,6 +222,11 @@
     if (!cur.coverImg || DEFAULT_COVER_RE.test(cur.coverImg)) patch.coverImg = sc.coverImg;
     return patch;
   }
+  // The shop's number changed. Until the owner saves the new one in the admin,
+  // a database still holding the old line must not keep sending customers to it.
+  var RETIRED_WHATSAPP = ['201069000231'];
+  function retiredNumber(n) { return (n && RETIRED_WHATSAPP.indexOf(n) > -1) ? null : n; }
+
   function normalizeShipping(d) {
     d = d || {};
     var zones = (Array.isArray(d.zones) ? d.zones : []).map(function (z, i) {
@@ -542,7 +547,7 @@
       products: products,
       settings: {
         storeName: s.name || CONFIG.defaults.storeName,
-        whatsapp: normalizeWhatsapp(s.whatsapp) || CONFIG.defaults.whatsapp,
+        whatsapp: retiredNumber(normalizeWhatsapp(s.whatsapp)) || CONFIG.defaults.whatsapp,
         shipping: num(s.shipping, CONFIG.defaults.shipping),
         shippingCompany: s.shippingCompany || '',
         // Electronic payment is on unless the owner turns it off in the admin.
