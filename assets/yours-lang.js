@@ -22,6 +22,12 @@
     'اكتشفي مجموعات YOURS': 'Discover the YOURS collections',
     'استشيري خبراء العناية بشعرك': 'Ask our hair care experts',
     'عناية احترافية بشعرك، من خبرة الصالون لبيتك.': 'Professional hair care, from our salon to your home.',
+    // routine quiz
+    'مش عارفة تختاري؟': "Not sure which to pick?", 'اعملي الاختبار': 'Take the quiz',
+    'أربع أسئلة قصيرة عن شعرك واستخدامك، ونقولك المجموعة اللي تناسبك ليه بالظبط.': 'Four short questions about your hair and your routine, and we will tell you which collection fits — and why.',
+    'ابدئي الاختبار': 'Start the quiz', 'اعملي اختبار الروتين': 'take the routine quiz',
+    'أقل من دقيقة · من غير تسجيل ولا بيانات': 'Under a minute · no sign-up, no personal details',
+    'روتينك': 'Your routine', 'رجوع': 'Back', 'اعملي الاختبار تاني': 'Start over',
     // collections sold as one set
     'مجموعات YOURS': 'YOURS collections',
     'كل مجموعة روتين كامل — شامبو وبلسم وماسك وسيروم — بسعر المجموعة': 'Each collection is a complete routine — shampoo, conditioner, mask and serum — at one set price',

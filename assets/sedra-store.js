@@ -814,6 +814,7 @@
   /* ================= ANALYTICS + PRESENCE ================= */
   var trackQueue = {}, trackTimer = null;
   function track(incs, keepalive) {
+    if (typeof incs === 'string') { var one = {}; one[incs] = 1; incs = one; }
     Object.keys(incs).forEach(function (k) { if (incs[k]) trackQueue[k] = (trackQueue[k] || 0) + incs[k]; });
     // Counters are accumulated in memory and written once per page view (on leave),
     // to keep Firestore usage inside the free quota.
@@ -861,10 +862,13 @@
     if (/^#[0-9a-f]{6}$/i.test(theme.bg || '')) root.style.setProperty('--cream', theme.bg); else root.style.removeProperty('--cream');
     if (/^#[0-9a-f]{6}$/i.test(theme.header || '')) root.style.setProperty('--black', theme.header); else root.style.removeProperty('--black');
   }
-  function applySettingsDOM() {
-    Array.prototype.forEach.call(document.querySelectorAll('[data-wa-link]'), function (a) {
+  function refreshWaLinks(root) {
+    Array.prototype.forEach.call((root || document).querySelectorAll('[data-wa-link]'), function (a) {
       a.href = waLink(a.getAttribute('data-wa-text') || '');
     });
+  }
+  function applySettingsDOM() {
+    refreshWaLinks();
     Array.prototype.forEach.call(document.querySelectorAll('[data-shipping]'), function (el) { el.textContent = 'من ' + money(minShip()); });
     Array.prototype.forEach.call(document.querySelectorAll('[data-wa-display]'), function (el) {
       el.textContent = '0' + waNumber().replace(/^20/, '');
@@ -1003,9 +1007,15 @@
       var t = e.target.closest ? e.target : e.target.parentElement;
       if (!t || !t.closest) return;
       var el;
+      // counted as a plain tally — no customer detail ever leaves with it
+      if (t.closest('a[href*="wa.me"]')) track('whatsappClicks');
       if (t.closest('#menuOverlay') || t.closest('[data-close-menu]')) return setMenu(false);
       if (t.closest('#cartOverlay') || t.closest('[data-close-cart]')) return setCart(false);
-      if ((el = t.closest('[data-add]'))) { e.preventDefault(); if (addToCart(el.getAttribute('data-add'), 1)) refreshAddButtons(); return; }
+      if ((el = t.closest('[data-add]'))) {
+        e.preventDefault(); track('addClicks');
+        if (addToCart(el.getAttribute('data-add'), 1)) refreshAddButtons();
+        return;
+      }
       if ((el = t.closest('[data-qty]'))) {
         var id = el.getAttribute('data-qty'), cur = inCartQty(id) + parseInt(el.getAttribute('data-delta'), 10);
         if (cur <= 0) removeItem(id); else setQty(id, cur);
@@ -1088,6 +1098,7 @@
     waLink: waLink,
     on: onEvent,
     refreshAddButtons: refreshAddButtons,
+    refreshWaLinks: refreshWaLinks,
     track: track,
     CART_SVG: CART_SVG,
     WA_SVG: WA_SVG

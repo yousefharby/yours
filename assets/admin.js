@@ -1540,10 +1540,28 @@
       ['📂', 'مشاهدات صفحات الأصناف', num(a.categoryViews, 0)], ['🖼️', 'مشاهدات صفحات المنتجات', pv],
       ['📝', 'فتحوا فورم الطلب', mo], ['✅', 'أوردرات', orders]
     ];
+    // events added with the routine quiz — all of them plain tallies
+    var qs = num(a.quizStarts, 0), qc = num(a.quizCompletes, 0);
+    var extra = [
+      ['🛒', 'ضغطات "أضف للطلب"', num(a.addClicks, 0)],
+      ['💬', 'ضغطات واتساب', num(a.whatsappClicks, 0)],
+      ['🧪', 'بدأوا اختبار الروتين', qs],
+      ['🎯', 'كمّلوا الاختبار', qc]
+    ];
+    var picks = S.categories.map(function (c) {
+      return ['· ' + c.name, num(a['quizPick_' + c.id], 0)];
+    }).filter(function (r) { return r[1] > 0; });
     $('#funnel').innerHTML = rows.map(function (r) {
       return '<div class="funnel-row"><span class="funnel-icon">' + r[0] + '</span><span class="funnel-label">' + r[1] + '</span><span class="funnel-val">' + r[2].toLocaleString('en-US') + '</span></div>';
     }).join('') + '<div class="funnel-row"><span class="funnel-icon">🎯</span><span class="funnel-label">نسبة التحويل (أوردر ÷ زوار)</span><span class="funnel-val">' + (visitors ? (orders / visitors * 100).toFixed(1) + '%' : '—') + '</span></div>' +
-      '<div class="funnel-row"><span class="funnel-icon">📝</span><span class="funnel-label">كمّلوا الطلب من اللي فتحوا الفورم</span><span class="funnel-val">' + (mo ? Math.min(100, Math.round(num(a.orders, 0) / mo * 100)) + '%' : '—') + '</span></div>';
+      '<div class="funnel-row"><span class="funnel-icon">📝</span><span class="funnel-label">كمّلوا الطلب من اللي فتحوا الفورم</span><span class="funnel-val">' + (mo ? Math.min(100, Math.round(num(a.orders, 0) / mo * 100)) + '%' : '—') + '</span></div>' +
+      extra.map(function (r) {
+        return '<div class="funnel-row"><span class="funnel-icon">' + r[0] + '</span><span class="funnel-label">' + esc(r[1]) + '</span><span class="funnel-val">' + r[2].toLocaleString('en-US') + '</span></div>';
+      }).join('') +
+      (qs ? '<div class="funnel-row"><span class="funnel-icon">📊</span><span class="funnel-label">نسبة إكمال الاختبار</span><span class="funnel-val">' + Math.min(100, Math.round(qc / qs * 100)) + '%</span></div>' : '') +
+      picks.map(function (r) {
+        return '<div class="funnel-row"><span class="funnel-icon">✨</span><span class="funnel-label">الاختبار رشّح ' + esc(r[0]) + '</span><span class="funnel-val">' + r[1].toLocaleString('en-US') + '</span></div>';
+      }).join('');
     var times = [
       ['الصفحة الرئيسية', avg(num(a.homeTime, 0), num(a.homeTimeSamples, 0)) || avg(num(lp.home, 0), num(lp.homeVisits, 0))],
       ['صفحات الأصناف', avg(num(a.categoryTime, 0), num(a.categoryTimeSamples, 0))],
