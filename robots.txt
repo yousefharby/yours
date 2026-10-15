@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+# the owner's dashboard has nothing for searchers
+Disallow: /admin.html
+
+Sitemap: https://yoursegypt.com/sitemap.xml
