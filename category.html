@@ -183,6 +183,37 @@ var D = SedraData;
 var params = new URLSearchParams(location.search);
 var catId = params.get('c') || '';
 
+/* ---- "What's inside your routine?" — the four steps in usage order ---------
+   Each step shows only the data that product actually carries. YOURS Go has no
+   ingredients or directions yet, so its steps show the name, size, purpose and
+   a link, and nothing is borrowed from another line. --------------------------*/
+function routineHTML(cat, c, list) {
+  if (list.length < 2) return '';
+  return '<section class="cat-routine" id="routine" style="scroll-margin-top:80px">' +
+    '<div class="cr-head"><h2>اللي جوه روتينك</h2>' +
+      '<p>الأربع خطوات بترتيب استخدامها</p></div>' +
+    '<ol class="cr-steps">' + list.map(function (pr) {
+      var dirs = D.pick(pr, 'directions'), freq = D.pick(pr, 'frequency'), size = D.pick(pr, 'size');
+      var purpose = D.pick(pr, 'color') || D.pick(pr, 'description');
+      var href = 'product.html?id=' + encodeURIComponent(pr.id);
+      return '<li class="cr-step">' +
+        '<a class="cr-media" href="' + href + '" tabindex="-1" aria-hidden="true">' +
+          D.imgTag(pr.mainImg, { alt: '', variant: 't' }) + '</a>' +
+        '<div class="cr-text">' +
+          '<h3><a href="' + href + '">' + D.esc(D.pick(pr, 'name')) + '</a></h3>' +
+          '<div class="cr-meta">' + (size ? '<span>' + D.esc(size) + '</span>' : '') +
+            (pr.solo && pr.price ? '<b>' + D.money(D.effectivePrice(cat, pr)) + '</b>' : '') + '</div>' +
+          (purpose ? '<p class="cr-purpose">' + D.esc(purpose) + '</p>' : '') +
+          (dirs ? '<p class="cr-how"><b>طريقة الاستخدام:</b> ' + D.esc(dirs) + '</p>' : '') +
+          (freq ? '<p class="cr-how"><b>عدد المرات:</b> ' + D.esc(freq) + '</p>' : '') +
+          (pr.ingredients ? '<details class="cr-ing"><summary>المكونات</summary><p dir="ltr">' + D.esc(pr.ingredients) + '</p></details>' : '') +
+          '<a class="cr-link" href="' + href + '">تفاصيل المنتج ›</a>' +
+        '</div></li>';
+    }).join('') + '</ol>' +
+    '<p class="cr-foot">مش لازم تستخدمي الأربعة في كل غسلة — كل منتج ليه طريقته وعدد مراته.</p>' +
+  '</section>';
+}
+
 function renderCategory(cat) {
   var root = document.getElementById('catPage');
   var cats = D.visibleCategories(cat);
@@ -240,6 +271,7 @@ function renderCategory(cat) {
         ? '<div class="solo-note">💡 من المجموعة دي، <b>' + soloList.map(function (p) { return D.esc(D.pick(p, 'name')); }).join('</b> و<b>') + '</b> ينفع تاخديهم لوحدهم كمان.</div>'
         : (isSet ? '<div class="solo-note">📦 منتجات المجموعة دي بتتباع مع بعض كمجموعة كاملة.</div>' : '')) +
     '</section>' +
+    routineHTML(cat, c, list) +
     '<div id="catCompare">' + Sedra.compareHTML({ current: c.id }) + '</div>';
 
   root.innerHTML = html;

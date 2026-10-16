@@ -211,8 +211,143 @@
       return { id: p.id, data: merged };
     });
   }
+
+  /* ---------------- Verified product details (v1) ----------------------
+     Supplied by the owner with the product-page brief, and published only as
+     far as that brief allows:
+       - Hydration conditioner and mask carry the sulfate/paraben/heavy-silicone
+         and keratin/protein-treated claims, confirmed as approved by the owner.
+       - Luxury carries only the claims written in its own product copy.
+       - YOURS Go has NO ingredient or directions data yet. The brief says not to
+         copy Luxury's into it without confirmed formula equivalence, so its
+         sections stay empty and the owner sees them flagged in the admin.
+     Nothing here claims hair growth, permanent repair, bond reconstruction or
+     the treatment of any medical condition. */
+  var PRODUCT_DETAILS = {
+    'luxury-shampoo-500': {
+      size: '500 مل', sizeEn: '500 ml',
+      description: 'شامبو العناية اليومية من مجموعة Luxury، بيغسل الشعر وفروة الرأس بلطف وبيبدأ بيه الروتين.',
+      descriptionEn: 'The daily cleansing step of the Luxury routine: it washes hair and scalp gently and opens the routine.',
+      benefits: ['تنظيف لطيف للشعر وفروة الرأس', 'وصف المنتج بيقول إنه بينضّف من غير سلفات', 'بيدعم النعومة وسهولة التسريح'],
+      benefitsEn: ['Gentle cleansing for hair and scalp', 'The product copy describes sulfate-free cleansing', 'Supports softness and manageability'],
+      ingredients: 'Aqua, Sodium Cocoyl Isethionate, Cocamidopropyl Betaine, Caffeine, Biotin, Niacinamide, Hydrolyzed Keratin, Silk Amino Acids, Panthenol, Glycerin, Sodium Chloride, Citric Acid, Fragrance, Natural Preservative System',
+      directions: 'دلّكيه على الشعر وفروة الرأس وهما مبلولين، اشطفي كويس، وبعديه استخدمي بلسم Luxury.',
+      directionsEn: 'Massage into wet scalp and hair, rinse thoroughly, and follow with the Luxury Conditioner.',
+      notes: 'ده منتج عناية تجميلية. مش علاج لتساقط الشعر ولا لأي حالة طبية في فروة الرأس.',
+      notesEn: 'This is a cosmetic hair-care product. It is not a treatment for hair loss or any medical scalp condition.'
+    },
+    'luxury-conditioner-500': {
+      size: '500 مل', sizeEn: '500 ml',
+      description: 'بلسم Luxury بيترك على الأطوال والأطراف دقيقتين لتلات، بيرطّب وبيسهّل التسريح.',
+      descriptionEn: 'The Luxury conditioner sits on mid-lengths and ends for 2–3 minutes to soften and ease detangling.',
+      benefits: ['نعومة وترطيب', 'تسريح أسهل', 'تغذية للأطوال والأطراف'],
+      benefitsEn: ['Softness and moisture', 'Easier detangling', 'Nourishment for mid-lengths and ends'],
+      ingredients: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Argan Oil, Jojoba Oil, Panthenol, Ceramides, Glycerin, Hydrolyzed Vegetable Protein, Citric Acid, Fragrance, Natural Preservative System',
+      directions: 'حطيه من نص الطول للأطراف، سيبيه من دقيقتين لـ 3 دقايق، وبعدين اشطفي كويس.',
+      directionsEn: 'Apply to mid-lengths and ends, leave for 2–3 minutes, then rinse thoroughly.'
+    },
+    'luxury-mask-500': {
+      size: '500 مل', sizeEn: '500 ml',
+      description: 'ماسك Luxury للعناية المركزة بالشعر الجاف أو الضعيف أو اللي شكله تالف.',
+      descriptionEn: 'The Luxury mask: intensive care for hair that looks dry, brittle or damaged.',
+      benefits: ['عناية مركزة للشعر الجاف والضعيف', 'ترطيب ونعومة', 'لمعان وسهولة في التحكم'],
+      benefitsEn: ['Intensive care for dry, brittle hair', 'Hydration and softness', 'Shine and manageability'],
+      ingredients: 'Hydrolyzed Vegetable Protein, Shea Butter, Aloe Vera Extract, Vitamin E, Argan Oil',
+      directions: 'حطيه على الشعر وسيبيه من 5 لـ 20 دقيقة حسب تعليمات المنتج، وبعدين اشطفي كويس.',
+      directionsEn: 'Apply to the hair, leave for 5–20 minutes according to the product directions, then rinse thoroughly.',
+      frequency: 'مرة أو مرتين في الأسبوع', frequencyEn: 'Once or twice a week',
+      notes: 'بيدي ترطيب ونعومة ولمعان مع الاستخدام المنتظم. مابنوعدش بترميم دائم ولا إعادة بناء روابط البروتين.',
+      notesEn: 'It supports hydration, softness and shine with regular use. We do not promise permanent repair or protein-bond reconstruction.'
+    },
+    'luxury-serum-75': {
+      size: '75 مل', sizeEn: '75 ml',
+      description: 'سيروم Luxury، آخر خطوة في الروتين، بيتحط وميتشطفش.',
+      descriptionEn: 'The Luxury serum: the final, leave-in step of the routine.',
+      benefits: ['تحكّم في الهيشان', 'لمعان ونعومة', 'وصف المنتج بيقول حماية حرارية لحد 230 درجة'],
+      benefitsEn: ['Frizz control', 'Shine and smoothness', 'The product copy states thermal protection up to 230°C'],
+      ingredients: 'Macadamia Oil, Squalane, Vitamin F, Cyclopentasiloxane, Dimethiconol',
+      directions: 'ضغطة أو اتنين على شعر نص نشفان أو ناشف، ركّزي على نص الطول والأطراف. من غير شطف.',
+      directionsEn: 'Apply 1–2 pumps to damp or dry hair, focusing on mid-lengths and ends. Do not rinse.',
+      notes: 'بيحسّن شكل الأطراف المتقصفة، بس مابيصلّحهاش بشكل دائم.',
+      notesEn: 'It improves the look of split ends; it does not permanently repair them.'
+    },
+
+    'hydration-shampoo-1000': {
+      size: '1 لتر', sizeEn: '1 L',
+      description: 'شامبو Hydration بتركيبة الأرچان، بينضّف بلطف وبيدي ترطيب أثناء الغسيل.',
+      descriptionEn: 'The Hydration shampoo with its argan formula: gentle cleansing with hydration during the wash.',
+      benefits: ['تنظيف لطيف', 'ترطيب أثناء الغسيل', 'مناسب للشعر الجاف والتالف'],
+      benefitsEn: ['Gentle cleansing', 'Hydration during washing', 'Suited to dry and damaged hair'],
+      ingredients: 'Sodium Cocoyl Isethionate, Cocamidopropyl Betaine, Panthenol, Hydrolyzed Keratin, Aloe Vera Extract, Argan Oil, Silk Proteins',
+      directions: 'حطيه على شعر وفروة مبلولين، دلّكي بلطف، اشطفي كويس، وكرّري لو محتاجة.',
+      directionsEn: 'Apply to wet hair and scalp, massage gently, rinse thoroughly, and repeat if needed.'
+    },
+    'hydration-conditioner-1000': {
+      size: '1 لتر', sizeEn: '1 L',
+      description: 'بلسم Hydration، ترطيب فوري وتغذية وتسريح أسهل.',
+      descriptionEn: 'The Hydration conditioner: instant hydration, nourishment and easier detangling.',
+      benefits: ['ترطيب فوري', 'تغذية ونعومة', 'تسريح أسهل'],
+      benefitsEn: ['Instant hydration', 'Nourishment and softness', 'Easier detangling'],
+      ingredients: 'Behentrimonium Methosulfate, Shea Butter, Avocado Oil, Rice Protein, Vitamin E, Hyaluronic Acid',
+      directions: 'حطيه من نص الطول للأطراف، سيبيه من 5 لـ 10 دقايق، وبعدين اشطفي كويس.',
+      directionsEn: 'Apply to mid-lengths and ends, leave for 5–10 minutes, then rinse thoroughly.',
+      notes: 'معلومات المنتج بتقول إنه خالي من السلفات والبارابين والسيليكون الثقيل، ومناسب لكل أنواع الشعر بما فيها الشعر المعالج بالكيراتين أو البروتين.',
+      notesEn: 'The product information states that it is free from sulfates, parabens and heavy silicones, and suitable for all hair types including keratin- or protein-treated hair.',
+      afterTreatment: true
+    },
+    'hydration-mask-500': {
+      size: '500 مل', sizeEn: '500 ml',
+      description: 'ماسك Hydration للعناية المركزة بالشعر الجاف واللي شكله تالف.',
+      descriptionEn: 'The Hydration mask: intensive care for hair that looks dry and damaged.',
+      benefits: ['عناية مركزة للشعر الجاف', 'ترطيب عميق', 'نعومة بعد الاستخدام'],
+      benefitsEn: ['Intensive care for dry hair', 'Deep hydration', 'Softness after use'],
+      ingredients: 'Coconut Oil, Baobab Oil, Hydrolyzed Collagen, Ceramides, Honey Extract, Amino Acids Complex',
+      directions: 'حطيه بسخاء على شعر نضيف ونص نشفان من الجذور للأطراف، سيبيه من 10 لـ 15 دقيقة، وبعدين اشطفي كويس.',
+      directionsEn: 'Apply generously to clean, towel-dried hair from roots to ends, leave for 10–15 minutes, then rinse thoroughly.',
+      frequency: 'مرة أو مرتين في الأسبوع', frequencyEn: 'Once or twice a week',
+      notes: 'معلومات المنتج بتقول إنه خالي من السلفات والبارابين والسيليكون الثقيل، ومناسب لكل أنواع الشعر بما فيها الشعر المعالج بالكيراتين أو البروتين.',
+      notesEn: 'The product information states that it is free from sulfates, parabens and heavy silicones, and suitable for all hair types including keratin- or protein-treated hair.',
+      afterTreatment: true
+    },
+    'hydration-serum-100': {
+      size: '100 مل', sizeEn: '100 ml',
+      description: 'سيروم Hydration، بيتحط في الآخر وميتشطفش.',
+      descriptionEn: 'The Hydration serum: applied last and left in.',
+      benefits: ['لمعان ونعومة', 'تقليل الهيشان', 'حماية حرارية حسب وصف المنتج'],
+      benefitsEn: ['Shine and smoothness', 'Less frizz', 'Heat protection as described by the manufacturer'],
+      ingredients: 'Cyclopentasiloxane, Dimethicone, Jojoba Oil, Marula Oil, Vitamin C, Ferulic Acid, Black Seed Oil',
+      directions: 'كام نقطة على شعر نص نشفان أو ناشف، ركّزي على نص الطول والأطراف. من غير شطف.',
+      directionsEn: 'Apply a few drops to damp or dry hair, focusing on mid-lengths and ends. Do not rinse.'
+    }
+  };
+  // Products whose ingredient and directions data the owner has not supplied yet.
+  // They render without those sections rather than borrowing another line's.
+  var DETAILS_PENDING = ['go-shampoo-250', 'go-conditioner-250', 'go-mask-250', 'go-serum-50'];
+  var GO_SIZES = { 'go-shampoo-250': '250 مل', 'go-conditioner-250': '250 مل', 'go-mask-250': '250 مل', 'go-serum-50': '50 مل' };
+  var GO_SIZES_EN = { 'go-shampoo-250': '250 ml', 'go-conditioner-250': '250 ml', 'go-mask-250': '250 ml', 'go-serum-50': '50 ml' };
+  function detailsOf(id) {
+    var d = PRODUCT_DETAILS[id];
+    if (d) return d;
+    if (GO_SIZES[id]) return { size: GO_SIZES[id], sizeEn: GO_SIZES_EN[id], pending: true };
+    return null;
+  }
+  // Force the verified details onto the stored product unless the owner has
+  // edited that product in the admin, which stamps detailsV1.
+  function applyProductDetails(rawProds) {
+    return rawProds.map(function (p) {
+      var det = detailsOf(p.id);
+      if (!det) return p;
+      var d = p.data || {};
+      if (d.detailsV1 === true) return p;
+      var merged = {};
+      Object.keys(d).forEach(function (k) { merged[k] = d[k]; });
+      Object.keys(det).forEach(function (k) { merged[k] = det[k]; });
+      if (det.description && !d.description) merged.description = det.description;
+      return { id: p.id, data: merged };
+    });
+  }
   var PRODUCT_RENAMES = {};
-  function applyNameFixes(rawProds) { return applyProductPriceDefaults(rawProds); }
+  function applyNameFixes(rawProds) { return applyProductDetails(applyProductPriceDefaults(rawProds)); }
 
   function seedCategoryPatch(id, cur) {
     var sc = SEED_CATEGORIES.filter(function (c) { return c.id === id; })[0];
@@ -339,7 +474,21 @@
       mainImg: main,
       gallery: gallery,
       order: num(d.order, 999),
-      visible: d.visible !== false
+      visible: d.visible !== false,
+      // verified product details (see PRODUCT_DETAILS); every one is optional
+      // and a missing field renders as no section rather than as a guess
+      size: d.size || '', sizeEn: d.sizeEn || '',
+      benefits: Array.isArray(d.benefits) ? d.benefits.filter(Boolean) : [],
+      benefitsEn: Array.isArray(d.benefitsEn) ? d.benefitsEn.filter(Boolean) : [],
+      ingredients: d.ingredients || '',
+      directions: d.directions || '', directionsEn: d.directionsEn || '',
+      frequency: d.frequency || '', frequencyEn: d.frequencyEn || '',
+      notes: d.notes || '', notesEn: d.notesEn || '',
+      faqs: Array.isArray(d.faqs) ? d.faqs.filter(function (f) { return f && f.q; }) : [],
+      faqsEn: Array.isArray(d.faqsEn) ? d.faqsEn.filter(function (f) { return f && f.q; }) : [],
+      afterTreatment: d.afterTreatment === true,
+      detailsPending: d.pending === true,
+      detailsV1: d.detailsV1 === true
     };
   }
   function byOrder(a, b) { return (a.order - b.order) || String(a.name).localeCompare(String(b.name), 'ar'); }
@@ -571,7 +720,9 @@
   function seedCatalog(source) {
     return buildCatalog(
       SEED_CATEGORIES.map(function (c) { return { id: c.id, data: c }; }),
-      SEED_PRODUCTS.map(function (p) { return { id: p.id, data: p }; }),
+      // the seed table holds names and prices; the verified ingredients,
+      // directions and sizes live in PRODUCT_DETAILS and are merged here too
+      applyProductDetails(SEED_PRODUCTS.map(function (p) { return { id: p.id, data: p }; })),
       null, source || 'seed');
   }
   var CACHE_TTL = 45 * 1000; // admin edits reach customers within a minute
@@ -595,8 +746,8 @@
       store.__theme = j.theme || {};
       store.__shipping = j.shipping || null;
       return buildCatalog(
-        j.categories.map(function (c) { return { id: c.id, data: c }; }),
-        j.products.map(function (p) { return { id: p.id, data: p }; }),
+        applyPriceDefaults(j.categories.map(function (c) { return { id: c.id, data: c }; })),
+        applyNameFixes(j.products.map(function (p) { return { id: p.id, data: p }; })),
         store, 'static');
     }), 6000);
   }
@@ -637,7 +788,7 @@
         return fetchStatic().catch(function () {
           return buildCatalog(
             SEED_CATEGORIES.map(function (c) { return { id: c.id, data: c }; }),
-            SEED_PRODUCTS.map(function (p) { return { id: p.id, data: p }; }),
+            applyProductDetails(SEED_PRODUCTS.map(function (p) { return { id: p.id, data: p }; })),
             store, 'seed-live');
         });
       }
@@ -860,6 +1011,7 @@
     lang: lang, setLang: setLang, isEn: isEn, pick: pick,
     esc: esc, num: num, money: money, toLatinDigits: toLatinDigits, randomId: randomId, validRatio: validRatio,
     applyPriceDefaults: applyPriceDefaults, applyProductPriceDefaults: applyProductPriceDefaults,
+    applyProductDetails: applyProductDetails, PRODUCT_DETAILS: PRODUCT_DETAILS, DETAILS_PENDING: DETAILS_PENDING,
     normalizeCategory: normalizeCategory, normalizeProduct: normalizeProduct, normalizeWhatsapp: normalizeWhatsapp, byOrder: byOrder,
     fs: { list: fsList, get: fsGet, commit: fsCommit, writeCreate: writeCreate, writeIncrement: writeIncrement, writeMerge: writeMerge, encodeFields: encodeFields, decodeFields: decodeFields },
     isMedia: isMedia, imgTag: imgTag, hydrateMedia: hydrateMedia,

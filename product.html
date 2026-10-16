@@ -247,6 +247,56 @@ function updateInCart() {
   document.getElementById('inCartQty').textContent = q;
 }
 
+/* ---- verified product detail sections (brief: product detail pages) --------
+   Every section is drawn only when the product actually carries that data.
+   YOURS Go has no ingredient or directions data yet, so its pages simply have
+   no such sections rather than borrowing another line's. ---------------------*/
+function detailsHTML(cat, p, c) {
+  var out = '';
+  var benefits = D.isEn() ? (p.benefitsEn.length ? p.benefitsEn : p.benefits) : p.benefits;
+  var acc = [];
+  if (benefits && benefits.length) {
+    acc.push({ id: 'benefits', t: 'فوايد المنتج', open: true,
+      body: '<ul class="pd-list">' + benefits.map(function (b) { return '<li>' + D.esc(b) + '</li>'; }).join('') + '</ul>' });
+  }
+  if (p.ingredients) {
+    acc.push({ id: 'ingredients', t: 'المكونات',
+      body: '<p class="pd-ing" dir="ltr">' + D.esc(p.ingredients) + '</p>' });
+  }
+  var dirs = D.pick(p, 'directions'), freq = D.pick(p, 'frequency');
+  if (dirs) {
+    acc.push({ id: 'howto', t: 'طريقة الاستخدام', open: true,
+      body: '<p>' + D.esc(dirs) + '</p>' +
+        (freq ? '<p class="pd-freq"><b>عدد المرات:</b> ' + D.esc(freq) + '</p>' : '') });
+  }
+  var steps = D.productsOf(cat, c.id);
+  if (steps.length > 1) {
+    acc.push({ id: 'routine', t: 'الروتين المقترح',
+      body: '<ol class="pd-routine">' + steps.map(function (x) {
+        var xd = D.pick(x, 'directions');
+        return '<li' + (x.id === p.id ? ' class="here"' : '') + '>' +
+          '<b>' + D.esc(D.pick(x, 'name')) + '</b>' +
+          (xd ? '<span>' + D.esc(xd) + '</span>' : '') +
+          (x.id === p.id ? '' : '<a href="product.html?id=' + encodeURIComponent(x.id) + '">تفاصيل المنتج</a>') +
+        '</li>';
+      }).join('') + '</ol>' +
+      '<p class="pd-note-small">مش لازم تستخدمي الأربعة في كل غسلة — كل منتج ليه طريقته وعدد مراته.</p>' });
+  }
+  var notes = D.pick(p, 'notes');
+  if (notes) acc.push({ id: 'notes', t: 'ملاحظات مهمة', body: '<p>' + D.esc(notes) + '</p>' });
+  var faqs = D.isEn() ? (p.faqsEn.length ? p.faqsEn : p.faqs) : p.faqs;
+  if (faqs && faqs.length) {
+    acc.push({ id: 'faqs', t: 'أسئلة شائعة',
+      body: faqs.map(function (f) { return '<div class="pd-faq"><b>' + D.esc(f.q) + '</b><p>' + D.esc(f.a || '') + '</p></div>'; }).join('') });
+  }
+  if (!acc.length) return '';
+  out = '<section class="pd" id="productDetails"><h2 class="pd-head">تفاصيل المنتج</h2>' +
+    acc.map(function (a) {
+      return '<details class="pd-sec"' + (a.open ? ' open' : '') + '><summary>' + D.esc(a.t) + '</summary><div class="pd-body">' + a.body + '</div></details>';
+    }).join('') + '</section>';
+  return out;
+}
+
 function renderProduct(cat) {
   renderFooterCats(cat);
   var root = document.getElementById('productPage');
@@ -304,6 +354,7 @@ function renderProduct(cat) {
     '<div class="pi">' +
       '<a class="pi-cat" href="category.html?c=' + encodeURIComponent(c.id) + '">' + D.esc(c.icon) + ' ' + D.esc(D.pick(c, 'name')) + '</a>' +
       '<h1>' + D.esc(D.pick(p, 'name')) + '</h1>' +
+      (D.pick(p, 'size') ? '<div class="pi-size">' + D.esc(D.pick(p, 'size')) + '</div>' : '') +
       (p.color ? '<div class="pi-color">' + D.esc(D.pick(p, 'color')) + '</div>' : '') +
       '<div class="viewers"><i></i><b id="viewerCount">14</b> بيتفرجوا على المنتج ده دلوقتي</div>' +
       (inSet
@@ -334,7 +385,7 @@ function renderProduct(cat) {
       '<div class="return-policy"><strong>👀 عاين قبل ما تستلم</strong>من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس، ولو فيها عيب إحنا بنتحمل الشحن كله. <a href="returns.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div>' +
       '<a class="btn btn-gold-outline btn-block" id="inquiryBtn" target="_blank" rel="noopener" href="#">' + Sedra.WA_SVG + ' استفسري عن المنتج ده</a>' +
     '</div>' +
-  '</div>';
+  '</div>' + detailsHTML(cat, p, c);
 
   var siblings = D.productsOf(cat, c.id).filter(function (x) { return x.id !== p.id; });
   if (siblings.length) {

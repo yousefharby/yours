@@ -25,6 +25,12 @@
     // routine quiz
     'مش عارفة تختاري؟': "Not sure which to pick?", 'اعملي الاختبار': 'Take the quiz',
     'أسئلة قصيرة عن شعرك واحتياجه، ونقولك المجموعة اللي تناسبك ليه بالظبط — ولو إجاباتك محتاجة رأي حد من الفريق، هنقولك.': 'A few short questions about your hair and what it needs, and we will tell you which collection fits — and why. If your answers call for a person, we will say so.',
+    'تفاصيل المنتج': 'Product details', 'فوايد المنتج': 'Key benefits', 'المكونات': 'Ingredients',
+    'طريقة الاستخدام': 'How to use', 'الروتين المقترح': 'Recommended routine', 'ملاحظات مهمة': 'Important notes',
+    'أسئلة شائعة': 'FAQs', 'عدد المرات:': 'How often:', 'تفاصيل المنتج ›': 'Product details ›',
+    'مش لازم تستخدمي الأربعة في كل غسلة — كل منتج ليه طريقته وعدد مراته.': 'You do not need all four at every wash — each product has its own method and frequency.',
+    'اللي جوه روتينك': 'What\u2019s inside your routine',
+    'الأربع خطوات بترتيب استخدامها': 'The four steps, in the order you use them',
     'ابدئي الاختبار': 'Start the quiz', 'اعملي اختبار الروتين': 'take the routine quiz', 'صورة إيصال التحويل': 'Transfer receipt photo',
     'أقل من دقيقة · من غير تسجيل ولا بيانات': 'Under a minute · no sign-up, no personal details',
     'روتينك': 'Your routine', 'رجوع': 'Back', 'اعملي الاختبار تاني': 'Start over',

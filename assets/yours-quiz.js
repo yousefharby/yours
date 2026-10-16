@@ -20,8 +20,19 @@
   'use strict';
   var D = global.SedraData;
 
-  var AFTERCARE_VERIFIED = false;   // ← flip only on written confirmation
-  var AFTERCARE_RULES = null;
+  // The owner has confirmed the supplied product information for two items:
+  // the Hydration conditioner and the Hydration mask are described as free from
+  // sulfates, parabens and heavy silicones and suitable for keratin- or
+  // protein-treated hair. That confirmation covers those two products and those
+  // two treatments ONLY — nothing has been confirmed about smoothing, relaxing,
+  // colouring or bleaching, or about the other six products, so those still go
+  // to the YOURS team. Extend TREATMENTS or PRODUCTS below only on the same kind
+  // of written confirmation.
+  var AFTERCARE_VERIFIED = true;
+  var AFTERCARE_RULES = {
+    TREATMENTS: ['protein', 'keratin'],
+    PRODUCTS: ['hydration-conditioner-1000', 'hydration-mask-500']
+  };
 
   /* ---------------- questions ---------------- */
   var Q = [
@@ -181,12 +192,36 @@
                 en: 'What you describe needs a professional opinion — please contact the salon that did your treatment, or a dermatologist. We are not a substitute for medical advice.' } };
     }
 
-    // 2 — salon treatment aftercare: the catalog does not document compatibility
+    // 2 — salon treatment aftercare, strictly within what has been confirmed
     var treated = isTreated(ans.treatment) || concerns.indexOf('salon') > -1;
-    if (treated && !AFTERCARE_VERIFIED) {
-      return { path: 'aftercare', assist: true,
-        note: { ar: 'نحب نساعدك تختاري العناية المناسبة بعد المعالجة. معلومات منتجاتنا المتاحة مش بتحدد التوافق مع البروتين والكيراتين وأنواع الفرد، وماينفعش نخمّن في حاجة زي دي — كلّمي فريق YOURS ونرشّحلك صح.',
-                en: "We'd love to help you choose the right aftercare routine. Our available product information does not state compatibility with protein, keratin or smoothing treatments, and that is not something to guess — please contact the YOURS team and we'll help you choose." } };
+    if (treated) {
+      var covered = AFTERCARE_VERIFIED && AFTERCARE_RULES &&
+        AFTERCARE_RULES.TREATMENTS.indexOf(ans.treatment) > -1;
+      if (!covered) {
+        return { path: 'aftercare', assist: true,
+          note: { ar: 'نحب نساعدك تختاري العناية المناسبة بعد المعالجة. معلومات منتجاتنا المتاحة مش بتحدد التوافق مع نوع المعالجة اللي عملتيها، وماينفعش نخمّن في حاجة زي دي — كلّمي فريق YOURS ونرشّحلك صح.',
+                  en: "We'd love to help you choose the right aftercare routine. Our available product information does not state compatibility with the treatment you had, and that is not something to guess — please contact the YOURS team and we'll help you choose." } };
+      }
+      // confirmed: recommend only the confirmed products, and only the ones
+      // that can actually be bought the way they are offered
+      var verified = [], inSet = [];
+      AFTERCARE_RULES.PRODUCTS.forEach(function (pid) {
+        var pr = D.productById(cat, pid);
+        if (!pr || !D.isProductAvailable(cat, pr)) return;
+        if (pr.solo && D.isBuyable(cat, pr)) verified.push(pr);
+        else inSet.push(pr);
+      });
+      if (!verified.length && !inSet.length) {
+        return { path: 'aftercare', assist: true,
+          note: { ar: 'المنتجات المؤكدة للعناية بعد المعالجة مش متاحة دلوقتي — كلّمي فريق YOURS.',
+                  en: 'The confirmed aftercare products are not available right now — please message the YOURS team.' } };
+      }
+      return { path: 'aftercare-verified', verified: verified, inSet: inSet,
+        setCat: inSet.length ? D.categoryById(cat, inSet[0].categoryId) : null,
+        note: { ar: 'معلومات المنتج بتقول إن دول مناسبين للشعر المعالج بالكيراتين أو البروتين. باقي منتجاتنا لسه مش متأكدين من توافقها مع المعالجة، فمش هنرشّحهالك.',
+                en: 'The product information states that these are suitable for keratin- or protein-treated hair. Our other products have not been confirmed for treated hair, so we are not recommending them to you.' },
+        timing: { ar: 'عن ميعاد أول غسلة بعد المعالجة — اسألي الصالون اللي عمللك المعالجة، دي حاجة بتختلف حسب نوعها وإحنا مش هنخمّن فيها.',
+                  en: 'For when to first wash after your treatment, please ask the salon that did it — it varies by treatment and we will not guess.' } };
     }
 
     // 3 — she asked for a person
@@ -340,6 +375,43 @@
       '</div>';
   }
 
+// The aftercare result: only the products whose suitability for treated hair
+  // the owner has confirmed, each one shown the way it is actually sold.
+  function aftercareCard(cat, r, answersHTML) {
+    return '<div class="quiz-result">' +
+      '<div class="quiz-ritual-head"><span class="quiz-result-kicker">' + (en() ? 'YOUR YOURS RITUAL' : 'روتين YOURS بتاعك') + '</span>' +
+        '<p class="quiz-ritual-sub">' + (en() ? 'A routine selected around your haircare needs.' : 'روتين متختار على حسب احتياج شعرك.') + '</p></div>' +
+      answersHTML +
+      '<div class="quiz-assist"><span class="quiz-assist-ico" aria-hidden="true">🛡️</span><p>' + esc(en() ? r.note.en : r.note.ar) + '</p></div>' +
+      (r.verified.length ? '<div class="quiz-addons"><div class="quiz-addons-head">' +
+          (en() ? 'Confirmed for treated hair, sold on its own' : 'مؤكد للشعر المعالج، وبيتباع لوحده') + '</div>' +
+          r.verified.map(function (pr) { return productRow(cat, pr); }).join('') + '</div>' : '') +
+      (r.inSet.length && r.setCat ? '<div class="quiz-alts"><div class="quiz-addons-head">' +
+          (en() ? 'Also confirmed, but sold inside its collection' : 'مؤكد كمان، بس بيتباع جوه مجموعته') + '</div>' +
+          r.inSet.map(function (pr) {
+            return '<div class="quiz-inset"><b>' + esc(D.pick(pr, 'name')) + '</b>' +
+              '<span>' + esc(en() ? 'Part of ' : 'جزء من ') + esc(D.pick(r.setCat, 'name')) + ' — ' + D.money(r.setCat.price) + '</span>' +
+              '<a href="category.html?c=' + encodeURIComponent(r.setCat.id) + '">' + (en() ? 'See the collection' : 'شوفي المجموعة') + '</a></div>';
+          }).join('') + '</div>' : '') +
+      '<p class="quiz-timing">' + esc(en() ? r.timing.en : r.timing.ar) + '</p>' +
+      '<a class="btn btn-gold btn-block quiz-wa" data-wa-link target="_blank" rel="noopener" href="#">' +
+        (en() ? 'Ask the YOURS team about your treatment' : 'اسألي فريق YOURS عن معالجتك') + '</a>' +
+      '<button type="button" class="quiz-back" data-restart>↺ ' + (en() ? 'Retake the quiz' : 'اعملي الاختبار تاني') + '</button>' +
+    '</div>';
+  }
+  function productRow(cat, pr) {
+    var dirs = D.pick(pr, 'directions');
+    return '<div class="quiz-prow">' +
+      '<a class="quiz-prow-media" href="product.html?id=' + encodeURIComponent(pr.id) + '" tabindex="-1" aria-hidden="true">' +
+        D.imgTag(pr.mainImg, { alt: '', variant: 't' }) + '</a>' +
+      '<div class="quiz-prow-text">' +
+        '<b>' + esc(D.pick(pr, 'name')) + '</b>' +
+        (dirs ? '<span>' + esc(dirs) + '</span>' : '') +
+        '<div class="quiz-prow-buy"><span class="price-now">' + D.money(D.effectivePrice(cat, pr)) + '</span>' +
+          '<button type="button" class="btn btn-gold p-add" data-keep-label="1" data-add="' + esc(pr.id) + '">' +
+            (en() ? '+ Add' : '+ أضف للطلب') + '</button></div>' +
+      '</div></div>';
+  }
   function assistCard(note, answersHTML) {
     return '<div class="quiz-result">' +
       '<div class="quiz-ritual-head"><span class="quiz-result-kicker">' + (en() ? 'YOUR YOURS RITUAL' : 'روتين YOURS بتاعك') + '</span>' +
@@ -369,6 +441,17 @@
     emit('quizCompletes');
     emit('quizPath_' + r.path);
 
+    if (r.path === 'aftercare-verified') {
+      body.innerHTML = aftercareCard(cat, r, answersSummary());
+      var amsg = (en() ? 'Hi! I did the hair quiz and had a salon treatment. I would like help with aftercare.\n'
+                       : 'السلام عليكم، عملت اختبار الشعر وعملت معالجة في الصالون وعايزة مساعدة في العناية بعدها.\n')
+        + summaryText();
+      var aw = body.querySelector('.quiz-wa'); if (aw) aw.setAttribute('data-wa-text', amsg);
+      if (global.Sedra && Sedra.refreshWaLinks) Sedra.refreshWaLinks(body);
+      D.hydrateMedia(body);
+      if (global.Sedra && Sedra.refreshAddButtons) Sedra.refreshAddButtons();
+      return;
+    }
     if (r.assist) {
       body.innerHTML = assistCard(r.note, answersSummary());
       var msg = (en() ? 'Hi! I did the hair quiz on the site and would like help choosing.\n' : 'السلام عليكم، عملت اختبار الشعر على الموقع وعايزة مساعدة في الاختيار.\n')

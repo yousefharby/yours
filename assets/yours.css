@@ -453,7 +453,7 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
   background: var(--cream-dark, rgba(0,0,0,.035)); border: 1px solid var(--border); }
 .quiz-usage b { display: block; font-size: 12.5px; font-weight: 900; color: var(--gold-dark); margin-bottom: 5px; }
 .quiz-usage p { font-size: 13px; line-height: 1.9; color: var(--text-light); margin: 0; }
-.quiz-pick-link { display: inline-block; margin-top: 2px; font-size: 13px; font-weight: 800;
+.quiz-pick-link { display: inline-flex; align-items: center; min-height: 28px; margin-top: 2px; font-size: 13px; font-weight: 800;
   color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
 .quiz-alts { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 15px; }
 .quiz-alts .quiz-pick { padding: 15px; border: 1px solid var(--border); border-radius: 16px; background: #fff; margin-bottom: 11px; }
@@ -463,3 +463,103 @@ html[dir="ltr"] .cart-count { left: auto; right: -6px; }
   .quiz-next { min-width: 0; flex: 1; }
   .quiz-nav .quiz-back { flex-shrink: 0; }
 }
+
+/* ---- product detail sections (ingredients, how to use, routine, FAQs) ---- */
+.pi-size { display: inline-block; margin-top: 6px; padding: 3px 11px; border-radius: 999px;
+  background: rgba(201,164,90,.13); border: 1px solid rgba(201,164,90,.4);
+  font-size: 12.5px; font-weight: 800; color: var(--gold-dark); }
+.pd { max-width: 760px; margin: 34px auto 0; padding: 0 2px; }
+.pd-head { font-size: 20px; font-weight: 900; color: var(--dark); margin-bottom: 14px; }
+.pd-sec { border: 1px solid var(--border); border-radius: 14px; background: #fff; margin-bottom: 10px; overflow: hidden; }
+.pd-sec > summary { cursor: pointer; list-style: none; padding: 15px 16px; font-size: 15px; font-weight: 800;
+  color: var(--dark); display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; }
+.pd-sec > summary::-webkit-details-marker { display: none; }
+.pd-sec > summary::after { content: '+'; font-size: 20px; font-weight: 400; color: var(--gold-dark); flex-shrink: 0; }
+.pd-sec[open] > summary::after { content: '−'; }
+.pd-sec > summary:hover { background: rgba(201,164,90,.05); }
+.pd-sec > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.pd-body { padding: 0 16px 16px; font-size: 14px; line-height: 1.95; color: var(--text-light); }
+.pd-body p { margin: 0 0 8px; }
+.pd-body p:last-child { margin-bottom: 0; }
+.pd-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.pd-list li { position: relative; padding-inline-start: 20px; }
+.pd-list li::before { content: '✦'; position: absolute; inset-inline-start: 0; color: var(--gold); font-size: 11px; top: 2px; }
+.pd-ing { font-size: 13px; line-height: 2; word-break: break-word; color: var(--text-light); }
+.pd-freq { margin-top: 8px !important; }
+.pd-freq b { color: var(--dark); }
+.pd-routine { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 11px; }
+.pd-routine li { counter-increment: step; position: relative; padding-inline-start: 34px; }
+.pd-routine li::before { content: counter(step); position: absolute; inset-inline-start: 0; top: 0;
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(201,164,90,.15); color: var(--gold-dark); font-size: 12px; font-weight: 900; }
+.pd-routine li.here::before { background: var(--gold); color: var(--black); }
+.pd-routine li b { display: block; color: var(--dark); font-size: 14px; }
+.pd-routine li span { display: block; font-size: 13px; line-height: 1.85; margin-top: 2px; }
+.pd-routine li a { display: inline-flex; align-items: center; min-height: 28px; margin-top: 2px; font-size: 12.5px; font-weight: 800;
+  color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
+.pd-note-small { margin-top: 12px !important; font-size: 12.5px; color: var(--text-light); opacity: .85; }
+.pd-faq { margin-bottom: 12px; }
+.pd-faq:last-child { margin-bottom: 0; }
+.pd-faq b { display: block; color: var(--dark); font-size: 14px; margin-bottom: 3px; }
+.pd-faq p { font-size: 13.5px; }
+@media (max-width: 520px) {
+  .pd { margin-top: 26px; }
+  .pd-sec > summary { padding: 14px 14px; font-size: 14.5px; }
+  .pd-body { padding: 0 14px 14px; }
+}
+
+/* ---- collection page: what's inside your routine (cr-*) ---- */
+.cat-routine { max-width: 860px; margin: 38px auto 0; padding: 0 2px; }
+.cr-head { text-align: center; margin-bottom: 20px; }
+.cr-head h2 { font-size: clamp(20px, 4vw, 26px); font-weight: 900; color: var(--dark); }
+.cr-head p { margin-top: 5px; font-size: 14px; color: var(--text-light); }
+.cr-steps { list-style: none; counter-reset: rstep; margin: 0; padding: 0; display: grid; gap: 12px; }
+.cr-step { counter-increment: rstep; display: flex; gap: 14px; align-items: flex-start;
+  padding: 15px; border: 1px solid var(--border); border-radius: 17px; background: #fff; }
+.cr-media { flex-shrink: 0; width: 86px; border-radius: 12px; overflow: hidden; background: var(--cream); }
+.cr-media img { width: 100%; height: auto; display: block; }
+.cr-text { flex: 1; min-width: 0; }
+.cr-text h3 { font-size: 15.5px; font-weight: 900; line-height: 1.5; }
+.cr-text h3::before { content: counter(rstep); display: inline-grid; place-items: center;
+  width: 21px; height: 21px; margin-inline-end: 7px; border-radius: 50%; vertical-align: 2px;
+  background: var(--gold); color: var(--black); font-size: 11.5px; font-weight: 900; }
+.cr-text h3 a { color: var(--dark); }
+.cr-text h3 a:hover { color: var(--gold-dark); }
+.cr-meta { display: flex; align-items: center; gap: 9px; margin-top: 4px; font-size: 12.5px; color: var(--text-light); }
+.cr-meta b { color: var(--gold-dark); font-weight: 900; }
+.cr-purpose { margin-top: 5px; font-size: 13.5px; line-height: 1.8; color: var(--text-light); }
+.cr-how { margin-top: 6px; font-size: 13px; line-height: 1.85; color: var(--text-light); }
+.cr-how b { color: var(--dark); font-weight: 800; }
+.cr-ing { margin-top: 7px; }
+.cr-ing summary { cursor: pointer; font-size: 12.5px; font-weight: 800; color: var(--gold-dark);
+  list-style: none; padding: 5px 0; min-height: 28px; }
+.cr-ing summary::-webkit-details-marker { display: none; }
+.cr-ing summary::after { content: ' +'; }
+.cr-ing[open] summary::after { content: ' \2212'; }
+.cr-ing p { margin-top: 4px; font-size: 12.5px; line-height: 1.95; color: var(--text-light); word-break: break-word; }
+.cr-link { display: inline-flex; align-items: center; min-height: 28px; margin-top: 6px; font-size: 13px; font-weight: 800;
+  color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
+.cr-foot { margin-top: 14px; text-align: center; font-size: 12.5px; color: var(--text-light); opacity: .9; }
+@media (max-width: 480px) {
+  .cr-step { gap: 11px; padding: 13px; }
+  .cr-media { width: 68px; }
+  .cr-text h3 { font-size: 14.5px; }
+}
+
+/* ---- quiz: the confirmed aftercare result ---- */
+.quiz-prow { display: flex; gap: 12px; align-items: flex-start; text-align: start;
+  padding: 12px; border: 1px solid var(--border); border-radius: 14px; background: #fff; margin-bottom: 9px; }
+.quiz-prow-media { flex-shrink: 0; width: 62px; border-radius: 10px; overflow: hidden; background: var(--cream); }
+.quiz-prow-media img { width: 100%; height: auto; display: block; }
+.quiz-prow-text { flex: 1; min-width: 0; }
+.quiz-prow-text b { display: block; font-size: 14px; font-weight: 900; color: var(--dark); }
+.quiz-prow-text span { display: block; margin-top: 3px; font-size: 12.5px; line-height: 1.8; color: var(--text-light); }
+.quiz-prow-buy { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; }
+.quiz-prow-buy .price-now { font-size: 17px; }
+.quiz-prow-buy .btn { padding: 8px 15px; font-size: 13px; min-height: 38px; }
+.quiz-inset { text-align: start; padding: 12px 13px; border: 1px dashed var(--border); border-radius: 13px; background: #fff; }
+.quiz-inset b { display: block; font-size: 13.5px; font-weight: 900; color: var(--dark); }
+.quiz-inset span { display: block; margin-top: 2px; font-size: 12.5px; color: var(--text-light); }
+.quiz-inset a { display: inline-flex; align-items: center; min-height: 28px; margin-top: 4px; font-size: 12.5px; font-weight: 800;
+  color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
+.quiz-timing { text-align: start; margin: 14px 0; font-size: 12.5px; line-height: 1.9; color: var(--text-light); }

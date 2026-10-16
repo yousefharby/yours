@@ -364,7 +364,7 @@
       renderCatalogViews();
     }, function (e) { banner('تعذر تحميل الأصناف: ' + errMsg(e)); });
     db.collection('products').onSnapshot(function (snap) {
-      S.products = D.applyProductPriceDefaults(snap.docs.map(function (d) { return { id: d.id, data: d.data() }; }))
+      S.products = D.applyProductDetails(D.applyProductPriceDefaults(snap.docs.map(function (d) { return { id: d.id, data: d.data() }; })))
         .map(function (p) { return D.normalizeProduct(p.id, p.data); }).sort(D.byOrder);
       S.prodsLoaded = true;
       renderCatalogViews();
