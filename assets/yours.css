@@ -64,8 +64,9 @@
 
 /* English layout */
 html[dir="ltr"] body { text-align: left; }
-html[dir="ltr"] .menu-panel { left: auto; right: 0; transform: translateX(100%); border-right: none; border-left: 1px solid rgba(201,164,90,.25); }
-html[dir="ltr"] .menu-panel.open { transform: translateX(0); }
+/* The menu drawer stays anchored to the left in English and slides in from
+   there, the usual place for it in an LTR layout. Parking it off the RIGHT
+   edge instead made the closed drawer widen the page by its own width. */
 html[dir="ltr"] .cart-drawer { right: auto; left: 0; transform: translateX(-100%); }
 html[dir="ltr"] .cart-drawer.open { transform: translateX(0); }
 html[dir="ltr"] .cart-count { left: auto; right: -6px; }

@@ -147,11 +147,21 @@
   function snapshotItem(p, qty) {
     var cat = state.catalog, c = D.categoryById(cat, p.categoryId) || {};
     return { productId: p.id, categoryId: p.categoryId, categoryName: c.name || '', name: p.name, color: p.color || '',
+      // The Arabic names above stay as the order record: the shop reads the
+      // Telegram message and the packing list in Arabic whatever the customer
+      // was browsing in. These are the same names for showing her the cart.
+      nameEn: p.nameEn || '', categoryNameEn: c.nameEn || '', colorEn: p.colorEn || '',
       img: p.mainImg, price: D.effectivePrice(cat, p), qty: qty,
       isSet: p.isSet === true,
       // what is actually inside the box, so the order and the packing list are explicit
-      contents: p.isSet ? (p.items || []).map(function (x) { return x.name; }) : null };
+      contents: p.isSet ? (p.items || []).map(function (x) { return x.name; }) : null,
+      contentsEn: p.isSet ? (p.items || []).map(function (x) { return x.nameEn || x.name; }) : null };
   }
+  // What the customer is shown, in the language she picked. The order record
+  // itself is never rewritten; only the display reads these.
+  function itemName(i) { return (D.isEn() && i.nameEn) ? i.nameEn : i.name; }
+  function itemCatName(i) { return (D.isEn() && i.categoryNameEn) ? i.categoryNameEn : i.categoryName; }
+  function itemContents(i) { return (D.isEn() && i.contentsEn && i.contentsEn.length) ? i.contentsEn : (i.contents || []); }
   function addToCart(productId, qty, silent) {
     var cat = state.catalog; if (!cat) return false;
     var p = D.buyableById(cat, productId);
@@ -191,10 +201,10 @@
 
   function lineItemHTML(i) {
     return '<div class="line-item">' +
-      '<div class="line-img">' + D.imgTag(i.img, { alt: i.name, variant: 't' }) + '</div>' +
-      '<div><div class="line-cat">' + esc(i.categoryName) + '</div><div class="line-name">' + esc(i.name) + '</div>' +
-      (i.isSet && i.contents && i.contents.length
-        ? '<div class="line-contents">' + i.contents.map(function (t) { return esc(t); }).join(' · ') + '</div>' : '') +
+      '<div class="line-img">' + D.imgTag(i.img, { alt: itemName(i), variant: 't' }) + '</div>' +
+      '<div><div class="line-cat">' + esc(itemCatName(i)) + '</div><div class="line-name">' + esc(itemName(i)) + '</div>' +
+      (i.isSet && itemContents(i).length
+        ? '<div class="line-contents">' + itemContents(i).map(function (t) { return esc(t); }).join(' · ') + '</div>' : '') +
       '<div class="line-price">' + money(i.price) + (i.isSet ? ' للمجموعة' : ' للقطعة') + '</div>' +
       '<button class="line-remove" type="button" data-remove="' + esc(i.productId) + '">إزالة</button></div>' +
       '<div class="line-side"><div class="qty" role="group" aria-label="الكمية">' +
@@ -342,8 +352,8 @@
         '</div>' +
         '</div>' +
         '<div class="form-group" data-field="fName"><label class="form-label" for="fName">الاسم الكامل <span class="req">*</span></label><input type="text" class="form-input" id="fName" autocomplete="name" placeholder="اكتبي اسمك بالكامل"><div class="field-error">اكتبي اسمك</div></div>' +
-        '<div class="form-group" data-field="fPhone"><label class="form-label" for="fPhone">رقم الموبايل <span class="req">*</span></label><input type="tel" class="form-input" id="fPhone" autocomplete="tel" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right"><div class="field-error">اكتبي رقم موبايل مصري صحيح من 11 رقم يبدأ بـ 01</div></div>' +
-        '<div class="form-group"><label class="form-label" for="fPhone2">رقم موبايل تاني <span class="opt">(اختياري)</span></label><input type="tel" class="form-input" id="fPhone2" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right"></div>' +
+        '<div class="form-group" data-field="fPhone"><label class="form-label" for="fPhone">رقم الموبايل <span class="req">*</span></label><input type="tel" class="form-input" id="fPhone" autocomplete="tel" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:start"><div class="field-error">اكتبي رقم موبايل مصري صحيح من 11 رقم يبدأ بـ 01</div></div>' +
+        '<div class="form-group"><label class="form-label" for="fPhone2">رقم موبايل تاني <span class="opt">(اختياري)</span></label><input type="tel" class="form-input" id="fPhone2" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:start"></div>' +
         '<div class="form-group" data-field="fGov"><label class="form-label" for="fGov">المحافظة <span class="req">*</span></label><select class="form-select" id="fGov"><option value="">— اختر المحافظة —</option></select><div class="field-error">اختاري المحافظة</div></div>' +
         '<div class="form-group" data-field="fCity"><label class="form-label" for="fCity">المدينة / المركز <span class="req">*</span></label><select class="form-select" id="fCity" disabled><option value="">— اختر المحافظة الأول —</option></select><div class="field-error">اختاري المدينة</div></div>' +
         '<div class="form-group" data-field="fAddress"><label class="form-label" for="fAddress">العنوان بالتفصيل <span class="req">*</span></label><input type="text" class="form-input" id="fAddress" autocomplete="street-address" placeholder="الشارع، علامة مميزة، رقم العمارة والدور"><div class="field-error">اكتبي العنوان بالتفصيل</div></div>' +
@@ -461,9 +471,9 @@
   function renderCheckoutSummary() {
     var pr = cartPricing(), sub = pr.net, n = cartCount();
     $('#checkoutSummary').innerHTML = cart.map(function (i) {
-      return '<div class="summary-item"><div class="s-img">' + D.imgTag(i.img, { alt: i.name, variant: 't' }) + '</div>' +
-        '<span class="summary-item-name"><small>' + esc(i.categoryName) + '</small>' + esc(i.name) +
-          (i.isSet && i.contents && i.contents.length ? '<em class="summary-contents">' + i.contents.map(function (t) { return esc(t); }).join(' · ') + '</em>' : '') + '</span>' +
+      return '<div class="summary-item"><div class="s-img">' + D.imgTag(i.img, { alt: itemName(i), variant: 't' }) + '</div>' +
+        '<span class="summary-item-name"><small>' + esc(itemCatName(i)) + '</small>' + esc(itemName(i)) +
+          (i.isSet && itemContents(i).length ? '<em class="summary-contents">' + itemContents(i).map(function (t) { return esc(t); }).join(' · ') + '</em>' : '') + '</span>' +
         '<span class="summary-item-qty">×' + i.qty + '</span><span class="summary-item-price">' + money(lineTotal(i)) + '</span></div>';
     }).join('') +
     '<button class="summary-edit" type="button" data-edit-cart>تعديل الطلب أو إضافة منتج</button>' +

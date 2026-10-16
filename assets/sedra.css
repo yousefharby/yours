@@ -387,8 +387,10 @@ body.no-scroll { overflow: hidden; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 
-.skip-link { position: absolute; right: -9999px; top: 0; }
-.skip-link:focus { right: 12px; top: 12px; z-index: 3000; background: #fff; color: #000; padding: 8px 14px; border-radius: 8px; }
+/* parked off the START edge, so it is off-screen in both directions without
+   stretching the page (an END-side offset widens an LTR page by 9999px) */
+.skip-link { position: absolute; inset-inline-start: -9999px; top: 0; }
+.skip-link:focus { inset-inline-start: 12px; top: 12px; z-index: 3000; background: #fff; color: #000; padding: 8px 14px; border-radius: 8px; }
 
 /* ================= CATEGORY CARD: banner ================= */
 .cat-card-media.banner { aspect-ratio: 3/2; background: #0f0d0a; }
@@ -511,3 +513,16 @@ a.trust-item:hover { background: #faf6ec; }
 .p-offer { background: #fff7e3; border: 1px solid var(--border); color: var(--gold-dark); font-size: 11px; font-weight: 800; border-radius: 8px; padding: 4px 8px; margin-bottom: 8px; text-align: center; }
 .cat-card-offer { background: #fff7e3; border: 1px solid var(--gold); color: var(--gold-dark); font-size: 12px; font-weight: 800; border-radius: 8px; padding: 6px 10px; }
 .totals-row.offer-row { color: #166534; font-weight: 800; }
+
+/* ---- English: direction -------------------------------------------------
+   body carries `direction: rtl`, which overrides the dir attribute on <html>,
+   so the English page kept mirroring its rows and reordering its numbers.
+   The lang layer puts .lang-en on body, so the switch hangs off that. */
+body.lang-en { direction: ltr; }
+body.lang-en .form-input, body.lang-en .form-select, body.lang-en textarea { direction: ltr; }
+/* phone and numeric fields read left-to-right in both languages */
+input[type="tel"], input[type="number"], input[inputmode="numeric"] { direction: ltr; text-align: start; }
+
+/* the two halves of a totals row must not run together when the value wraps */
+.totals-row { gap: 12px; }
+.totals-row > span:last-child { text-align: end; }
