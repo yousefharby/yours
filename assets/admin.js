@@ -1551,6 +1551,16 @@
     var picks = S.categories.map(function (c) {
       return ['· ' + c.name, num(a['quizPick_' + c.id], 0)];
     }).filter(function (r) { return r[1] > 0; });
+    // Where the quiz ends up. "محتاجة تأكيد العناية بعد المعالجة" is the number of
+    // customers the quiz had to send to WhatsApp because we have no written
+    // confirmation about protein and keratin aftercare yet.
+    var paths = [
+      ['· رشّحنا لها مجموعة', num(a.quizPath_match, 0)],
+      ['· محتاجة تأكيد العناية بعد المعالجة', num(a.quizPath_aftercare, 0)],
+      ['· حوّلناها لمتخصص (مشكلة فروة)', num(a.quizPath_care, 0)],
+      ['· إجاباتها محتاجة مساعدة الفريق', num(a.quizPath_assist, 0)],
+      ['· أعادت الاختبار', num(a.quizRestarts, 0)]
+    ].filter(function (r) { return r[1] > 0; });
     $('#funnel').innerHTML = rows.map(function (r) {
       return '<div class="funnel-row"><span class="funnel-icon">' + r[0] + '</span><span class="funnel-label">' + r[1] + '</span><span class="funnel-val">' + r[2].toLocaleString('en-US') + '</span></div>';
     }).join('') + '<div class="funnel-row"><span class="funnel-icon">🎯</span><span class="funnel-label">نسبة التحويل (أوردر ÷ زوار)</span><span class="funnel-val">' + (visitors ? (orders / visitors * 100).toFixed(1) + '%' : '—') + '</span></div>' +
@@ -1561,6 +1571,9 @@
       (qs ? '<div class="funnel-row"><span class="funnel-icon">📊</span><span class="funnel-label">نسبة إكمال الاختبار</span><span class="funnel-val">' + Math.min(100, Math.round(qc / qs * 100)) + '%</span></div>' : '') +
       picks.map(function (r) {
         return '<div class="funnel-row"><span class="funnel-icon">✨</span><span class="funnel-label">الاختبار رشّح ' + esc(r[0]) + '</span><span class="funnel-val">' + r[1].toLocaleString('en-US') + '</span></div>';
+      }).join('') +
+      paths.map(function (r) {
+        return '<div class="funnel-row"><span class="funnel-icon">🧭</span><span class="funnel-label">' + esc(r[0]) + '</span><span class="funnel-val">' + r[1].toLocaleString('en-US') + '</span></div>';
       }).join('');
     var times = [
       ['الصفحة الرئيسية', avg(num(a.homeTime, 0), num(a.homeTimeSamples, 0)) || avg(num(lp.home, 0), num(lp.homeVisits, 0))],

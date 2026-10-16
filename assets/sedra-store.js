@@ -335,7 +335,7 @@
           '<label class="receipt-box" id="receiptBox">' +
             '<input type="file" accept="image/*" id="fReceipt" hidden>' +
             '<span id="receiptLabel">📷 ارفع صورة إيصال التحويل</span>' +
-            '<img id="receiptPreview" alt="" hidden>' +
+            '<img id="receiptPreview" alt="صورة إيصال التحويل" hidden>' +
           '</label>' +
           '<div class="pay-note">بعد ما تحوّل، ارفع صورة التحويل. هنراجعها ونتواصل معاك لتأكيد الطلب، وهيتشحن <b>بدون تحصيل</b>.</div>' +
           '<a class="pay-wa" id="payWaBtn" target="_blank" rel="noopener" href="#">' + WA_SVG + ' قابلتك مشكلة في التحويل؟ كلمينا واتساب</a>' +

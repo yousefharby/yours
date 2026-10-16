@@ -24,8 +24,8 @@
     'عناية احترافية بشعرك، من خبرة الصالون لبيتك.': 'Professional hair care, from our salon to your home.',
     // routine quiz
     'مش عارفة تختاري؟': "Not sure which to pick?", 'اعملي الاختبار': 'Take the quiz',
-    'أربع أسئلة قصيرة عن شعرك واستخدامك، ونقولك المجموعة اللي تناسبك ليه بالظبط.': 'Four short questions about your hair and your routine, and we will tell you which collection fits — and why.',
-    'ابدئي الاختبار': 'Start the quiz', 'اعملي اختبار الروتين': 'take the routine quiz',
+    'أسئلة قصيرة عن شعرك واحتياجه، ونقولك المجموعة اللي تناسبك ليه بالظبط — ولو إجاباتك محتاجة رأي حد من الفريق، هنقولك.': 'A few short questions about your hair and what it needs, and we will tell you which collection fits — and why. If your answers call for a person, we will say so.',
+    'ابدئي الاختبار': 'Start the quiz', 'اعملي اختبار الروتين': 'take the routine quiz', 'صورة إيصال التحويل': 'Transfer receipt photo',
     'أقل من دقيقة · من غير تسجيل ولا بيانات': 'Under a minute · no sign-up, no personal details',
     'روتينك': 'Your routine', 'رجوع': 'Back', 'اعملي الاختبار تاني': 'Start over',
     // collections sold as one set
