@@ -1718,8 +1718,14 @@
       .then(function () {
         S.store.discounts = list;
         renderDiscounts();
-        publishSnapshot();
-        if (msg) toast(msg);
+        // A code only works once the storefront snapshot carries it. Saying
+        // "saved" before that is a lie the owner would only discover at the
+        // checkout, so wait for the publish and report what really happened.
+        if (!S.catsLoaded || !S.prodsLoaded) {
+          toast('اتسجل، بس نسخة الموقع لسه بتحمّل — استني ثانية وجرّبي تاني', 'error');
+          return;
+        }
+        return publishSnapshot().then(function () { if (msg) toast(msg); });
       })
       .catch(function (err) { toast('تعذر الحفظ: ' + errMsg(err), 'error'); });
   }
@@ -1783,7 +1789,14 @@
     $('#settingPixel').classList.remove('invalid');
     var data = { name: $('#settingName').value.trim(), whatsapp: $('#settingWA').value.trim(), allowTransfer: $('#settingTransfer').checked, paymentV2: true, pixelId: pixRaw ? pixel : null,
       instapayLink: $('#settingInstapay').value.trim(), instapayHandle: $('#settingInstapayHandle').value.trim(), walletNumber: $('#settingWallet').value.trim(), shippingCompany: $('#settingShipCo').value.trim(), updatedAt: serverTs() };
-    db.collection('settings').doc('store').set(data, { merge: true }).then(function () { S.store = data; publishSnapshot(); toast('✅ تم حفظ بيانات المتجر'); })
+    db.collection('settings').doc('store').set(data, { merge: true }).then(function () {
+      // the write merges, so Firestore keeps the discount codes; keep them in
+      // memory too, or the next snapshot would publish without them
+      data.discounts = S.store.discounts || [];
+      S.store = data;
+      publishSnapshot();
+      toast('✅ تم حفظ بيانات المتجر');
+    })
       .catch(function (err) { toast('تعذر الحفظ: ' + errMsg(err), 'error'); });
   }
   function saveTheme(e) {

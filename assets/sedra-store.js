@@ -529,16 +529,27 @@
     if (!typed) return promoSay('اكتبي الكود الأول', 'bad');
     btn.setAttribute('disabled', 'disabled');
     promoSay('بنتأكد من الكود…', '');
-    D.lookupDiscount(state.catalog, typed).then(function (hit) {
-      btn.removeAttribute('disabled');
-      if (!hit) { promo = null; promoSay('الكود ده مش شغال', 'bad'); renderCheckoutSummary(); return; }
+    function accept(hit) {
       promo = { code: typed, percent: hit.percent };
       f.setAttribute('disabled', 'disabled');
       btn.textContent = 'شيلي الكود';
       promoSay('اتطبق خصم ' + hit.percent + '%', 'good');
       renderCheckoutSummary();
       track('promoApplied');
-    }, function () {
+    }
+    D.lookupDiscount(state.catalog, typed).then(function (hit) {
+      if (hit) { btn.removeAttribute('disabled'); return accept(hit); }
+      // The page may be holding a copy of the catalog from before the owner
+      // added this code, so fetch the live one once before refusing it.
+      return D.refreshCatalog().then(function (fresh) {
+        state.catalog = fresh;
+        return D.lookupDiscount(fresh, typed);
+      }).then(function (hit2) {
+        btn.removeAttribute('disabled');
+        if (hit2) return accept(hit2);
+        promo = null; promoSay('الكود ده مش شغال', 'bad'); renderCheckoutSummary();
+      });
+    }).catch(function () {
       btn.removeAttribute('disabled');
       promoSay('مقدرناش نتأكد من الكود دلوقتي', 'bad');
     });
@@ -546,8 +557,10 @@
     function openCheckout() {
     if (!cart.length) { openPicker(); toast('اختاري منتج الأول'); return; }
     clearPromo('');
-    var anyCode = ((state.catalog && state.catalog.settings.discounts) || []).some(function (d) { return d.active; });
-    var box = $('#promoBox'); if (box) box.style.display = anyCode ? '' : 'none';
+    // The field is always here. Hiding it when the page happens to hold no
+    // codes meant a customer with a perfectly good code saw nothing at all,
+    // with no way to tell whether the code or the page was at fault.
+    var box = $('#promoBox'); if (box) box.style.display = '';
     setCart(false); setMenu(false);
     $('#checkoutForm').style.display = '';
     $('#checkoutSuccess').classList.remove('show');
