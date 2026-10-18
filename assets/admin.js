@@ -376,6 +376,7 @@
         .sort(function (a, b) { return b._ts - a._ts; });
       S.ordersLoaded = true;
       renderOrders(); renderOverview(); updateNewBadge(); fillOrderFilters();
+      renderDiscounts();                 // the per-code tally counts orders
       if (S.tab === 'analytics') renderAnalytics();
     }, function (e) {
       banner('تعذر تحميل الأوردرات: ' + errMsg(e));
@@ -516,7 +517,8 @@
       return '<tr data-order-row="' + esc(o.id) + '" style="cursor:pointer"><td><span class="o-code">' + esc(o.orderCode || '—') + '</span></td>' +
         '<td><div class="o-name">' + esc(o.name) + '</div><span class="o-phone">' + esc(o.phone) + '</span></td>' +
         '<td>' + orderItemsHTML(o, true) + '</td><td>' + esc(o.governorate || '—') + '</td>' +
-        '<td class="o-total">' + money(orderTotal(o)) + '</td>' +
+        '<td class="o-total">' + money(orderTotal(o)) +
+          (o.promoCode ? '<span class="promo-pill" title="استخدمت كود خصم">🎟️ ' + esc(o.promoCode) + ' −' + money(num(o.promoDiscount, 0)) + '</span>' : '') + '</td>' +
         '<td><span class="status-badge ' + (STATUS_CLASS[st] || '') + '">' + esc(statusLabel(st)) + '</span></td><td class="o-date">' + fmtDate(o._ts, true) + '</td></tr>';
     }).join('') : '<tr><td colspan="7"><div class="empty-state"><p>لسه مفيش أوردرات</p></div></td></tr>';
     hydrate($('#recentOrdersBody'));
@@ -649,7 +651,8 @@
         '<td><div class="o-name">' + esc(o.name) + '</div><span class="o-phone">' + esc(o.phone) + '</span></td>' +
         '<td>' + orderItemsHTML(o, false) + '</td>' +
         '<td style="min-width:150px;font-size:12px;line-height:1.6"><b>' + esc(o.governorate || '') + '</b>' + (o.city ? ' — ' + esc(o.city) : '') + '<br>' + esc(o.address || '') + '</td>' +
-        '<td class="o-total">' + money(orderTotal(o)) + '</td>' +
+        '<td class="o-total">' + money(orderTotal(o)) +
+          (o.promoCode ? '<span class="promo-pill" title="استخدمت كود خصم">🎟️ ' + esc(o.promoCode) + ' −' + money(num(o.promoDiscount, 0)) + '</span>' : '') + '</td>' +
         '<td style="font-size:12px">' + (o.paidOnline ? '<span class="paid-pill">💳 مدفوع</span>' : esc(o.paymentMethod || '—')) + '</td>' +
         '<td><select class="status-select" data-status="' + esc(o.id) + '">' + STATUSES.map(function (s) { return '<option value="' + esc(s) + '"' + (s === st ? ' selected' : '') + '>' + esc(statusLabel(s)) + '</option>'; }).join('') + '</select></td>' +
         '<td class="o-date">' + fmtDate(o._ts, true) + '</td>' +
@@ -685,6 +688,7 @@
       field('ملاحظات', o.notes) +
       field('الدفع', o.paidOnline ? '💳 تحويل إلكتروني (' + (o.transferMethod || '') + ')' + (o.hasReceipt ? ' — الإيصال على تيليجرام ✅' : ' — من غير إيصال ⚠️') : '💵 عند الاستلام') +
       field('نوع البوليصة', o.paidOnline ? 'بدون تحصيل (مدفوع)' : 'تحصيل ' + money(orderTotal(o))) +
+      (o.promoCode ? field('كود الخصم', o.promoCode + ' — خصم ' + num(o.promoPercent, 0) + '% (' + money(num(o.promoDiscount, 0)) + ')') : '') +
       field('منطقة الشحن', o.shippingZone) + field('الجهاز', o.deviceType) +
       field('التاريخ', fmtDate(o._ts, true)) + field('الحالة', statusLabel(st)) +
       (o.gps ? '<div class="detail-item"><label>الموقع</label><span><a href="' + esc(/^https:\/\//.test(o.gps) ? o.gps : '#') + '" target="_blank" rel="noopener">📍 فتح الخريطة</a></span></div>' : '');
@@ -695,7 +699,12 @@
         '<div class="detail-product-price">' + money(num(i.price, 0) * num(i.qty, 1)) + '</div></div>';
     }).join('');
     var sub = typeof o.subtotal === 'number' ? o.subtotal : orderTotal(o) - num(o.shipping, 0);
-    $('#detailTotals').innerHTML = '<div class="detail-totals"><div><span>المنتجات</span><span>' + money(sub) + '</span></div><div><span>الشحن</span><span>' + money(o.shipping || 0) + '</span></div><div class="grand"><span>الإجمالي</span><span>' + money(orderTotal(o)) + '</span></div></div>';
+    var cut = num(o.promoDiscount, 0);
+    $('#detailTotals').innerHTML = '<div class="detail-totals">' +
+      '<div><span>المنتجات</span><span>' + money(sub + cut) + '</span></div>' +
+      (cut ? '<div class="promo-line"><span>🎟️ كود ' + esc(o.promoCode || '') + ' (' + num(o.promoPercent, 0) + '%)</span><span>− ' + money(cut) + '</span></div>' : '') +
+      '<div><span>الشحن</span><span>' + money(o.shipping || 0) + '</span></div>' +
+      '<div class="grand"><span>الإجمالي</span><span>' + money(orderTotal(o)) + '</span></div></div>';
     $('#detailActions').innerHTML =
       '<a class="btn-ghost" target="_blank" rel="noopener" href="' + esc(waCustomer(o.phone, 'أهلاً ' + (o.name || '') + '، معاك YOURS بخصوص طلبك رقم ' + (o.orderCode || ''))) + '">💬 واتساب العميل</a>' +
       '<a class="btn-ghost" href="tel:' + esc(o.phone) + '">📞 اتصال</a>' +
@@ -1729,14 +1738,24 @@
       })
       .catch(function (err) { toast('تعذر الحفظ: ' + errMsg(err), 'error'); });
   }
+  // how many orders used a code, and how much it gave away
+  function discUsage(code) {
+    var want = D.normalizeCode(code), n = 0, sum = 0;
+    (S.orders || []).forEach(function (o) {
+      if (o.promoCode && D.normalizeCode(o.promoCode) === want) { n++; sum += num(o.promoDiscount, 0); }
+    });
+    return { n: n, sum: sum };
+  }
   function renderDiscounts() {
     var box = $('#discountsList'); if (!box) return;
     var list = discList();
     if (!list.length) { box.innerHTML = '<div class="disc-empty">مفيش أكواد لسه. اكتبي كود ونسبته فوق واضغطي إضافة.</div>'; return; }
     box.innerHTML = list.map(function (d, i) {
+      var used = discUsage(d.code);
       return '<div class="disc-row' + (d.active === false ? ' off' : '') + '">' +
         '<code>' + esc(d.code) + '</code>' +
         '<b>' + num(d.percent, 0) + '%</b>' +
+        '<span class="disc-used">' + (used.n ? used.n + ' أوردر · ' + money(used.sum) : 'مااستخدمش لسه') + '</span>' +
         '<button type="button" data-disc-toggle="' + i + '">' + (d.active === false ? 'تفعيل' : 'إيقاف') + '</button>' +
         '<button type="button" class="del" data-disc-del="' + i + '">حذف</button>' +
       '</div>';
