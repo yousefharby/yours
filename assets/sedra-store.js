@@ -362,6 +362,14 @@
           '<button class="gps-btn" type="button" id="gpsBtn">📍 حددي موقعي تلقائياً</button><input type="hidden" id="fGPS">' +
         '</div>' +
         '<div class="policy-box"><strong>👀 معاينة قبل الاستلام:</strong> من حقك تفتحي الشحنة وتعايني المنتجات قدام المندوب قبل ما تدفعي. لو مش عاجباك ترجّعها وتدفع مصاريف الشحن بس. <a href="returns.html" target="_blank" rel="noopener">التفاصيل</a></div>' +
+        '<div class="promo-box" id="promoBox">' +
+          '<label class="form-label" for="fPromo">كود الخصم <span class="opt">(لو عندك)</span></label>' +
+          '<div class="promo-row">' +
+            '<input type="text" class="form-input" id="fPromo" autocomplete="off" spellcheck="false" placeholder="اكتبي الكود" maxlength="24" dir="ltr" style="text-align:start">' +
+            '<button type="button" class="btn btn-dark" id="promoApply">تطبيق</button>' +
+          '</div>' +
+          '<div class="promo-msg" id="promoMsg"></div>' +
+        '</div>' +
         '<div class="form-alert" id="checkoutAlert"></div>' +
         '<button class="btn btn-gold btn-block" type="button" id="submitOrderBtn">✅ تأكيد الطلب</button>' +
       '</div>' +
@@ -383,6 +391,9 @@
     ['fName', 'fPhone', 'fAddress'].forEach(function (id) { on($('#' + id), 'input', function () { clearFieldError(id); }); });
     on($('#gpsBtn'), 'click', getLocation);
     on($('#submitOrderBtn'), 'click', submitOrder);
+    on($('#promoApply'), 'click', applyPromo);
+    on($('#fPromo'), 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); applyPromo(); } });
+    on($('#fPromo'), 'input', function () { if (!promo) promoSay(''); });
     on($('#checkoutModal'), 'click', function (e) { if (e.target.id === 'checkoutModal') closeCheckout(); });
     Array.prototype.forEach.call(document.querySelectorAll('[data-pay]'), function (b) {
       on(b, 'click', function () {
@@ -479,15 +490,64 @@
     '<button class="summary-edit" type="button" data-edit-cart>تعديل الطلب أو إضافة منتج</button>' +
     '<div class="totals-row"><span>المنتجات (' + n + ' قطعة)</span><span>' + money(pr.gross) + '</span></div>' +
     (pr.discount ? '<div class="totals-row offer-row"><span>🎁 خصم العرض</span><span>− ' + money(pr.discount) + '</span></div>' : '') +
+    (promo ? '<div class="totals-row offer-row"><span>🎟️ كود الخصم ' + esc(promo.code) + ' (' + promo.percent + '%)</span><span>− ' + money(promoCut()) + '</span></div>' : '') +
     (currentGov()
       ? '<div class="totals-row"><span>الشحن (' + esc(currentGov()) + ')</span><span>' + money(zoneFor(currentGov()).price) + '</span></div>' +
-        '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(sub + zoneFor(currentGov()).price) + '</span></div>'
+        '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(payable() + zoneFor(currentGov()).price) + '</span></div>'
       : '<div class="totals-row"><span>الشحن</span><span>اختاري المحافظة تحت (من ' + money(minShip()) + ')</span></div>' +
-        '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(sub) + ' + الشحن</span></div>');
+        '<div class="totals-row grand"><span>الإجمالي</span><span>' + money(payable()) + ' + الشحن</span></div>');
     D.hydrateMedia($('#checkoutSummary'));
   }
-  function openCheckout() {
+/* ---------------- Discount code ---------------------------------------
+     The code is checked against the hashes in the catalog settings, so the
+     codes themselves are never shipped to the page. The discount applies to
+     the products only, never to the shipping fee, and the order record and the
+     shop's message both carry the code and the amount. */
+  var promo = null;   // { code, percent } once a live code has been applied
+  function promoCut() {
+    if (!promo) return 0;
+    return Math.round(cartPricing().net * promo.percent / 100);
+  }
+  function payable() { return Math.max(0, cartPricing().net - promoCut()); }
+  function promoSay(msg, kind) {
+    var el = $('#promoMsg'); if (!el) return;
+    el.textContent = msg || '';
+    el.className = 'promo-msg' + (kind ? ' ' + kind : '');
+  }
+  function clearPromo(msg) {
+    promo = null;
+    var f = $('#fPromo'); if (f) f.removeAttribute('disabled');
+    var b = $('#promoApply'); if (b) { b.removeAttribute('disabled'); b.textContent = 'تطبيق'; }
+    promoSay(msg || '', msg ? 'bad' : '');
+    renderCheckoutSummary();
+  }
+  function applyPromo() {
+    var f = $('#fPromo'), btn = $('#promoApply');
+    if (!f) return;
+    if (promo) return clearPromo('');          // the button doubles as "remove"
+    var typed = D.normalizeCode(f.value);
+    if (!typed) return promoSay('اكتبي الكود الأول', 'bad');
+    btn.setAttribute('disabled', 'disabled');
+    promoSay('بنتأكد من الكود…', '');
+    D.lookupDiscount(state.catalog, typed).then(function (hit) {
+      btn.removeAttribute('disabled');
+      if (!hit) { promo = null; promoSay('الكود ده مش شغال', 'bad'); renderCheckoutSummary(); return; }
+      promo = { code: typed, percent: hit.percent };
+      f.setAttribute('disabled', 'disabled');
+      btn.textContent = 'شيلي الكود';
+      promoSay('اتطبق خصم ' + hit.percent + '%', 'good');
+      renderCheckoutSummary();
+      track('promoApplied');
+    }, function () {
+      btn.removeAttribute('disabled');
+      promoSay('مقدرناش نتأكد من الكود دلوقتي', 'bad');
+    });
+  }
+    function openCheckout() {
     if (!cart.length) { openPicker(); toast('اختاري منتج الأول'); return; }
+    clearPromo('');
+    var anyCode = ((state.catalog && state.catalog.settings.discounts) || []).some(function (d) { return d.active; });
+    var box = $('#promoBox'); if (box) box.style.display = anyCode ? '' : 'none';
     setCart(false); setMenu(false);
     $('#checkoutForm').style.display = '';
     $('#checkoutSuccess').classList.remove('show');
@@ -596,7 +656,10 @@
     });
     if (order.offerDiscount > 0) lines.push('🎁 خصم العرض: −' + order.offerDiscount + ' ج' + (order.offerNote ? ' (' + htmlEsc(order.offerNote) + ')' : ''));
     lines.push('', '📦 عدد القطع: ' + order.itemsCount,
-      '💰 المنتجات: ' + order.subtotal + ' ج',
+      '💰 المنتجات: ' + (order.subtotal + (order.promoDiscount || 0)) + ' ج');
+    // the code the customer used, so the shop sees it before confirming
+    if (order.promoCode) lines.push('🎟️ <b>كود خصم: ' + htmlEsc(order.promoCode) + ' (' + order.promoPercent + '%) — −' + order.promoDiscount + ' ج</b>');
+    lines.push(
       '🚚 الشحن: ' + order.shipping + ' ج' + (order.shippingZone ? ' (' + htmlEsc(order.shippingZone) + ')' : ''),
       '💵 <b>الإجمالي: ' + order.total + ' ج</b>', '',
       '📍 <b>العنوان</b>',
@@ -756,7 +819,8 @@
         isSet: i.isSet === true, contents: i.contents || null };
     });
     var pricing = cartPricing();
-    var subtotal = pricing.net, zone = zoneFor(gov), ship = zone.price;
+    var codeCut = promoCut();
+    var subtotal = Math.max(0, pricing.net - codeCut), zone = zoneFor(gov), ship = zone.price;
 
     nextOrderCode().then(function (code) {
       var order = {
@@ -768,6 +832,7 @@
         hasReceipt: selectedPayment === 'تحويل إلكتروني' ? !!receiptDataUrl : null,
         shippingCollect: selectedPayment !== 'تحويل إلكتروني',
         items: items, itemsCount: cartCount(), subtotal: subtotal, productsBeforeOffer: pricing.gross, offerDiscount: pricing.discount,
+        promoCode: promo ? promo.code : null, promoPercent: promo ? promo.percent : null, promoDiscount: codeCut || null,
         offerNote: pricing.offers.map(function (o) { return o.name + ' ×' + o.qty + ' — وفّر ' + o.saved + ' ج'; }).join('، ') || null,
         shipping: ship, shippingZone: zone.name || null, total: subtotal + ship,
         product: items.map(function (i) { return i.name; }).join('، '), productId: items[0].productId,

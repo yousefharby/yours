@@ -57,7 +57,7 @@
       chooserEn: 'I want a complete, premium routine at home',
       usage: 'اغسلي بالشامبو مرتين، وبعدين البلسم من نص الطول للأطراف دقيقتين. الماسك مرة أو مرتين في الأسبوع من 5 لـ 10 دقايق. السيروم في الآخر على الشعر النص نشفان.',
       usageEn: 'Shampoo twice, then apply conditioner from mid-length to ends for 2 minutes. Use the mask once or twice a week for 5–10 minutes. Finish with the serum on towel-dried hair.',
-      price: 850, oldPrice: 1700, badge: 'Luxury',
+      price: 1700, oldPrice: null, badge: 'Luxury',
       setName: 'مجموعة YOURS Luxury كاملة',
       setNameEn: 'YOURS Luxury — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
@@ -83,7 +83,7 @@
       chooserEn: 'My hair is dry and needs deep hydration',
       usage: 'للشعر الجاف جداً: شامبو مرتين، وبلسم من نص الطول للأطراف، والماسك مرتين في الأسبوع. السيروم يومياً على الأطراف.',
       usageEn: 'For very dry hair: shampoo twice, condition from mid-length to ends, and use the mask twice a week. Apply the serum daily on the ends.',
-      price: 2500, oldPrice: null, badge: 'Hydration',
+      price: 2800, oldPrice: null, badge: 'Hydration',
       setName: 'مجموعة YOURS Hydration كاملة',
       setNameEn: 'YOURS Hydration — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
@@ -109,7 +109,7 @@
       chooserEn: 'I want to try it first, or take it travelling',
       usage: 'نفس الروتين بالظبط بأحجام أصغر: شامبو ← بلسم ← ماسك ← سيروم.',
       usageEn: 'Exactly the same routine in smaller sizes: shampoo → conditioner → mask → serum.',
-      price: 400, oldPrice: 800, badge: 'Go',
+      price: 800, oldPrice: null, badge: 'Go',
       setName: 'مجموعة YOURS Go كاملة',
       setNameEn: 'YOURS Go — Complete Set',
       cardRatio: '1/1', imageFit: 'contain',
@@ -177,13 +177,13 @@
   // ---- Collection pricing (v2) ----------------------------------------
   // YOURS now sells each line as one complete set, at the set price below.
   // These values are applied over whatever the database holds until the owner
-  // saves that category or product in the admin, which stamps priceV2.
+  // saves that category or product in the admin, which stamps priceV3.
   function applyPriceDefaults(rawCats) {
     return rawCats.map(function (c) {
       var sc = SEED_CATEGORIES.filter(function (x) { return x.id === c.id; })[0];
       if (!sc) return c;
       var d = c.data || {};
-      if (d.priceV2 === true) return c;                 // the owner set it themselves
+      if (d.priceV3 === true) return c;                 // the owner set it themselves
       var merged = {};
       Object.keys(d).forEach(function (k) { merged[k] = d[k]; });
       merged.price = sc.price;
@@ -202,7 +202,7 @@
       var sp = SEED_PRODUCTS.filter(function (x) { return x.id === p.id; })[0];
       if (!sp) return p;
       var d = p.data || {};
-      if (d.priceV2 === true) return p;
+      if (d.priceV3 === true) return p;
       var merged = {};
       Object.keys(d).forEach(function (k) { merged[k] = d[k]; });
       merged.price = sp.price || null;
@@ -704,7 +704,10 @@
         allowTransfer: s.paymentV2 === true ? s.allowTransfer === true : true,
         instapayLink: s.instapayLink || CONFIG.defaults.instapayLink,
         instapayHandle: s.instapayHandle || CONFIG.defaults.instapayHandle,
-        walletNumber: s.walletNumber || CONFIG.defaults.walletNumber
+        walletNumber: s.walletNumber || CONFIG.defaults.walletNumber,
+        // Discount codes reach the storefront as hashes only: the snapshot is
+        // public, so the codes themselves never leave the admin.
+        discounts: normalizeDiscounts(s.discounts)
       },
       shipping: normalizeShipping(s.__shipping),
       theme: (settings && settings.__theme) || {}
@@ -996,7 +999,44 @@
     if (!b) return 0;
     return Math.max(0, effectivePrice(cat, product) * b.minQty - b.total);
   }
-  function productImages(p) {
+/* ---------------- Discount codes -------------------------------------
+     The owner adds codes in the admin, each with its own percentage. Only a
+     SHA-256 hash of each code travels to the storefront, because the snapshot
+     every visitor reads is public; the code itself stays in settings/store.
+     A customer types a code, the page hashes it the same way and compares. */
+  function normalizeDiscounts(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map(function (d) {
+      if (!d) return null;
+      var pct = num(d.percent, 0);
+      if (!d.hash || !(pct > 0 && pct <= 100)) return null;
+      return { hash: String(d.hash), percent: Math.round(pct), active: d.active !== false, label: d.label || '' };
+    }).filter(Boolean);
+  }
+  function normalizeCode(code) { return String(code || '').trim().toUpperCase().replace(/\s+/g, ''); }
+  function hashCode(code) {
+    var clean = normalizeCode(code);
+    if (!clean) return Promise.resolve('');
+    var c = global.crypto && global.crypto.subtle;
+    if (!c) return Promise.reject(new Error('no-crypto'));
+    var bytes = new TextEncoder().encode('yours:' + clean);
+    return c.digest('SHA-256', bytes).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+        return ('0' + b.toString(16)).slice(-2);
+      }).join('');
+    });
+  }
+  // Resolves to { percent, hash } when the code is live, or null.
+  function lookupDiscount(cat, code) {
+    var list = (cat && cat.settings && cat.settings.discounts) || [];
+    if (!list.length) return Promise.resolve(null);
+    return hashCode(code).then(function (h) {
+      if (!h) return null;
+      var hit = list.filter(function (d) { return d.active && d.hash === h; })[0];
+      return hit ? { percent: hit.percent, hash: h } : null;
+    });
+  }
+    function productImages(p) {
     var list = [];
     [p.mainImg].concat(p.gallery || []).forEach(function (src) { if (src && list.indexOf(src) === -1) list.push(src); });
     return list;
@@ -1021,6 +1061,7 @@
     isProductAvailable: isProductAvailable, isBuyable: isBuyable, effectivePrice: effectivePrice, effectiveOldPrice: effectiveOldPrice, productImages: productImages,
     isSetId: isSetId, setIdOf: setIdOf, categoryOfSetId: categoryOfSetId, isSetCategory: isSetCategory,
     setProductOf: setProductOf, buyableById: buyableById, buyables: buyables,
-    bundleFor: bundleFor, priceForQty: priceForQty, bundleSaving: bundleSaving
+    bundleFor: bundleFor, priceForQty: priceForQty, bundleSaving: bundleSaving,
+    normalizeDiscounts: normalizeDiscounts, normalizeCode: normalizeCode, hashCode: hashCode, lookupDiscount: lookupDiscount
   };
 })(window);

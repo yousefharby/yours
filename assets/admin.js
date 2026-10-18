@@ -421,7 +421,11 @@
       settings: {
         name: S.store.name || '', whatsapp: S.store.whatsapp || '', shippingCompany: S.store.shippingCompany || '',
         allowTransfer: S.store.allowTransfer === true, paymentV2: S.store.paymentV2 === true, pixelId: S.store.pixelId === undefined ? null : S.store.pixelId,
-        instapayLink: S.store.instapayLink || '', instapayHandle: S.store.instapayHandle || '', walletNumber: S.store.walletNumber || ''
+        instapayLink: S.store.instapayLink || '', instapayHandle: S.store.instapayHandle || '', walletNumber: S.store.walletNumber || '',
+        // hashes only: this document is public
+        discounts: (Array.isArray(S.store.discounts) ? S.store.discounts : [])
+          .filter(function (d) { return d && d.hash && num(d.percent, 0) > 0; })
+          .map(function (d) { return { hash: d.hash, percent: Math.round(num(d.percent, 0)), active: d.active !== false }; })
       },
       theme: S.theme || {},
       shipping: S.shipping || null,
@@ -1048,7 +1052,7 @@
       tagline: $('#cTagline').value.trim(), description: $('#cDesc').value.trim(),
       bestFor: $('#cBestFor').value.trim(), chooser: $('#cChooser').value.trim(),
       price: Math.round(price), oldPrice: old ? Math.round(old) : null, badge: $('#cBadge').value.trim(),
-      priceV2: true,
+      priceV2: true, priceV3: true,
       setOnly: $('#cSetOnly').checked,
       setName: $('#cSetName').value.trim(),
       bundleQty: null, bundleTotal: null, bundleExtra: null,
@@ -1358,7 +1362,7 @@
     var data = {
       categoryId: catId, name: name, color: $('#pColor').value.trim(), description: $('#pDesc').value.trim(),
       price: useCat ? null : Math.round(price), oldPrice: useCat ? null : (old ? Math.round(old) : null),
-      solo: setOnly ? solo : true, priceV2: true,
+      solo: setOnly ? solo : true, priceV2: true, priceV3: true,
       mainImg: PM.images[0], gallery: PM.images.slice(1), visible: $('#pVisible').checked, updatedAt: serverTs()
     };
     if (!existing || existing.categoryId !== catId) {
@@ -1611,6 +1615,7 @@
       S.theme = r[1].exists ? (r[1].data() || {}) : {};
       S.shipping = D.normalizeShipping(r[2].exists ? r[2].data() : null);
       fillSettings();
+      renderDiscounts();
       scheduleSnapshot();
     }).catch(function (e) { toast('تعذر تحميل الإعدادات: ' + errMsg(e), 'error'); S.shipping = S.shipping || D.normalizeShipping(null); fillSettings(); });
   }
@@ -1702,7 +1707,72 @@
       .then(function () { btn.disabled = false; btn.textContent = '💾 حفظ أسعار الشحن'; });
   }
 
-  function saveStore(e) {
+/* ---------------- Discount codes ---------------------------------------
+     Stored in settings/store, which only the admin can read. What reaches the
+     storefront, through the public snapshot, is the SHA-256 hash of each code
+     and its percentage — never the code itself. The plain code is kept here so
+     the owner can still read, copy and retire it. */
+  function discList() { return Array.isArray(S.store.discounts) ? S.store.discounts.slice() : []; }
+  function discSave(list, msg) {
+    return db.collection('settings').doc('store').set({ discounts: list, updatedAt: serverTs() }, { merge: true })
+      .then(function () {
+        S.store.discounts = list;
+        renderDiscounts();
+        publishSnapshot();
+        if (msg) toast(msg);
+      })
+      .catch(function (err) { toast('تعذر الحفظ: ' + errMsg(err), 'error'); });
+  }
+  function renderDiscounts() {
+    var box = $('#discountsList'); if (!box) return;
+    var list = discList();
+    if (!list.length) { box.innerHTML = '<div class="disc-empty">مفيش أكواد لسه. اكتبي كود ونسبته فوق واضغطي إضافة.</div>'; return; }
+    box.innerHTML = list.map(function (d, i) {
+      return '<div class="disc-row' + (d.active === false ? ' off' : '') + '">' +
+        '<code>' + esc(d.code) + '</code>' +
+        '<b>' + num(d.percent, 0) + '%</b>' +
+        '<button type="button" data-disc-toggle="' + i + '">' + (d.active === false ? 'تفعيل' : 'إيقاف') + '</button>' +
+        '<button type="button" class="del" data-disc-del="' + i + '">حذف</button>' +
+      '</div>';
+    }).join('');
+  }
+  function addDiscount() {
+    var err = $('#discError'), codeEl = $('#discCode'), pctEl = $('#discPercent');
+    var code = D.normalizeCode(codeEl.value);
+    var pct = Math.round(num(pctEl.value, 0));
+    err.textContent = '';
+    if (!/^[A-Z0-9_-]{3,24}$/.test(code)) { err.textContent = 'الكود لازم يكون من 3 لـ 24 حرف أو رقم إنجليزي، من غير مسافات.'; return; }
+    if (!(pct > 0 && pct <= 100)) { err.textContent = 'النسبة لازم تكون من 1 لـ 100.'; return; }
+    var list = discList();
+    if (list.some(function (d) { return D.normalizeCode(d.code) === code; })) { err.textContent = 'الكود ده موجود بالفعل.'; return; }
+    D.hashCode(code).then(function (hash) {
+      list.push({ code: code, percent: pct, hash: hash, active: true, createdAt: Date.now() });
+      codeEl.value = ''; pctEl.value = '';
+      return discSave(list, '✅ اتضاف كود ' + code + ' بخصم ' + pct + '%');
+    }, function () { err.textContent = 'المتصفح ده مش بيدعم تشفير الأكواد. افتحي اللوحة من https.'; });
+  }
+  function bindDiscounts() {
+    var hook = function (sel, ev, fn) { var el = $(sel); if (el) el.addEventListener(ev, fn); };
+    hook('#discAddBtn', 'click', addDiscount);
+    hook('#discCode', 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addDiscount(); } });
+    hook('#discPercent', 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addDiscount(); } });
+    hook('#discountsList', 'click', function (e) {
+      var t = e.target;
+      var ti = t.getAttribute && t.getAttribute('data-disc-toggle');
+      var di = t.getAttribute && t.getAttribute('data-disc-del');
+      var list = discList();
+      if (ti !== null && ti !== undefined && list[+ti]) {
+        list[+ti].active = list[+ti].active === false;
+        discSave(list, list[+ti].active ? '✅ الكود اشتغل' : '⏸️ الكود اتوقف');
+      } else if (di !== null && di !== undefined && list[+di]) {
+        var gone = list[+di].code;
+        if (!confirm('تحذفي كود ' + gone + ' نهائياً؟')) return;
+        list.splice(+di, 1);
+        discSave(list, '🗑️ اتمسح كود ' + gone);
+      }
+    });
+  }
+    function saveStore(e) {
     e.preventDefault();
     var wa = D.normalizeWhatsapp($('#settingWA').value);
     if (!/^20?1[0125]\d{8}$/.test(wa) && !/^\d{10,15}$/.test(wa)) { $('#settingWA').classList.add('invalid'); return toast('رقم الواتساب مش صحيح', 'error'); }
@@ -1888,6 +1958,7 @@
     $$('input[name="catDelMode"]').forEach(function (r) { r.addEventListener('change', function () { $('#catDeleteMoveTo').disabled = $('input[name="catDelMode"]:checked').value !== 'move'; }); });
     // settings
     $('#storeSettingsForm').addEventListener('submit', saveStore);
+    bindDiscounts();
     $('#shippingForm').addEventListener('submit', saveShipping);
     $('#addZoneBtn').addEventListener('click', function () {
       if (!S.shipping) return;

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-16",
+ "generated": "2026-10-18",
  "note": "First-paint fallback only. Live Firestore data replaces it as soon as it arrives.",
  "categories": [
   {
@@ -18,8 +18,8 @@
    "description": "خط Luxury هو روتين YOURS الكامل في البيت. أربع خطوات متكاملة — شامبو وبلسم وماسك وسيروم — بعبوات 500 مل وتركيبة غنية بزيت الزيتون، تنضّف الشعر وتغذيه وترجّع له نعومته ولمعانه مع الاستخدام المنتظم.",
    "bestFor": "اللي عايز روتين كامل ونتيجة تدوم",
    "chooser": "عايزة روتين كامل وفخم في البيت",
-   "price": 850,
-   "oldPrice": 1700,
+   "price": 1700,
+   "oldPrice": null,
    "badge": "Luxury",
    "bundle": null,
    "cardRatio": "1/1",
@@ -67,7 +67,7 @@
    "description": "خط Hydration بتركيبة الأرچان المخصصة للشعر الجاف والتالف، بعبوات 1 لتر توفر عليكِ وتكفي شهور. نفس اللي بنستخدمه في الصالون، لعائلة كاملة أو لشعر طويل وكثيف.",
    "bestFor": "الشعر الجاف والتالف والعائلة والصالونات",
    "chooser": "شعري جاف ومحتاج ترطيب عميق",
-   "price": 2500,
+   "price": 2800,
    "oldPrice": null,
    "badge": "Hydration",
    "bundle": null,
@@ -116,8 +116,8 @@
    "description": "خط Go بأحجام 250 مل تدخل أي شنطة، لعناية كاملة وانتي بره البيت. مثالي كمان لو بتجربي YOURS لأول مرة وعايزة تشوفي النتيجة قبل العبوات الكبيرة.",
    "bestFor": "السفر والچيم وتجربة المنتج لأول مرة",
    "chooser": "عايزة أجرب الأول أو ماخد معايا في السفر",
-   "price": 400,
-   "oldPrice": 800,
+   "price": 800,
+   "oldPrice": null,
    "badge": "Go",
    "bundle": null,
    "cardRatio": "1/1",

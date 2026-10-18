@@ -10,6 +10,15 @@
 
   var DICT = {
     /* ---- localization pass: every string the English audit found ---- */
+    "كود الخصم": "Discount code",
+    "(لو عندك)": "(if you have one)",
+    "اكتبي الكود": "Enter your code",
+    "تطبيق": "Apply",
+    "شيلي الكود": "Remove code",
+    "اكتبي الكود الأول": "Enter a code first",
+    "بنتأكد من الكود…": "Checking your code…",
+    "الكود ده مش شغال": "That code is not valid",
+    "مقدرناش نتأكد من الكود دلوقتي": "We could not check the code right now",
     "عرض السلة": "View cart",
     "الاسم بالكامل": "Full name",
     "موبايل تاني": "Second mobile",
@@ -316,6 +325,8 @@
   var PATTERNS = [
     [/^اتضاف "(.+)" للطلب$/, function (m) { return '"' + m[1] + '" added to your order'; }],
     [/^اتشال "(.+)" من الطلب$/, function (m) { return '"' + m[1] + '" removed from your order'; }],
+    [/^اتطبق خصم (\d+)%$/, function (m) { return m[1] + '% discount applied'; }],
+    [/^🎟️ كود الخصم (.+) \((\d+)%\)$/, function (m) { return '🎟️ Code ' + m[1] + ' (' + m[2] + '%)'; }],
     [/^تم استلام طلبك يا (.+)! 🎉$/, function (m) { return 'Thank you, ' + m[1] + ' — we have your order! 🎉'; }],
     [/^المنتجات \((\d+) (?:قطعة|قطع)\)$/, function (m) { return 'Products (' + m[1] + (m[1] === '1' ? ' item)' : ' items)'); }],
     [/^اختاري المحافظة تحت \((.+)\)$/, function (m) { return 'Choose below (' + (phrase(m[1]) || m[1]) + ')'; }],
