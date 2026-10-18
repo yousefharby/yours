@@ -236,7 +236,6 @@ function renderCategory(cat) {
 
   var isSet = D.isSetCategory(c);
   var soloList = list.filter(function (p) { return p.solo; });
-  var save = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
   var banner = !!c.coverImg;
   var html =
     (banner ? '<div class="cat-banner">' + D.imgTag(c.coverImg, { alt: D.pick(c, 'name'), loading: 'eager' }) + '</div>' : '') +
@@ -248,8 +247,8 @@ function renderCategory(cat) {
     '</div><aside class="cat-buy' + (isSet ? ' set-buy' : '') + '">' +
       (isSet ? '<div class="set-kicker">📦 المجموعة كاملة — ' + list.length + ' منتجات</div>' : '') +
       '<div class="price-line"><span class="price-now">' + D.money(c.price) + '</span>' +
-        (c.oldPrice && c.oldPrice > c.price ? '<span class="price-was">' + D.money(c.oldPrice) + '</span>' : '') + '</div>' +
-      (save ? '<div class="set-save">وفّري ' + D.money(save) + ' لما تاخدي المجموعة كاملة</div>' : '') +
+        '</div>' +
+
       (isSet && list.length ? '<ul class="set-contents big">' + list.map(function (p) {
         return '<li><span>' + D.esc(D.pick(p, 'name')) + '</span></li>'; }).join('') + '</ul>' : '') +
       (c.bestFor ? '<div class="for"><b>مناسبة لـ:</b> ' + D.esc(D.pick(c, 'bestFor')) + '</div>' : '') +

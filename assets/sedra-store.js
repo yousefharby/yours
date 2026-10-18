@@ -910,7 +910,7 @@
         (inSet
           ? '<div class="p-foot set-note"><span class="in-set-tag">ضمن مجموعة ' + esc(D.pick(c, 'name')) + '</span>' +
               '<button type="button" class="p-add" data-add="' + esc(D.setIdOf(c.id)) + '">+ أضف المجموعة</button></div>'
-          : '<div class="p-foot"><div class="price-line"><span class="price-now">' + money(price) + '</span>' + (old ? '<span class="price-was">' + money(old) + '</span>' : '') + '</div>' +
+          : '<div class="p-foot"><div class="price-line"><span class="price-now">' + money(price) + '</span></div>' +
             '<button type="button" class="p-add' + (q ? ' added' : '') + '" data-add="' + esc(p.id) + '">' + (q ? '✓ في الطلب' : '+ أضف للطلب') + '</button></div>') +
       '</div></article>';
   }
@@ -920,11 +920,10 @@
     var isSet = D.isSetCategory(c);
     var cover = c.coverImg || (list[0] && list[0].mainImg) || '';
     var inCart = isSet ? inCartQty(D.setIdOf(c.id)) : 0;
-    var save = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
     return '<article class="cat-card' + (isSet ? ' set-card' : '') + '">' +
       '<a class="cat-card-media banner" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
         D.imgTag(cover, { alt: D.pick(c, 'name'), variant: 't' }) +
-        (save ? '<span class="cat-card-save">وفّري ' + money(save) + '</span>' : '') +
+
         '<span class="cat-card-count">' + list.length + ' منتجات</span></a>' +
       '<div class="cat-card-body">' +
         '<a class="cat-card-name" href="category.html?c=' + encodeURIComponent(c.id) + '">' + esc(c.icon) + ' ' + esc(D.pick(c, 'name')) + '</a>' +
@@ -933,7 +932,7 @@
           return '<li>' + esc(D.pick(p, 'name')) + '</li>';
         }).join('') + '</ul>' : '') +
         '<div class="cat-card-foot"><div class="price-line"><span class="price-now">' + money(c.price) + '</span>' +
-          (save ? '<span class="price-was">' + money(c.oldPrice) + '</span>' : '') + '</div></div>' +
+          '</div></div>' +
         (isSet
           ? '<div class="cat-card-actions">' +
               '<button type="button" class="btn btn-gold btn-block p-add' + (inCart ? ' added' : '') + '" data-add="' + esc(D.setIdOf(c.id)) + '">' +

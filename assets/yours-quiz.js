@@ -491,7 +491,6 @@
 
   function collectionCard(cat, c, primary) {
     var items = D.productsOf(cat, c.id);
-    var save = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
     var usage = D.pick(c, 'usage');
     return '<article class="quiz-pick' + (primary ? ' primary' : '') + '">' +
       '<a class="quiz-result-media" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
@@ -502,7 +501,7 @@
           return '<li>' + esc(D.pick(p, 'name')) + '</li>'; }).join('') + '</ul>' : '') +
       (primary && usage ? '<div class="quiz-usage"><b>' + (en() ? 'How to use' : 'طريقة الاستخدام') + '</b><p>' + esc(usage) + '</p></div>' : '') +
       '<div class="price-line quiz-result-price"><span class="price-now">' + D.money(c.price) + '</span>' +
-        (save ? '<span class="price-was">' + D.money(c.oldPrice) + '</span>' : '') + '</div>' +
+        '</div>' +
       '<button type="button" class="btn ' + (primary ? 'btn-gold' : 'btn-dark') + ' btn-block p-add" data-keep-label="1" data-add="' + esc(D.setIdOf(c.id)) + '">' +
         (en() ? '+ Add the set to cart' : '+ أضف المجموعة للطلب') + '</button>' +
       '<a class="quiz-pick-link" href="category.html?c=' + encodeURIComponent(c.id) + '">' +

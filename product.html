@@ -319,7 +319,6 @@ function renderProduct(cat) {
   var price = D.effectivePrice(cat, p), old = D.effectiveOldPrice(cat, p);
   // inside a set-only collection this product is not sold on its own
   var inSet = D.isSetCategory(c) && !p.solo;
-  var setSave = (c.oldPrice && c.oldPrice > c.price) ? c.oldPrice - c.price : 0;
   var setList = D.productsOf(cat, c.id);
   var sameKey = JSON.stringify([p, c, price, old, inSet, cat.settings]);
   G.product = p;
@@ -364,11 +363,11 @@ function renderProduct(cat) {
             '<ul class="set-contents big">' + setList.map(function (x) {
               return '<li' + (x.id === p.id ? ' class="here"' : '') + '><span>' + D.esc(D.pick(x, 'name')) + '</span></li>'; }).join('') + '</ul>' +
             '<div class="price-block"><span class="price-now">' + D.money(c.price) + '</span>' +
-              (setSave ? '<span class="price-was">' + D.money(c.oldPrice) + '</span><span class="save">وفّري ' + D.money(setSave) + '</span>' : '') +
+
               '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>' +
           '</div>'
         : '<div class="price-block"><span class="price-now">' + D.money(price) + '</span>' +
-          (old ? '<span class="price-was">' + D.money(old) + '</span><span class="save">وفّري ' + D.money(old - price) + '</span>' : '') +
+
           '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>') +
       (specs.length ? '<div class="box"><h3>المواصفات</h3><div class="specs-grid">' + specs.map(function (sp) {
         return '<div><span class="spec-label">' + D.esc(D.pick(sp, 'label')) + '</span><span class="spec-val">' + D.esc(D.pick(sp, 'value')) + '</span></div>';
