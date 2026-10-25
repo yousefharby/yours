@@ -18,9 +18,12 @@
       messagingSenderId: "871914701657",
       appId: "1:871914701657:web:024c8d09e59fee86ca4248"
     },
+    // The bot token is NOT here and must never come back. A static site hands
+    // every byte it loads to the public, so a token in this file is a token
+    // anyone can take — which is exactly what happened. The relay below holds
+    // it instead; see relay/worker.js.
     telegram: {
-      botToken: "8985099787:AAGzcO9z9hWpIOTkHgU51oxQ8Ns3edpZDks",
-      chatId: "1306486719"
+      relay: 'https://yours-orders.REPLACE-ME.workers.dev'
     },
     defaults: {
       storeName: 'YOURS',
