@@ -12,7 +12,9 @@
     /* ---- localization pass: every string the English audit found ---- */
     "آراء العملاء": "What customers say",
     "اللي جرّبوا بيقولوا إيه": "In their own words",
-    "كل كلمة تحت منقولة زي ما هي من رسايل عملاء حقيقيين على واتساب وإنستجرام وفيسبوك.": "Every word below is taken exactly as written, from real customers' messages on WhatsApp, Instagram and Facebook.",
+    "دي سكرين شوتس حقيقية من رسايل عملاء على واتساب وإنستجرام وفيسبوك، زي ما وصلت بالظبط.": "These are real screenshots of customers' messages on WhatsApp, Instagram and Facebook, exactly as they arrived.",
+    "دوسي على أي صورة تكبر": "Tap any screenshot to enlarge it",
+    "السابق": "Previous", "التالي": "Next",
     "كود الخصم": "Discount code",
     "(لو عندك)": "(if you have one)",
     "اكتبي الكود": "Enter your code",
