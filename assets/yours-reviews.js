@@ -73,7 +73,10 @@
       altEn: 'A Facebook post with a photo of the complete Hydration set' },
     { img: 'r18.jpg', src: 'واتساب', srcEn: 'WhatsApp', set: '',
       alt: 'عميلة وصاحبتها بيشكروا على شكل المجموعة',
-      altEn: 'A customer and her friend thanking us for how the set looks' }
+      altEn: 'A customer and her friend thanking us for how the set looks' },
+    { img: 'r19.jpg', src: 'واتساب', srcEn: 'WhatsApp', set: 'YOURS Hydration',
+      alt: 'عميلة باعتة صور المجموعة عندها وبتقول إنها تحفة وحجمها أكبر مما كانت متخيلة',
+      altEn: 'A customer sending photos of her set at home, saying it is lovely and the bottles are bigger than she expected' }
   ];
 
   global.YoursReviews = REVIEWS;
