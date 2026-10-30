@@ -426,7 +426,11 @@
         // hashes only: this document is public
         discounts: (Array.isArray(S.store.discounts) ? S.store.discounts : [])
           .filter(function (d) { return d && d.hash && num(d.percent, 0) > 0; })
-          .map(function (d) { return { hash: d.hash, percent: Math.round(num(d.percent, 0)), active: d.active !== false }; })
+          .map(function (d) { return { hash: d.hash, percent: Math.round(num(d.percent, 0)), active: d.active !== false }; }),
+        // The offers are prices and deadlines — public by nature, and the
+        // storefront needs them to show the right price and the right clock.
+        offersV1: S.store.offersV1 === true,
+        offers: D.normalizeOffers(S.store.offersV1 === true ? S.store.offers : D.SEED_OFFERS)
       },
       theme: S.theme || {},
       shipping: S.shipping || null,
@@ -443,7 +447,7 @@
   function renderCatalogViews() {
     scheduleSnapshot();
     if (!S.catsLoaded || !S.prodsLoaded) return;
-    renderCategories(); renderProducts(); renderOverview(); fillOrderFilters();
+    renderCategories(); renderProducts(); renderOverview(); fillOrderFilters(); renderOffers();
     if (S.tab === 'analytics') renderAnalytics();
     if ($('#prodModal').classList.contains('open')) fillProdCategorySelect($('#pCategory').value);
   }
@@ -1625,6 +1629,7 @@
       S.shipping = D.normalizeShipping(r[2].exists ? r[2].data() : null);
       fillSettings();
       renderDiscounts();
+      renderOffers();
       scheduleSnapshot();
     }).catch(function (e) { toast('تعذر تحميل الإعدادات: ' + errMsg(e), 'error'); S.shipping = S.shipping || D.normalizeShipping(null); fillSettings(); });
   }
@@ -1797,6 +1802,123 @@
       }
     });
   }
+  /* ---------------- Timed offers -------------------------------------
+     A collection runs at an offer price with a deadline the customer sees
+     ticking on the site.
+
+       يومي   the price runs until midnight tonight, Cairo time, and starts
+              again by itself every day. The site says "today's offer price
+              — until 12 tonight", which is true whenever it is read.
+       بتاريخ the offer ends at the date and time set here, for good, and
+              the price goes back on its own.
+
+     Both deadlines are real: the clock on the site counts to this moment and
+     is the same for every visitor. There is deliberately no setting for a
+     countdown that restarts for each person — that is a false statement about
+     the price, and the first customer who comes back the next day sees it. */
+  // Before this panel is ever saved, the launch offers in the code are what
+  // the site is running — so that is what the owner must see and be able to edit.
+  function offerList() {
+    if (S.store.offersV1 === true) return Array.isArray(S.store.offers) ? S.store.offers.slice() : [];
+    return (D.SEED_OFFERS || []).map(function (o) { return Object.assign({}, o); });
+  }
+  function offerSave(list, msg) {
+    return db.collection('settings').doc('store')
+      .set({ offers: list, offersV1: true, updatedAt: serverTs() }, { merge: true })
+      .then(function () {
+        S.store.offers = list; S.store.offersV1 = true;
+        renderOffers();
+        if (!S.catsLoaded || !S.prodsLoaded) {
+          toast('اتسجل، بس نسخة الموقع لسه بتحمّل — استني ثانية وجرّبي تاني', 'error');
+          return;
+        }
+        return publishSnapshot().then(function () { if (msg) toast(msg); });
+      })
+      .catch(function (err) { toast('تعذر الحفظ: ' + errMsg(err), 'error'); });
+  }
+  function offerLeftText(o) {
+    var ends = D.offerEndsAt(o);
+    var left = ends - Date.now();
+    if (left <= 0) return 'انتهى';
+    var h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000);
+    return 'فاضل ' + (h ? h + ' ساعة و' : '') + m + ' دقيقة';
+  }
+  function localDateValue(ms) {
+    var d = new Date(ms - new Date().getTimezoneOffset() * 60000);
+    return d.toISOString().slice(0, 16);
+  }
+  function renderOffers() {
+    var box = $('#offersList'); if (!box) return;
+    var sel = $('#offerCat');
+    var cats = (S.categories || []).filter(function (c) { return c.visible !== false; });
+    if (sel) {
+      var keep = sel.value;
+      sel.innerHTML = '<option value="">اختاري المجموعة</option>' + cats.map(function (c) {
+        return '<option value="' + esc(c.id) + '">' + esc(c.name) + ' — السعر الحالي ' + money(num(c.price, 0)) + '</option>';
+      }).join('');
+      if (keep) sel.value = keep;
+    }
+    var list = offerList();
+    if (!list.length) {
+      box.innerHTML = '<div class="disc-empty">مفيش عروض شغالة. اختاري مجموعة وسعر العرض فوق واضغطي تشغيل.</div>';
+      return;
+    }
+    box.innerHTML = list.map(function (o, i) {
+      var c = (S.categories || []).filter(function (x) { return x.id === o.categoryId; })[0];
+      var was = c ? num(c.price, 0) : 0;
+      var live = o.active !== false && D.offerEndsAt(o) > Date.now();
+      return '<div class="disc-row offer-row' + (live ? '' : ' off') + '">' +
+        '<code>' + esc(c ? c.name : o.categoryId) + '</code>' +
+        '<b>' + money(num(o.price, 0)) + (was > o.price ? ' <s>' + money(was) + '</s>' : '') + '</b>' +
+        '<span class="disc-used">' + (o.mode === 'once' ? 'بينتهي ' + new Date(num(o.endsAt, 0)).toLocaleString('ar-EG') : 'كل يوم لحد ١٢ بالليل') +
+          ' · ' + (o.active === false ? 'متوقف' : offerLeftText(o)) + '</span>' +
+        '<button type="button" data-offer-toggle="' + i + '">' + (o.active === false ? 'تشغيل' : 'إيقاف') + '</button>' +
+        '<button type="button" class="del" data-offer-del="' + i + '">حذف</button>' +
+      '</div>';
+    }).join('');
+  }
+  function addOffer() {
+    var err = $('#offerError');
+    var catId = $('#offerCat').value;
+    var price = Math.round(num($('#offerPrice').value, 0));
+    var mode = $('#offerMode').value === 'once' ? 'once' : 'daily';
+    var endsAt = mode === 'once' ? Date.parse($('#offerEnds').value) : 0;
+    err.textContent = '';
+    var c = (S.categories || []).filter(function (x) { return x.id === catId; })[0];
+    if (!c) { err.textContent = 'اختاري المجموعة الأول.'; return; }
+    if (!(price > 0)) { err.textContent = 'اكتبي سعر العرض.'; return; }
+    if (price >= num(c.price, 0)) { err.textContent = 'سعر العرض لازم يكون أقل من السعر الحالي (' + money(num(c.price, 0)) + ').'; return; }
+    if (mode === 'once' && !(endsAt > Date.now())) { err.textContent = 'اختاري تاريخ ووقت في المستقبل.'; return; }
+    var list = offerList().filter(function (o) { return o.categoryId !== catId; });
+    list.push({ categoryId: catId, price: price, mode: mode, endsAt: endsAt || 0, active: true, createdAt: Date.now() });
+    $('#offerPrice').value = '';
+    offerSave(list, '✅ العرض اشتغل: ' + c.name + ' بـ ' + money(price));
+  }
+  function bindOffers() {
+    var hook = function (sel, ev, fn) { var el = $(sel); if (el) el.addEventListener(ev, fn); };
+    hook('#offerAddBtn', 'click', addOffer);
+    hook('#offerPrice', 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addOffer(); } });
+    hook('#offerMode', 'change', function () {
+      var once = $('#offerMode').value === 'once';
+      $('#offerEndsWrap').style.display = once ? '' : 'none';
+      if (once && !$('#offerEnds').value) $('#offerEnds').value = localDateValue(Date.now() + 86400000);
+    });
+    hook('#offersList', 'click', function (e) {
+      var t = e.target;
+      var ti = t.getAttribute && t.getAttribute('data-offer-toggle');
+      var di = t.getAttribute && t.getAttribute('data-offer-del');
+      var list = offerList();
+      if (ti !== null && ti !== undefined && list[+ti]) {
+        list[+ti].active = list[+ti].active === false;
+        offerSave(list, list[+ti].active ? '✅ العرض اشتغل' : '⏸️ العرض اتوقف — السعر رجع لطبيعته');
+      } else if (di !== null && di !== undefined && list[+di]) {
+        if (!confirm('تحذفي العرض ده نهائياً؟ السعر هيرجع لطبيعته على طول.')) return;
+        list.splice(+di, 1);
+        offerSave(list, '🗑️ اتمسح العرض — السعر رجع لطبيعته');
+      }
+    });
+  }
+
     function saveStore(e) {
     e.preventDefault();
     var wa = D.normalizeWhatsapp($('#settingWA').value);
@@ -1991,6 +2113,7 @@
     // settings
     $('#storeSettingsForm').addEventListener('submit', saveStore);
     bindDiscounts();
+    bindOffers();
     $('#shippingForm').addEventListener('submit', saveShipping);
     $('#addZoneBtn').addEventListener('click', function () {
       if (!S.shipping) return;

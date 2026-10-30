@@ -11,6 +11,8 @@
   var DICT = {
     /* ---- localization pass: every string the English audit found ---- */
     "آراء العملاء": "What customers say",
+    "سعر العرض النهارده — لحد ١٢ بالليل": "Today’s offer price — until midnight",
+    "العرض بينتهي خلال": "Offer ends in",
     "اللي جرّبوا بيقولوا إيه": "In their own words",
     "دي سكرين شوتس حقيقية من رسايل عملاء على واتساب وإنستجرام وفيسبوك، زي ما وصلت بالظبط.": "These are real screenshots of customers' messages on WhatsApp, Instagram and Facebook, exactly as they arrived.",
     "دوسي على أي صورة تكبر": "Tap any screenshot to enlarge it",
@@ -328,6 +330,7 @@
 /* Strings the site builds at runtime. Each rule rebuilds the English from the
      same parts, so a new product or a changed price needs no new entry. */
   var PATTERNS = [
+    [/^عرض −(\d+)%$/, function (m) { return m[1] + '% off'; }],
     [/^اتضاف "(.+)" للطلب$/, function (m) { return '"' + m[1] + '" added to your order'; }],
     [/^اتشال "(.+)" من الطلب$/, function (m) { return '"' + m[1] + '" removed from your order'; }],
     [/^اتطبق خصم (\d+)%$/, function (m) { return m[1] + '% discount applied'; }],

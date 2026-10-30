@@ -973,6 +973,77 @@
     var minw = r > 1.1 ? 290 : (r < 0.9 ? 190 : 230);
     return { cls: 'p-grid' + (r > 1.1 ? ' wide' : ''), style: '--minw:' + minw + 'px' };
   }
+  /* ================= OFFER PRICE + COUNTDOWN =================
+     One place builds every offer price and every clock on the site, so the
+     figure a customer sees and the figure she is charged can never drift
+     apart. The clock below counts to the real deadline stored on the offer;
+     when it reaches zero the page reloads and the normal price comes back by
+     itself. Nothing here restarts the clock for a new visitor.            */
+  function offerOf(thing) { return D.offerFor(state.catalog, thing); }
+
+  // "price now" plus the normal price struck through, when an offer is live
+  function priceHTML(thing, cls) {
+    var cat = state.catalog;
+    var isCat = !thing.categoryId;
+    var price = isCat ? thing.price : D.effectivePrice(cat, thing);
+    var o = offerOf(thing);
+    return '<div class="price-line' + (cls ? ' ' + cls : '') + (o ? ' on-offer' : '') + '">' +
+      '<span class="price-now">' + money(price) + '</span>' +
+      (o ? '<span class="price-was">' + money(o.was) + '</span>' +
+           '<span class="price-off">−' + Math.round((1 - o.price / o.was) * 100) + '%</span>' : '') +
+      '</div>';
+  }
+
+  function twoDigits(n) { return (n < 10 ? '0' : '') + n; }
+  function countdownParts(ms) {
+    var s = Math.max(0, Math.floor(ms / 1000));
+    return { h: Math.floor(s / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+  }
+  // The clock. The wording says what is true: this is today's offer price and
+  // it runs until the stated hour. A daily offer comes back tomorrow, so it
+  // never claims to be a last chance.
+  function offerTimerHTML(thing, opts) {
+    var o = offerOf(thing);
+    if (!o) return '';
+    opts = opts || {};
+    var p = countdownParts(o.endsAt - Date.now());
+    return '<div class="offer-timer' + (opts.small ? ' small' : '') + '" data-ends="' + o.endsAt + '">' +
+      '<span class="offer-timer-label">' +
+        (o.mode === 'daily' ? 'سعر العرض النهارده — لحد ١٢ بالليل' : 'العرض بينتهي خلال') +
+      '</span>' +
+      '<span class="offer-clock" aria-live="off">' +
+        '<b class="t-h">' + twoDigits(p.h) + '</b><i>:</i><b class="t-m">' + twoDigits(p.m) + '</b><i>:</i><b class="t-s">' + twoDigits(p.s) + '</b>' +
+      '</span></div>';
+  }
+  function offerBadgeHTML(thing) {
+    var o = offerOf(thing);
+    return o ? '<span class="offer-badge">عرض −' + Math.round((1 - o.price / o.was) * 100) + '%</span>' : '';
+  }
+
+  var tickTimer = null;
+  function tickOffers() {
+    var nodes = document.querySelectorAll('.offer-timer[data-ends]');
+    if (!nodes.length) return;
+    var now = Date.now(), expired = false;
+    Array.prototype.forEach.call(nodes, function (n) {
+      var left = Number(n.getAttribute('data-ends')) - now;
+      if (left <= 0) { expired = true; return; }
+      var p = countdownParts(left);
+      var h = n.querySelector('.t-h'), m = n.querySelector('.t-m'), s = n.querySelector('.t-s');
+      if (h) h.textContent = twoDigits(p.h);
+      if (m) m.textContent = twoDigits(p.m);
+      if (s) s.textContent = twoDigits(p.s);
+    });
+    // the deadline passed while the page was open: rebuild from the catalog so
+    // the price on screen is the price that will actually be charged
+    if (expired) { try { localStorage.removeItem('yours_catalog_v3'); } catch (e) {} location.reload(); }
+  }
+  function startOfferClock() {
+    if (tickTimer) return;
+    tickTimer = setInterval(tickOffers, 1000);
+    tickOffers();
+  }
+
   function productCardHTML(p, opts) {
     opts = opts || {};
     var cat = state.catalog, c = D.categoryById(cat, p.categoryId) || D.normalizeCategory('', {});
@@ -991,7 +1062,7 @@
         (inSet
           ? '<div class="p-foot set-note"><span class="in-set-tag">ضمن مجموعة ' + esc(D.pick(c, 'name')) + '</span>' +
               '<button type="button" class="p-add" data-add="' + esc(D.setIdOf(c.id)) + '">+ أضف المجموعة</button></div>'
-          : '<div class="p-foot"><div class="price-line"><span class="price-now">' + money(price) + '</span></div>' +
+          : '<div class="p-foot">' + priceHTML(p) +
             '<button type="button" class="p-add' + (q ? ' added' : '') + '" data-add="' + esc(p.id) + '">' + (q ? '✓ في الطلب' : '+ أضف للطلب') + '</button></div>') +
       '</div></article>';
   }
@@ -1003,8 +1074,7 @@
     var inCart = isSet ? inCartQty(D.setIdOf(c.id)) : 0;
     return '<article class="cat-card' + (isSet ? ' set-card' : '') + '">' +
       '<a class="cat-card-media banner" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
-        D.imgTag(cover, { alt: D.pick(c, 'name'), variant: 't' }) +
-
+        D.imgTag(cover, { alt: D.pick(c, 'name'), variant: 't' }) + offerBadgeHTML(c) +
         '<span class="cat-card-count">' + list.length + ' منتجات</span></a>' +
       '<div class="cat-card-body">' +
         '<a class="cat-card-name" href="category.html?c=' + encodeURIComponent(c.id) + '">' + esc(c.icon) + ' ' + esc(D.pick(c, 'name')) + '</a>' +
@@ -1012,8 +1082,7 @@
         (isSet && list.length ? '<ul class="set-contents">' + list.map(function (p) {
           return '<li>' + esc(D.pick(p, 'name')) + '</li>';
         }).join('') + '</ul>' : '') +
-        '<div class="cat-card-foot"><div class="price-line"><span class="price-now">' + money(c.price) + '</span>' +
-          '</div></div>' +
+        '<div class="cat-card-foot">' + priceHTML(c) + offerTimerHTML(c, { small: true }) + '</div>' +
         (isSet
           ? '<div class="cat-card-actions">' +
               '<button type="button" class="btn btn-gold btn-block p-add' + (inCart ? ' added' : '') + '" data-add="' + esc(D.setIdOf(c.id)) + '">' +
@@ -1163,6 +1232,7 @@
       renderCartUI();
       if (opts.onCatalog) opts.onCatalog(catalog, fromCache);
       renderMenu();
+      startOfferClock();
       if ($('#pickerOverlay').classList.contains('open')) renderPicker();
     });
     initAnalytics();
@@ -1180,6 +1250,10 @@
     cartCount: cartCount,
     productCardHTML: productCardHTML,
     categoryCardHTML: categoryCardHTML,
+    priceHTML: priceHTML,
+    offerTimerHTML: offerTimerHTML,
+    offerBadgeHTML: offerBadgeHTML,
+    startOfferClock: startOfferClock,
     compareHTML: compareHTML,
     bindCompare: bindCompare,
     minShip: minShip,

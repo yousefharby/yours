@@ -693,6 +693,10 @@
     var categories = rawCats.map(function (c) { return normalizeCategory(c.id, c.data); }).sort(byOrder);
     var products = rawProds.map(function (p) { return normalizeProduct(p.id, p.data); }).sort(byOrder);
     var s = settings || {};
+    // Until the owner saves the offers panel once (which stamps offersV1),
+    // the launch offers below are what runs.
+    var offers = normalizeOffers(s.offersV1 === true ? s.offers : SEED_OFFERS);
+    applyOffers(categories, offers);
     return {
       source: source,
       categories: categories,
@@ -710,7 +714,8 @@
         walletNumber: s.walletNumber || CONFIG.defaults.walletNumber,
         // Discount codes reach the storefront as hashes only: the snapshot is
         // public, so the codes themselves never leave the admin.
-        discounts: normalizeDiscounts(s.discounts)
+        discounts: normalizeDiscounts(s.discounts),
+        offers: offers
       },
       shipping: normalizeShipping(s.__shipping),
       theme: (settings && settings.__theme) || {}
@@ -1016,6 +1021,97 @@
       return { hash: String(d.hash), percent: Math.round(pct), active: d.active !== false, label: d.label || '' };
     }).filter(Boolean);
   }
+/* ---------------- Timed offers ---------------------------------------
+     A collection can run at an offer price with a deadline the customer can
+     see ticking. Two shapes, both with a REAL end moment:
+
+       mode 'daily'  the price runs until midnight tonight, Cairo time, and
+                     renews by itself for the next day. The page says
+                     "today's offer price — until 12 tonight", which is true
+                     whenever it is read, and the clock is the same for every
+                     visitor. It never says this is the last chance, because
+                     the offer comes back tomorrow.
+
+       mode 'once'   the owner picks a date and time. When it passes the
+                     price goes back to normal on its own and the offer is
+                     over for good. This is the one to use for a real
+                     last-chance sale.
+
+     What this never does is restart the clock per visitor, or per page view,
+     so that everybody sees "24 hours left" forever. A deadline that moves
+     with the viewer is a false statement about the price, it is what the
+     consumer-protection law and the ad platforms actually go after, and the
+     first customer who comes back the next day can see it for herself.
+
+     The deadline is resolved at catalog build time and checked again by the
+     ticking clock on the page, so a price can never outlive its offer.      */
+  // The offers running now. The owner changes these in the admin; the moment
+  // he saves that panel these stop being used.
+  var SEED_OFFERS = [
+    { categoryId: 'go',      price: 499,  mode: 'daily', active: true },
+    { categoryId: 'luxury',  price: 1199, mode: 'daily', active: true }
+  ];
+  var CAIRO_OFFSET_MIN = 120;              // Egypt sits on UTC+2 all year
+  function endOfCairoDay(now) {
+    var ms = (now == null ? Date.now() : now);
+    var shifted = ms + CAIRO_OFFSET_MIN * 60000;         // into Cairo wall-clock
+    var day = Math.floor(shifted / 86400000);
+    return (day + 1) * 86400000 - CAIRO_OFFSET_MIN * 60000;   // midnight Cairo, back in UTC
+  }
+  function offerEndsAt(o, now) {
+    if (!o) return 0;
+    if (o.mode === 'daily') return endOfCairoDay(now);
+    return num(o.endsAt, 0);
+  }
+  function normalizeOffers(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map(function (o) {
+      if (!o || !o.categoryId) return null;
+      var price = num(o.price, 0);
+      if (!(price > 0)) return null;
+      var mode = o.mode === 'once' ? 'once' : 'daily';
+      var endsAt = mode === 'once' ? num(o.endsAt, 0) : 0;
+      if (mode === 'once' && !(endsAt > 0)) return null;
+      return {
+        categoryId: String(o.categoryId), price: Math.round(price),
+        mode: mode, endsAt: endsAt, active: o.active !== false,
+        label: o.label || '', labelEn: o.labelEn || ''
+      };
+    }).filter(Boolean);
+  }
+  // Puts the live offer price on the collection and keeps the normal price as
+  // oldPrice, so every price on the site — cards, pages, cart, order, Telegram
+  // — follows from one place and reverts by itself the moment the offer ends.
+  function applyOffers(categories, offers, now) {
+    if (!offers || !offers.length) return categories;
+    var t = (now == null ? Date.now() : now);
+    categories.forEach(function (c) {
+      var o = offers.filter(function (x) { return x.active && x.categoryId === c.id; })[0];
+      if (!o) return;
+      var ends = offerEndsAt(o, t);
+      if (!(ends > t)) return;                     // the offer is over
+      if (!(o.price > 0 && o.price < c.price)) return;   // never raises a price
+      c.oldPrice = c.price;
+      c.price = o.price;
+      c.offer = { price: o.price, was: c.oldPrice, endsAt: ends, mode: o.mode,
+                  label: o.label, labelEn: o.labelEn };
+    });
+    return categories;
+  }
+  // The live offer on whatever is being priced (a collection, or a product
+  // priced by its collection). Returns null once the deadline has passed.
+  function offerFor(cat, thing) {
+    if (!cat || !thing) return null;
+    var c = thing.categoryId ? categoryById(cat, thing.categoryId) : thing;
+    if (!c || !c.offer) return null;
+    if (thing.categoryId && thing.price) return null;   // priced on its own, not by the set
+    return c.offer.endsAt > Date.now() ? c.offer : null;
+  }
+  function anyOffer(cat) {
+    return (cat && cat.categories || []).filter(function (c) {
+      return c.offer && c.offer.endsAt > Date.now();
+    });
+  }
   function normalizeCode(code) { return String(code || '').trim().toUpperCase().replace(/\s+/g, ''); }
   function hashCode(code) {
     var clean = normalizeCode(code);
@@ -1065,6 +1161,9 @@
     isSetId: isSetId, setIdOf: setIdOf, categoryOfSetId: categoryOfSetId, isSetCategory: isSetCategory,
     setProductOf: setProductOf, buyableById: buyableById, buyables: buyables,
     bundleFor: bundleFor, priceForQty: priceForQty, bundleSaving: bundleSaving,
-    normalizeDiscounts: normalizeDiscounts, normalizeCode: normalizeCode, hashCode: hashCode, lookupDiscount: lookupDiscount
+    normalizeDiscounts: normalizeDiscounts, normalizeCode: normalizeCode, hashCode: hashCode, lookupDiscount: lookupDiscount,
+    SEED_OFFERS: SEED_OFFERS,
+    normalizeOffers: normalizeOffers, applyOffers: applyOffers, offerFor: offerFor, anyOffer: anyOffer,
+    offerEndsAt: offerEndsAt, endOfCairoDay: endOfCairoDay
   };
 })(window);

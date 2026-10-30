@@ -246,8 +246,7 @@ function renderCategory(cat) {
       (c.specs.length ? '<div class="cat-specs">' + c.specs.map(function (sp) { return '<div class="cat-spec"><span>' + D.esc(D.pick(sp, 'label')) + '</span><b>' + D.esc(D.pick(sp, 'value')) + '</b></div>'; }).join('') + '</div>' : '') +
     '</div><aside class="cat-buy' + (isSet ? ' set-buy' : '') + '">' +
       (isSet ? '<div class="set-kicker">📦 المجموعة كاملة — ' + list.length + ' منتجات</div>' : '') +
-      '<div class="price-line"><span class="price-now">' + D.money(c.price) + '</span>' +
-        '</div>' +
+      Sedra.priceHTML(c) + Sedra.offerTimerHTML(c) +
 
       (isSet && list.length ? '<ul class="set-contents big">' + list.map(function (p) {
         return '<li><span>' + D.esc(D.pick(p, 'name')) + '</span></li>'; }).join('') + '</ul>' : '') +

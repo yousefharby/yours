@@ -362,11 +362,11 @@ function renderProduct(cat) {
             '<p class="set-box-note">المجموعة بتتباع كاملة: ' + setList.length + ' منتجات مع بعض.</p>' +
             '<ul class="set-contents big">' + setList.map(function (x) {
               return '<li' + (x.id === p.id ? ' class="here"' : '') + '><span>' + D.esc(D.pick(x, 'name')) + '</span></li>'; }).join('') + '</ul>' +
-            '<div class="price-block"><span class="price-now">' + D.money(c.price) + '</span>' +
+            '<div class="price-block">' + Sedra.priceHTML(c) + Sedra.offerTimerHTML(c) +
 
               '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>' +
           '</div>'
-        : '<div class="price-block"><span class="price-now">' + D.money(price) + '</span>' +
+        : '<div class="price-block">' + Sedra.priceHTML(p) + Sedra.offerTimerHTML(p) +
 
           '<div class="price-ship"><strong>+ الشحن <span data-shipping>من ' + D.money(D.minShipping(cat)) + '</span></strong>حسب المحافظة — <a href="shipping.html" style="color:var(--gold-dark);font-weight:800">التفاصيل</a></div></div>') +
       (specs.length ? '<div class="box"><h3>المواصفات</h3><div class="specs-grid">' + specs.map(function (sp) {
