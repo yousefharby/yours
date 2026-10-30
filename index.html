@@ -190,6 +190,16 @@
   </div>
 </section>
 
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <span class="hero-eyebrow">آراء العملاء</span>
+    <h2>اللي جرّبوا بيقولوا إيه</h2>
+    <p class="reviews-note">كل كلمة تحت منقولة زي ما هي من رسايل عملاء حقيقيين على واتساب وإنستجرام وفيسبوك.</p>
+    <div class="reviews-rail" id="reviewsRail" role="list"></div>
+    <div class="reviews-dots" id="reviewsDots" aria-hidden="true"></div>
+  </div>
+</section>
+
 <section class="about" id="about">
   <div class="about-inner">
     <span class="hero-eyebrow">عن YOURS</span>
@@ -294,6 +304,7 @@
 
 <script src="assets/sedra-data.js?v=14"></script>
 <script src="assets/sedra-store.js?v=14"></script>
+<script src="assets/yours-reviews.js?v=1"></script>
 <script src="assets/yours-quiz.js?v=15"></script>
 <script src="assets/yours-lang.js?v=14"></script>
 <script>
@@ -331,8 +342,53 @@ function renderHome(cat) {
     document.getElementById('heroTitle').innerHTML = D.esc(parts[0]) + (parts[1] ? '<br><em>' + D.esc(parts[1]) + '</em>' : '');
   }
   renderFooterCats(cat);
+  renderReviews();
   D.hydrateMedia(document);
 }
+/* ---- آراء العملاء -----------------------------------------------------
+   بتترسم من assets/yours-reviews.js. كل رأي بالعربي وترجمته، فبتظهر
+   باللغة اللي العميلة مختاراها من غير ما نحتاج نضيفها في قاموس الترجمة. */
+function renderReviews() {
+  var rail = document.getElementById('reviewsRail');
+  var dots = document.getElementById('reviewsDots');
+  var list = window.YoursReviews || [];
+  if (!rail || !list.length) return;
+  var en = D.isEn();
+  rail.innerHTML = list.map(function (r, i) {
+    var quote = en ? (r.en || r.ar) : r.ar;
+    var who = en ? (r.nameEn || r.name) : r.name;
+    var src = en ? (r.sourceEn || r.source) : r.source;
+    return '<article class="review" role="listitem" data-i="' + i + '">' +
+      '<span class="review-mark" aria-hidden="true">&#8220;</span>' +
+      '<p class="review-text">' + D.esc(quote) + '</p>' +
+      '<footer class="review-by">' +
+        (who ? '<b>' + D.esc(who) + '</b>' : '') +
+        (r.set ? '<span class="review-set">' + D.esc(r.set) + '</span>' : '') +
+        (src ? '<span class="review-src">' + D.esc(src) + '</span>' : '') +
+      '</footer></article>';
+  }).join('');
+
+  // a dot per card, and the dots follow the rail as it is swiped
+  dots.innerHTML = list.map(function (_, i) {
+    return '<span class="' + (i === 0 ? 'on' : '') + '"></span>';
+  }).join('');
+  var cards = rail.querySelectorAll('.review');
+  var marks = dots.querySelectorAll('span');
+  var tick = null;
+  rail.addEventListener('scroll', function () {
+    if (tick) return;
+    tick = requestAnimationFrame(function () {
+      tick = null;
+      var mid = rail.scrollLeft + rail.clientWidth / 2, near = 0, best = Infinity;
+      Array.prototype.forEach.call(cards, function (c, i) {
+        var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+        if (d < best) { best = d; near = i; }
+      });
+      Array.prototype.forEach.call(marks, function (m, i) { m.classList.toggle('on', i === near); });
+    });
+  }, { passive: true });
+}
+
 Sedra.init({ page: 'home', onCatalog: renderHome });
 </script>
 </body>
