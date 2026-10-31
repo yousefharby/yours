@@ -1048,8 +1048,9 @@
   // The offers running now. The owner changes these in the admin; the moment
   // he saves that panel these stop being used.
   var SEED_OFFERS = [
-    { categoryId: 'go',      price: 499,  mode: 'daily', active: true },
-    { categoryId: 'luxury',  price: 1199, mode: 'daily', active: true }
+    { categoryId: 'go',        price: 499,  mode: 'daily', active: true },
+    { categoryId: 'luxury',    price: 1199, mode: 'daily', active: true },
+    { categoryId: 'hydration', price: 1999, mode: 'daily', active: true }
   ];
   var CAIRO_OFFSET_MIN = 120;              // Egypt sits on UTC+2 all year
   function endOfCairoDay(now) {
